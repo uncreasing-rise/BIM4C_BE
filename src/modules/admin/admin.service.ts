@@ -107,5 +107,5 @@ export class AdminService {
   async mediaDetail(id: string) { const row = await this.prisma.media.findUnique({ where: { id } }); if (!row) throw new NotFoundException('Media not found'); return row; }
   async updateMedia(id: string, input: UpdateMediaDto) { await this.mediaDetail(id); return this.prisma.media.update({ where: { id }, data: input }); }
   async uploadMedia(file: Express.Multer.File, alt?: string) { const stored = await this.storage.save(file); try { return await this.prisma.media.create({ data: { ...stored, filename: file.originalname, mimeType: file.mimetype, size: file.size, alt: alt?.trim() || null } }); } catch (error) { await this.storage.remove(stored.storageKey); throw error; } }
-  async deleteMedia(id: string) { const row = await this.mediaDetail(id); await this.prisma.media.delete({ where: { id } }); await this.storage.remove(row.storageKey); }
+  async deleteMedia(id: string) { const row = await this.mediaDetail(id); await this.storage.remove(row.storageKey); await this.prisma.media.delete({ where: { id } }); }
 }

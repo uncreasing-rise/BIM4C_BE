@@ -21,7 +21,7 @@ async function bootstrap(): Promise<void> {
   app.use(cookieParser());
   app.use(json({ limit: '100kb' }));
   app.use(urlencoded({ extended: false, limit: '100kb' }));
-  app.enableCors({ origin: origins, methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'], allowedHeaders: ['Content-Type', 'X-Request-ID'], exposedHeaders: ['X-Request-ID'], credentials: true, maxAge: 86400 });
+  app.enableCors({ origin: origins, methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'], allowedHeaders: ['Authorization', 'Content-Type', 'X-Request-ID'], exposedHeaders: ['X-Request-ID'], credentials: true, maxAge: 86400 });
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true, stopAtFirstError: false, exceptionFactory: validationException }));
   app.useGlobalFilters(new ApiExceptionFilter());
   app.enableShutdownHooks();

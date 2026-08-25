@@ -26,6 +26,9 @@ const posts = [
 ] as const;
 
 async function seed(): Promise<void> {
+  if (process.env.NODE_ENV === 'production' && process.env.ADMIN_BOOTSTRAP_RESET_PASSWORD === 'true') {
+    throw new Error('ADMIN_BOOTSTRAP_RESET_PASSWORD must not be enabled in production');
+  }
   const bootstrapEmail = process.env.ADMIN_BOOTSTRAP_EMAIL?.trim().toLowerCase();
   const bootstrapPassword = process.env.ADMIN_BOOTSTRAP_PASSWORD;
   if (bootstrapEmail && bootstrapPassword) {

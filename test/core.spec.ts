@@ -6,6 +6,7 @@ import { normalizeEmail, normalizeText } from '../src/common/utils/input';
 import { BadRequestException } from '@nestjs/common';
 import { SlugPipe } from '../src/common/pipes/slug.pipe';
 import { mapContent } from '../src/common/dto/content-response.dto';
+import { validateEnvironment } from '../src/config/env';
 
 describe('backend contract primitives', () => {
   it('builds FE-compatible pagination metadata', () => { expect(pageResponse(['a'], 25, 2, 10)).toEqual({ data: ['a'], meta: { page: 2, limit: 10, total: 25, totalPages: 3 } }); });
@@ -13,4 +14,6 @@ describe('backend contract primitives', () => {
   it('requires newsletter consent', async () => { const dto = plainToInstance(CreateNewsletterSubscriptionDto, { email: 'USER@example.com', consent: false }); const errors = await validate(dto); expect(errors.some((error) => error.property === 'consent')).toBe(true); expect(dto.email).toBe('user@example.com'); });
   it('accepts URL-safe slugs and rejects unsafe values', () => { const pipe = new SlugPipe(); expect(pipe.transform('lumi-hanoi')).toBe('lumi-hanoi'); expect(() => pipe.transform('../draft')).toThrow(BadRequestException); });
   it('maps stored content without exposing database fields', () => { const response = mapContent({ id: 'id', slug: 'post', title: 'Post', description: 'Description', image: '/image.jpg', eyebrow: 'News', meta: null, highlights: ['One'], sections: [{ title: 'Section', body: 'Body' }] }); expect(response).toEqual({ id: 'id', slug: 'post', title: 'Post', description: 'Description', image: '/image.jpg', eyebrow: 'News', meta: null, highlights: ['One'], sections: [{ title: 'Section', body: 'Body' }] }); expect(response).not.toHaveProperty('deletedAt'); });
+  it('parses false environment booleans without truthy string coercion', () => { const env = validateEnvironment({ DATABASE_URL: 'postgresql://user:pass@localhost:5432/test', TEMPORARY_ADMIN_AUTH: 'false', ADMIN_BOOTSTRAP_RESET_PASSWORD: 'false' }); expect(env.TEMPORARY_ADMIN_AUTH).toBe(false); expect(env.ADMIN_BOOTSTRAP_RESET_PASSWORD).toBe(false); });
+  it('rejects unsafe local configuration in production', () => { expect(() => validateEnvironment({ NODE_ENV: 'production', DATABASE_URL: 'postgresql://user:pass@localhost:5432/test', FRONTEND_URL: 'http://localhost:3000', CORS_ORIGINS: 'http://localhost:3000', MEDIA_STORAGE_DRIVER: 'local', PUBLIC_API_URL: 'http://localhost:8080' })).toThrow(/Invalid environment/); });
 });
