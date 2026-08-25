@@ -1,0 +1,2 @@
+import { Global,Module } from '@nestjs/common'; import { AuthController } from './auth.controller'; import { AuthService } from './auth.service'; import { SessionAuthGuard } from './session-auth.guard'; import { PermissionGuard } from './permission.guard'; import { CsrfGuard } from './csrf.guard';
+@Global() @Module({controllers:[AuthController],providers:[AuthService,SessionAuthGuard,PermissionGuard,CsrfGuard],exports:[SessionAuthGuard,PermissionGuard,CsrfGuard]}) export class AuthModule{}

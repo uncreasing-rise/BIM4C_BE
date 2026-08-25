@@ -1,0 +1,347 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ProjectStatus {
+  DRAFT
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+}
+
+enum SubmissionStatus {
+  NEW
+  IN_PROGRESS
+  RESOLVED
+  SPAM
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum AuditAction {
+  LOGIN
+  LOGOUT
+  CREATE
+  UPDATE
+  DELETE
+  PUBLISH
+  ARCHIVE
+  ROLE_CHANGE
+  SETTINGS_UPDATE
+  MEDIA_UPLOAD
+  MEDIA_DELETE
+}
+
+model ProjectCategory {
+  id        String    @id @default(uuid()) @db.Uuid
+  slug      String    @unique @db.VarChar(120)
+  name      String    @db.VarChar(160)
+  projects  Project[]
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@map("project_categories")
+}
+
+model Project {
+  id          String          @id @default(uuid()) @db.Uuid
+  slug        String          @unique @db.VarChar(180)
+  title       String          @db.VarChar(240)
+  description String          @db.VarChar(1000)
+  image       String          @db.VarChar(500)
+  eyebrow     String          @db.VarChar(160)
+  meta        String?         @db.VarChar(240)
+  highlights  Json
+  sections    Json
+  location    String          @db.VarChar(180)
+  year        Int
+  status      ProjectStatus   @default(DRAFT)
+  isFeatured  Boolean         @default(false) @map("is_featured")
+  sortOrder   Int             @default(0) @map("sort_order")
+  categoryId  String          @map("category_id") @db.Uuid
+  category    ProjectCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  images      ProjectImage[]
+  publishedAt DateTime?       @map("published_at") @db.Timestamptz(3)
+  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt   DateTime?       @map("deleted_at") @db.Timestamptz(3)
+  @@index([status, publishedAt])
+  @@index([categoryId])
+  @@index([createdAt])
+  @@map("projects")
+}
+
+model ProjectImage {
+  id        String  @id @default(uuid()) @db.Uuid
+  projectId String  @map("project_id") @db.Uuid
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  url       String  @db.VarChar(500)
+  alt       String  @db.VarChar(240)
+  caption   String? @db.VarChar(500)
+  sortOrder Int     @default(0) @map("sort_order")
+  @@index([projectId, sortOrder])
+  @@map("project_images")
+}
+
+model Service {
+  id          String        @id @default(uuid()) @db.Uuid
+  slug        String        @unique @db.VarChar(180)
+  title       String        @db.VarChar(240)
+  description String        @db.VarChar(1000)
+  image       String        @db.VarChar(500)
+  eyebrow     String        @db.VarChar(160)
+  meta        String?       @db.VarChar(240)
+  highlights  Json
+  sections    Json
+  status      ContentStatus @default(DRAFT)
+  sortOrder   Int           @default(0) @map("sort_order")
+  publishedAt DateTime?     @map("published_at") @db.Timestamptz(3)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt   DateTime?     @map("deleted_at") @db.Timestamptz(3)
+  @@index([status, publishedAt])
+  @@map("services")
+}
+
+model Course {
+  id            String               @id @default(uuid()) @db.Uuid
+  slug          String               @unique @db.VarChar(180)
+  title         String               @db.VarChar(240)
+  description   String               @db.VarChar(1000)
+  image         String               @db.VarChar(500)
+  eyebrow       String               @db.VarChar(160)
+  meta          String?              @db.VarChar(240)
+  highlights    Json
+  sections      Json
+  status        ContentStatus        @default(DRAFT)
+  sortOrder     Int                  @default(0) @map("sort_order")
+  publishedAt   DateTime?            @map("published_at") @db.Timestamptz(3)
+  createdAt     DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt     DateTime?            @map("deleted_at") @db.Timestamptz(3)
+  curriculum    CourseSection[]
+  registrations CourseRegistration[]
+  @@index([status, publishedAt])
+  @@map("courses")
+}
+
+model CourseSection {
+  id          String @id @default(uuid()) @db.Uuid
+  courseId    String @map("course_id") @db.Uuid
+  course      Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title       String @db.VarChar(240)
+  description String @db.Text
+  sortOrder   Int    @default(0) @map("sort_order")
+  @@index([courseId, sortOrder])
+  @@map("course_sections")
+}
+
+model PostCategory {
+  id        String @id @default(uuid()) @db.Uuid
+  slug      String @unique @db.VarChar(120)
+  name      String @db.VarChar(160)
+  posts     Post[]
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@map("post_categories")
+}
+
+model Post {
+  id          String        @id @default(uuid()) @db.Uuid
+  slug        String        @unique @db.VarChar(180)
+  title       String        @db.VarChar(240)
+  description String        @db.VarChar(1000)
+  image       String        @db.VarChar(500)
+  eyebrow     String        @db.VarChar(160)
+  meta        String?       @db.VarChar(240)
+  highlights  Json
+  sections    Json
+  authorName  String?       @map("author_name") @db.VarChar(160)
+  status      ContentStatus @default(DRAFT)
+  sortOrder   Int           @default(0) @map("sort_order")
+  categoryId  String?       @map("category_id") @db.Uuid
+  category    PostCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  publishedAt DateTime?     @map("published_at") @db.Timestamptz(3)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt   DateTime?     @map("deleted_at") @db.Timestamptz(3)
+  @@index([status, publishedAt])
+  @@index([categoryId])
+  @@map("posts")
+}
+
+model Contact {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(160)
+  email     String   @db.VarChar(320)
+  phone     String?  @db.VarChar(32)
+  company   String?  @db.VarChar(200)
+  message   String   @db.VarChar(5000)
+  status    SubmissionStatus @default(NEW)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@index([email])
+  @@index([createdAt])
+  @@index([status, createdAt])
+  @@map("contacts")
+}
+
+model CourseRegistration {
+  id        String   @id @default(uuid()) @db.Uuid
+  courseId  String   @map("course_id") @db.Uuid
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  name      String   @db.VarChar(160)
+  email     String   @db.VarChar(320)
+  phone     String   @db.VarChar(32)
+  status    SubmissionStatus @default(NEW)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@index([courseId])
+  @@index([email])
+  @@index([status, createdAt])
+  @@map("course_registrations")
+}
+
+model NewsletterSubscription {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique @db.VarChar(320)
+  consent   Boolean
+  isActive  Boolean  @default(true) @map("is_active")
+  unsubscribedAt DateTime? @map("unsubscribed_at") @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@index([createdAt])
+  @@index([isActive, createdAt])
+  @@map("newsletter_subscriptions")
+}
+
+model HeroSlide {
+  id        String   @id @default(uuid()) @db.Uuid
+  eyebrow   String   @db.VarChar(160)
+  title     String   @db.VarChar(240)
+  image     String   @db.VarChar(500)
+  alt       String   @db.VarChar(240)
+  sortOrder Int      @default(0) @map("sort_order")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@index([isActive, sortOrder])
+  @@map("hero_slides")
+}
+
+model StrategicPartner {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(180)
+  logo      String   @db.VarChar(500)
+  website   String?  @db.VarChar(500)
+  sortOrder Int      @default(0) @map("sort_order")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@index([isActive, sortOrder])
+  @@map("strategic_partners")
+}
+
+model Media {
+  id         String   @id @default(uuid()) @db.Uuid
+  url        String   @db.VarChar(1000)
+  storageKey String   @unique @map("storage_key") @db.VarChar(500)
+  filename   String   @db.VarChar(255)
+  mimeType   String   @map("mime_type") @db.VarChar(120)
+  size       Int
+  width      Int?
+  height     Int?
+  alt        String?  @db.VarChar(240)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@index([createdAt])
+  @@map("media")
+}
+
+model AdminUser {
+  id           String         @id @default(uuid()) @db.Uuid
+  email        String         @unique @db.VarChar(320)
+  name         String         @db.VarChar(160)
+  passwordHash String         @map("password_hash") @db.VarChar(255)
+  status       UserStatus     @default(ACTIVE)
+  roles        AdminUserRole[]
+  sessions     AdminSession[]
+  auditLogs    AuditLog[]
+  lastLoginAt  DateTime?      @map("last_login_at") @db.Timestamptz(3)
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@index([status, createdAt])
+  @@map("admin_users")
+}
+
+model AdminUserRole {
+  userId String    @map("user_id") @db.Uuid
+  role   AdminRole
+  user   AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@id([userId, role])
+  @@index([role])
+  @@map("admin_user_roles")
+}
+
+model AdminSession {
+  id        String    @id @default(uuid()) @db.Uuid
+  tokenHash String    @unique @map("token_hash") @db.Char(64)
+  userId    String    @map("user_id") @db.Uuid
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(3)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("admin_sessions")
+}
+
+model AuditLog {
+  id         String      @id @default(uuid()) @db.Uuid
+  actorId    String?     @map("actor_id") @db.Uuid
+  actor      AdminUser?  @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action     AuditAction
+  resource   String      @db.VarChar(80)
+  resourceId String?     @map("resource_id") @db.VarChar(120)
+  requestId  String?     @map("request_id") @db.VarChar(100)
+  metadata   Json?
+  createdAt  DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@index([actorId, createdAt])
+  @@index([resource, createdAt])
+  @@index([action, createdAt])
+  @@map("audit_logs")
+}
+
+model SiteSettings {
+  id                    String   @id @default("default") @db.VarChar(32)
+  companyName           String   @map("company_name") @db.VarChar(200)
+  email                 String   @db.VarChar(320)
+  phone                 String?  @db.VarChar(32)
+  address               String?  @db.VarChar(500)
+  socialLinks           Json     @map("social_links")
+  defaultSeoTitle       String   @map("default_seo_title") @db.VarChar(240)
+  defaultSeoDescription String   @map("default_seo_description") @db.VarChar(500)
+  defaultOgImage        String?  @map("default_og_image") @db.VarChar(1000)
+  createdAt             DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@map("site_settings")
+}
