@@ -1,5 +1,15 @@
 import type { Prisma } from '@prisma/client';
-export interface ContentSection { title: string; body: string }
+export interface ContentMedia { url: string; alt?: string; caption?: string; width?: number; height?: number }
+export interface ContentSection {
+  title: string;
+  body: string;
+  images?: ContentMedia[];
+  imageLayout?: 'stack' | 'grid';
+  unorderedList?: string[];
+  orderedList?: string[];
+  quote?: string;
+  videoUrl?: string;
+}
 export interface ContentResponse { id: string; slug: string; title: string; description: string; image: string; eyebrow: string; meta: string | null; highlights: string[]; sections: ContentSection[] }
 interface ContentRecord extends Omit<ContentResponse, 'highlights' | 'sections'> { highlights: Prisma.JsonValue; sections: Prisma.JsonValue }
 function isSection(value: unknown): value is ContentSection { return typeof value === 'object' && value !== null && 'title' in value && typeof value.title === 'string' && 'body' in value && typeof value.body === 'string'; }

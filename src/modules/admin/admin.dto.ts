@@ -18,9 +18,23 @@ export class AdminListQueryDto {
   @IsOptional() @IsIn(['asc', 'desc']) sortOrder: 'asc' | 'desc' = 'desc';
 }
 
+export class ContentMediaDto {
+  @Transform(trim) @IsString() @MinLength(1) @MaxLength(1000) url!: string;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) alt?: string;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(500) caption?: string;
+  @IsOptional() @IsInt() @Min(1) @Max(10000) width?: number;
+  @IsOptional() @IsInt() @Min(1) @Max(10000) height?: number;
+}
+
 export class ContentSectionDto {
   @IsString() @MinLength(1) @MaxLength(240) title!: string;
   @IsString() @MinLength(1) @MaxLength(20000) body!: string;
+  @IsOptional() @IsArray() @ArrayMaxSize(12) @ValidateNested({ each: true }) @Type(() => ContentMediaDto) images?: ContentMediaDto[];
+  @IsOptional() @IsIn(['stack', 'grid']) imageLayout?: 'stack' | 'grid';
+  @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) unorderedList?: string[];
+  @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) orderedList?: string[];
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(5000) quote?: string;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) videoUrl?: string;
 }
 
 export class CreateContentDto {
