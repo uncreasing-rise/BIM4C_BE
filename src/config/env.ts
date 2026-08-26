@@ -22,7 +22,6 @@ const schema = z.object({
   SUPABASE_URL: z.string().url().optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(20).optional(),
   SUPABASE_MEDIA_BUCKET: z.string().min(1).optional(),
-  SUPABASE_STORAGE_BUCKET: z.string().min(1).default('media'),
   PUBLIC_API_URL: z.string().url().default('http://localhost:8080'),
   MEDIA_STORAGE_PATH: z.string().min(1).default('uploads'),
 }).superRefine((env, context) => {
