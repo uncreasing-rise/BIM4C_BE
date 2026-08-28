@@ -5,7 +5,7 @@ const environmentBoolean = z.preprocess((value) => value === 'true' ? true : val
 const schema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().min(1).max(65535).default(8080),
-  DATABASE_URL: z.string().url().refine((value) => ['postgres:', 'postgresql:'].includes(new URL(value).protocol), 'Must be a PostgreSQL URL'),
+  DATABASE_URL: z.string().url().refine((value) => /^postgres(?:ql)?:\/\//i.test(value), 'Must be a PostgreSQL URL'),
   FRONTEND_URL: z.string().url().default('http://localhost:3000'),
   CORS_ORIGINS: z.string().min(1).optional(),
   RATE_LIMIT_TTL_MS: z.coerce.number().int().positive().default(60000),

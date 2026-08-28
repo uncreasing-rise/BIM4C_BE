@@ -19,27 +19,31 @@ model ProjectCategory {
 }
 
 model Project {
-  id          String          @id @default(uuid()) @db.Uuid
-  slug        String          @unique @db.VarChar(180)
-  title       String          @db.VarChar(240)
-  description String          @db.VarChar(1000)
-  image       String          @db.VarChar(500)
-  eyebrow     String          @db.VarChar(160)
-  meta        String?         @db.VarChar(240)
-  highlights  Json
-  sections    Json
-  location    String          @db.VarChar(180)
-  year        Int
-  status      ProjectStatus   @default(DRAFT)
-  isFeatured  Boolean         @default(false) @map("is_featured")
-  sortOrder   Int             @default(0) @map("sort_order")
-  categoryId  String          @map("category_id") @db.Uuid
-  publishedAt DateTime?       @map("published_at") @db.Timestamptz(3)
-  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt   DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
-  deletedAt   DateTime?       @map("deleted_at") @db.Timestamptz(3)
-  images      ProjectImage[]
-  category    ProjectCategory @relation(fields: [categoryId], references: [id])
+  id                 String          @id @default(uuid()) @db.Uuid
+  slug               String          @unique @db.VarChar(180)
+  title              String          @db.VarChar(240)
+  description        String          @db.VarChar(1000)
+  image              String          @db.VarChar(500)
+  eyebrow            String          @db.VarChar(160)
+  meta               String?         @db.VarChar(240)
+  highlights         Json
+  sections           Json
+  location           String          @db.VarChar(180)
+  year               Int
+  investor           String?         @db.VarChar(1000)
+  expectedCompletion String?         @map("expected_completion") @db.VarChar(180)
+  scale              String?         @db.VarChar(2000)
+  contractPackage    String?         @map("contract_package") @db.VarChar(500)
+  status             ProjectStatus   @default(DRAFT)
+  isFeatured         Boolean         @default(false) @map("is_featured")
+  sortOrder          Int             @default(0) @map("sort_order")
+  categoryId         String          @map("category_id") @db.Uuid
+  publishedAt        DateTime?       @map("published_at") @db.Timestamptz(3)
+  createdAt          DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt          DateTime?       @map("deleted_at") @db.Timestamptz(3)
+  images             ProjectImage[]
+  category           ProjectCategory @relation(fields: [categoryId], references: [id])
 
   @@index([status, publishedAt])
   @@index([categoryId])

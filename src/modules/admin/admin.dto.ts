@@ -56,6 +56,10 @@ export class CreateProjectDto extends OmitType(CreateContentDto, ['status'] as c
   @IsUUID() categoryId!: string;
   @Transform(trim) @IsString() @MinLength(2) @MaxLength(180) location!: string;
   @IsInt() @Min(1900) @Max(2200) year!: number;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) investor?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(180) expectedCompletion?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(2000) scale?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(500) contractPackage?: string | null;
   @IsOptional() @IsEnum(ProjectStatus) status?: ProjectStatus;
   @IsOptional() @IsBoolean() isFeatured?: boolean;
 }
