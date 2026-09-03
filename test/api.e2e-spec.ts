@@ -7,7 +7,7 @@ import {
 import { Test } from '@nestjs/testing';
 import { ContentStatus, ProjectStatus } from '@prisma/client';
 import request = require('supertest');
-import * as cookieParser from 'cookie-parser';
+import cookieParser = require('cookie-parser');
 import { AppModule } from '../src/app.module';
 import { ApiExceptionFilter } from '../src/common/filters/api-exception.filter';
 import { PrismaService } from '../src/database/prisma.service';
