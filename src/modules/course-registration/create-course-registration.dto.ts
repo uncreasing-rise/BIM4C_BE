@@ -6,6 +6,8 @@ import {
   Matches,
   MaxLength,
   MinLength,
+  IsBoolean,
+  Equals,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { normalizeEmail, normalizeText } from '../../common/utils/input';
@@ -27,4 +29,6 @@ export class CreateCourseRegistrationDto {
   @IsString()
   @Matches(/^[+()\d\s.-]{8,32}$/)
   phone!: string;
+  @ApiProperty({ example: true }) @IsBoolean() @Equals(true) consent!: boolean;
+  @ApiProperty({ example: '20.08.2026' }) @Transform(({ value }) => normalizeText(value)) @IsString() @MinLength(1) @MaxLength(64) privacyPolicyVersion!: string;
 }

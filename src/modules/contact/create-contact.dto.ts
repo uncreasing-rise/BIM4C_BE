@@ -3,6 +3,8 @@ import {
   IsEmail,
   IsOptional,
   IsString,
+  IsBoolean,
+  Equals,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -38,4 +40,6 @@ export class CreateContactDto {
   @MinLength(10)
   @MaxLength(5000)
   message!: string;
+  @ApiProperty({ example: true }) @IsBoolean() @Equals(true) consent!: boolean;
+  @ApiProperty({ example: '20.08.2026' }) @Transform(({ value }) => normalizeText(value)) @IsString() @MinLength(1) @MaxLength(64) privacyPolicyVersion!: string;
 }

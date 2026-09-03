@@ -16,7 +16,8 @@ export class CourseRegistrationService {
       select: { id: true },
     });
     if (!course) throw new NotFoundException('Course not found');
-    await this.prisma.courseRegistration.create({ data: input });
+    const { consent, privacyPolicyVersion, ...data } = input;
+    await this.prisma.courseRegistration.create({ data: { ...data, consentGiven: consent, consentAt: new Date(), privacyPolicyVersion, consentSource: 'website' } });
     return { success: true, message: 'Đăng ký khóa học đã được ghi nhận.' };
   }
 }

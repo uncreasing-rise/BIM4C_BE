@@ -195,6 +195,10 @@ model Contact {
   createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
   status    SubmissionStatus @default(NEW)
   updatedAt DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  consentGiven Boolean?      @map("consent_given")
+  consentAt DateTime?        @map("consent_at") @db.Timestamptz(3)
+  privacyPolicyVersion String? @map("privacy_policy_version") @db.VarChar(64)
+  consentSource String?      @map("consent_source") @db.VarChar(64)
 
   @@index([email])
   @@index([createdAt])
@@ -212,6 +216,10 @@ model CourseRegistration {
   status    SubmissionStatus @default(NEW)
   updatedAt DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
   course    Course           @relation(fields: [courseId], references: [id])
+  consentGiven Boolean?      @map("consent_given")
+  consentAt DateTime?        @map("consent_at") @db.Timestamptz(3)
+  privacyPolicyVersion String? @map("privacy_policy_version") @db.VarChar(64)
+  consentSource String?      @map("consent_source") @db.VarChar(64)
 
   @@index([courseId])
   @@index([email])
@@ -227,6 +235,9 @@ model NewsletterSubscription {
   updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
   isActive       Boolean   @default(true) @map("is_active")
   unsubscribedAt DateTime? @map("unsubscribed_at") @db.Timestamptz(3)
+  consentAt DateTime? @map("consent_at") @db.Timestamptz(3)
+  privacyPolicyVersion String? @map("privacy_policy_version") @db.VarChar(64)
+  consentSource String? @map("consent_source") @db.VarChar(64)
 
   @@index([createdAt])
   @@index([isActive, createdAt])

@@ -9,7 +9,8 @@ export interface MutationResponse {
 export class ContactService {
   constructor(private readonly prisma: PrismaService) {}
   async create(input: CreateContactDto): Promise<MutationResponse> {
-    await this.prisma.contact.create({ data: input });
+    const { consent, privacyPolicyVersion, ...data } = input;
+    await this.prisma.contact.create({ data: { ...data, consentGiven: consent, consentAt: new Date(), privacyPolicyVersion, consentSource: 'website' } });
     return { success: true, message: 'Yêu cầu liên hệ đã được ghi nhận.' };
   }
 }

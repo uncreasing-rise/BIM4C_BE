@@ -304,6 +304,8 @@ describe('P0 API contract (HTTP)', () => {
         name: 'Nguyen Van A',
         email: 'USER@example.com',
         message: 'A valid contact message.',
+        consent: true,
+        privacyPolicyVersion: '20.08.2026',
       })
       .expect(201, {
         success: true,
@@ -327,12 +329,14 @@ describe('P0 API contract (HTTP)', () => {
         name: 'Nguyen Van A',
         email: 'a@example.com',
         phone: '0900000000',
+        consent: true,
+        privacyPolicyVersion: '20.08.2026',
       })
       .expect(404);
     expect(response.body.code).toBe('NOT_FOUND');
   });
   it('keeps newsletter subscription idempotent', async () => {
-    const payload = { email: 'USER@example.com', consent: true };
+    const payload = { email: 'USER@example.com', consent: true, privacyPolicyVersion: '20.08.2026' };
     await request(app.getHttpServer())
       .post('/newsletter/subscriptions')
       .send(payload)

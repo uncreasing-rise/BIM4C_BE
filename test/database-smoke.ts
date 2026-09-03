@@ -66,6 +66,8 @@ async function smoke(): Promise<void> {
           name: 'BIM4C Smoke Test',
           email: 'smoke-contact@example.com',
           message: 'Automated deployment smoke test.',
+          consent: true,
+          privacyPolicyVersion: '20.08.2026',
         }),
       })
     ).status,
@@ -81,6 +83,8 @@ async function smoke(): Promise<void> {
           name: 'BIM4C Smoke Test',
           email: 'smoke-course@example.com',
           phone: '0900000000',
+          consent: true,
+          privacyPolicyVersion: '20.08.2026',
         }),
       })
     ).status,
@@ -90,6 +94,7 @@ async function smoke(): Promise<void> {
   const newsletterPayload = JSON.stringify({
     email: 'smoke-newsletter@example.com',
     consent: true,
+    privacyPolicyVersion: '20.08.2026',
   });
   assertStatus(
     (
