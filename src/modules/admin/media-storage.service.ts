@@ -1,6 +1,141 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'; import { ConfigService } from '@nestjs/config'; import { createClient } from '@supabase/supabase-js'; import { mkdir, readFile, unlink, writeFile } from 'node:fs/promises'; import { extname, join, resolve } from 'node:path'; import { randomUUID } from 'node:crypto';
-export interface StoredMedia{storageKey:string;url:string} export interface MediaStorageAdapter{save(file:Express.Multer.File):Promise<StoredMedia>;read(storageKey:string):Promise<Buffer>;remove(storageKey:string):Promise<void>}
-function safeKey(name:string){return`${randomUUID()}${extname(name).toLowerCase().replace(/[^.a-z0-9]/g,'').slice(0,10)}`} function validate(file:Express.Multer.File){if(!file||!['image/jpeg','image/png','image/webp','image/gif'].includes(file.mimetype))throw new BadRequestException('Unsupported image type');const b=file.buffer,valid=file.mimetype==='image/jpeg'?b[0]===0xff&&b[1]===0xd8&&b[2]===0xff:file.mimetype==='image/png'?b.subarray(0,8).equals(Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a])):file.mimetype==='image/gif'?['GIF87a','GIF89a'].includes(b.subarray(0,6).toString('ascii')):b.subarray(0,4).toString('ascii')==='RIFF'&&b.subarray(8,12).toString('ascii')==='WEBP';if(!valid)throw new BadRequestException('File content does not match image type')}
-@Injectable()export class LocalMediaStorage implements MediaStorageAdapter{private readonly root:string;constructor(private readonly config:ConfigService){this.root=resolve(config.get<string>('MEDIA_STORAGE_PATH')??'uploads')}async save(file:Express.Multer.File){validate(file);const storageKey=safeKey(file.originalname);await mkdir(this.root,{recursive:true});await writeFile(join(this.root,storageKey),file.buffer);const base=this.config.get<string>('PUBLIC_API_URL')??`http://localhost:${this.config.get<number>('PORT')??8080}`;return{storageKey,url:`${base.replace(/\/$/,'')}/media/files/${storageKey}`}}async read(key:string){if(!/^[a-f0-9-]{36}(\.[a-z0-9]+)?$/i.test(key))throw new NotFoundException('Media not found');try{return await readFile(join(this.root,key))}catch{throw new NotFoundException('Media not found')}}async remove(key:string){try{await unlink(join(this.root,key))}catch{/* idempotent */}}}
-@Injectable()export class SupabaseMediaStorage implements MediaStorageAdapter{private readonly client;private readonly bucket:string;constructor(config:ConfigService){const url=config.get<string>('SUPABASE_URL'),key=config.get<string>('SUPABASE_SERVICE_ROLE_KEY');if(!url||!key)throw new Error('Supabase Storage credentials are required');this.client=createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});this.bucket=config.get<string>('SUPABASE_MEDIA_BUCKET')??'media'}async save(file:Express.Multer.File){validate(file);const storageKey=safeKey(file.originalname),bucket=this.client.storage.from(this.bucket);const{error}=await bucket.upload(storageKey,file.buffer,{contentType:file.mimetype,upsert:false});if(error)throw error;return{storageKey,url:bucket.getPublicUrl(storageKey).data.publicUrl}}read(key:string):Promise<Buffer>{void key;return Promise.reject(new NotFoundException('Supabase media is served by storage'))}async remove(key:string){const{error}=await this.client.storage.from(this.bucket).remove([key]);if(error)throw error}}
-@Injectable()export class MediaStorageService implements MediaStorageAdapter{private readonly adapter:MediaStorageAdapter;constructor(config:ConfigService){this.adapter=config.get<string>('MEDIA_STORAGE_DRIVER')==='supabase'?new SupabaseMediaStorage(config):new LocalMediaStorage(config)}save(file:Express.Multer.File){return this.adapter.save(file)}read(key:string){return this.adapter.read(key)}remove(key:string){return this.adapter.remove(key)}}
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { createClient } from '@supabase/supabase-js';
+import { mkdir, readFile, unlink, writeFile } from 'node:fs/promises';
+import { extname, join, resolve } from 'node:path';
+import { randomUUID } from 'node:crypto';
+export interface StoredMedia {
+  storageKey: string;
+  url: string;
+}
+export interface MediaStorageAdapter {
+  save(file: Express.Multer.File): Promise<StoredMedia>;
+  read(storageKey: string): Promise<Buffer>;
+  remove(storageKey: string): Promise<void>;
+}
+function safeKey(name: string) {
+  return `${randomUUID()}${extname(name)
+    .toLowerCase()
+    .replace(/[^.a-z0-9]/g, '')
+    .slice(0, 10)}`;
+}
+function validate(file: Express.Multer.File) {
+  if (
+    !file ||
+    !['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(
+      file.mimetype,
+    )
+  )
+    throw new BadRequestException('Unsupported image type');
+  const b = file.buffer,
+    valid =
+      file.mimetype === 'image/jpeg'
+        ? b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff
+        : file.mimetype === 'image/png'
+          ? b
+              .subarray(0, 8)
+              .equals(
+                Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+              )
+          : file.mimetype === 'image/gif'
+            ? ['GIF87a', 'GIF89a'].includes(b.subarray(0, 6).toString('ascii'))
+            : b.subarray(0, 4).toString('ascii') === 'RIFF' &&
+              b.subarray(8, 12).toString('ascii') === 'WEBP';
+  if (!valid)
+    throw new BadRequestException('File content does not match image type');
+}
+@Injectable()
+export class LocalMediaStorage implements MediaStorageAdapter {
+  private readonly root: string;
+  constructor(private readonly config: ConfigService) {
+    this.root = resolve(config.get<string>('MEDIA_STORAGE_PATH') ?? 'uploads');
+  }
+  async save(file: Express.Multer.File) {
+    validate(file);
+    const storageKey = safeKey(file.originalname);
+    await mkdir(this.root, { recursive: true });
+    await writeFile(join(this.root, storageKey), file.buffer);
+    const base =
+      this.config.get<string>('PUBLIC_API_URL') ??
+      `http://localhost:${this.config.get<number>('PORT') ?? 8080}`;
+    return {
+      storageKey,
+      url: `${base.replace(/\/$/, '')}/media/files/${storageKey}`,
+    };
+  }
+  async read(key: string) {
+    if (!/^[a-f0-9-]{36}(\.[a-z0-9]+)?$/i.test(key))
+      throw new NotFoundException('Media not found');
+    try {
+      return await readFile(join(this.root, key));
+    } catch {
+      throw new NotFoundException('Media not found');
+    }
+  }
+  async remove(key: string) {
+    try {
+      await unlink(join(this.root, key));
+    } catch {
+      /* idempotent */
+    }
+  }
+}
+@Injectable()
+export class SupabaseMediaStorage implements MediaStorageAdapter {
+  private readonly client;
+  private readonly bucket: string;
+  constructor(config: ConfigService) {
+    const url = config.get<string>('SUPABASE_URL'),
+      key = config.get<string>('SUPABASE_SERVICE_ROLE_KEY');
+    if (!url || !key)
+      throw new Error('Supabase Storage credentials are required');
+    this.client = createClient(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    this.bucket = config.get<string>('SUPABASE_MEDIA_BUCKET') ?? 'media';
+  }
+  async save(file: Express.Multer.File) {
+    validate(file);
+    const storageKey = safeKey(file.originalname),
+      bucket = this.client.storage.from(this.bucket);
+    const { error } = await bucket.upload(storageKey, file.buffer, {
+      contentType: file.mimetype,
+      upsert: false,
+    });
+    if (error) throw error;
+    return { storageKey, url: bucket.getPublicUrl(storageKey).data.publicUrl };
+  }
+  read(key: string): Promise<Buffer> {
+    void key;
+    return Promise.reject(
+      new NotFoundException('Supabase media is served by storage'),
+    );
+  }
+  async remove(key: string) {
+    const { error } = await this.client.storage.from(this.bucket).remove([key]);
+    if (error) throw error;
+  }
+}
+@Injectable()
+export class MediaStorageService implements MediaStorageAdapter {
+  private readonly adapter: MediaStorageAdapter;
+  constructor(config: ConfigService) {
+    this.adapter =
+      config.get<string>('MEDIA_STORAGE_DRIVER') === 'supabase'
+        ? new SupabaseMediaStorage(config)
+        : new LocalMediaStorage(config);
+  }
+  save(file: Express.Multer.File) {
+    return this.adapter.save(file);
+  }
+  read(key: string) {
+    return this.adapter.read(key);
+  }
+  remove(key: string) {
+    return this.adapter.remove(key);
+  }
+}

@@ -23,10 +23,43 @@ import { AdminMutationInterceptor } from './modules/audit/admin-mutation.interce
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, cache: true, validate: validateEnvironment }),
-    ThrottlerModule.forRootAsync({ inject: [ConfigService], useFactory: (config: ConfigService) => [{ ttl: config.getOrThrow<number>('RATE_LIMIT_TTL_MS'), limit: config.getOrThrow<number>('RATE_LIMIT_MAX') }] }),
-    DatabaseModule, AuditModule, AuthModule, UsersModule, SettingsModule, ServicesModule, ProjectsModule, CoursesModule, PostsModule, ContactModule, CourseRegistrationModule, NewsletterModule, HomepageModule, AdminModule, HealthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+      validate: validateEnvironment,
+    }),
+    ThrottlerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => [
+        {
+          ttl: config.getOrThrow<number>('RATE_LIMIT_TTL_MS'),
+          limit: config.getOrThrow<number>('RATE_LIMIT_MAX'),
+        },
+      ],
+    }),
+    DatabaseModule,
+    AuditModule,
+    AuthModule,
+    UsersModule,
+    SettingsModule,
+    ServicesModule,
+    ProjectsModule,
+    CoursesModule,
+    PostsModule,
+    ContactModule,
+    CourseRegistrationModule,
+    NewsletterModule,
+    HomepageModule,
+    AdminModule,
+    HealthModule,
   ],
-  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }, { provide: APP_INTERCEPTOR, useClass: AdminMutationInterceptor }],
+  providers: [
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    { provide: APP_INTERCEPTOR, useClass: AdminMutationInterceptor },
+  ],
 })
-export class AppModule implements NestModule { configure(consumer: MiddlewareConsumer): void { consumer.apply(RequestContextMiddleware).forRoutes('*'); } }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(RequestContextMiddleware).forRoutes('*');
+  }
+}

@@ -1,2 +1,121 @@
-import{CallHandler,ExecutionContext,Injectable,Logger,NestInterceptor}from'@nestjs/common';import{ConfigService}from'@nestjs/config';import{Reflector}from'@nestjs/core';import{AuditAction}from'@prisma/client';import type{Request}from'express';import{concatMap,from,type Observable}from'rxjs';import{ADMIN_RESOURCE}from'../auth/permissions';import{AuditService}from'./audit.service';
-@Injectable()export class AdminMutationInterceptor implements NestInterceptor{private readonly logger=new Logger(AdminMutationInterceptor.name);constructor(private readonly reflector:Reflector,private readonly audit:AuditService,private readonly config:ConfigService){}intercept(context:ExecutionContext,next:CallHandler):Observable<unknown>{const resource=this.reflector.getAllAndOverride<string>(ADMIN_RESOURCE,[context.getHandler(),context.getClass()]),request=context.switchToHttp().getRequest<Request>();if(!resource||['GET','HEAD','OPTIONS'].includes(request.method)||['users','settings','audit'].includes(resource))return next.handle()as Observable<unknown>;return(next.handle()as Observable<unknown>).pipe(concatMap(result=>from(this.afterCommit(request,resource,result).then(()=>result))))}private async afterCommit(req:Request,resource:string,result:unknown){const param=req.params.id,resourceId=typeof param==='string'?param:this.resultId(result);try{await this.audit.record({actorId:req.admin?.id,action:this.action(req),resource,resourceId,requestId:req.requestId})}catch(e){this.logger.error(`Audit write failed for ${resource}`,e instanceof Error?e.stack:String(e))}try{await this.revalidate(resource,req,result)}catch(e){this.logger.warn(`Revalidation failed for ${resource}: ${e instanceof Error?e.message:String(e)}`)}}private action(req:Request):AuditAction{if(req.path.includes('/upload'))return AuditAction.MEDIA_UPLOAD;if(req.method==='DELETE')return req.path.includes('/media/')?AuditAction.MEDIA_DELETE:AuditAction.DELETE;const bulk=(req.body as{action?:string}|undefined)?.action;if(bulk==='publish')return AuditAction.PUBLISH;if(bulk==='archive')return AuditAction.ARCHIVE;if(req.path.endsWith('/status')&&(req.body as{status?:string}|undefined)?.status==='PUBLISHED')return AuditAction.PUBLISH;return req.method==='POST'?AuditAction.CREATE:AuditAction.UPDATE}private resultId(result:unknown){if(typeof result==='object'&&result&&'data'in result)return(result as{data?:{id?:string}}).data?.id;return undefined}private async revalidate(resource:string,req:Request,result:unknown){const url=this.config.get<string>('REVALIDATION_URL'),secret=this.config.get<string>('REVALIDATION_SECRET');if(!url||!secret)return;const tags=new Set<string>(),normalized=resource==='project-categories'?'projects':resource==='post-categories'?'posts':resource;if(['projects','services','courses','posts','homepage'].includes(normalized))tags.add(normalized);const body=req.body as{slug?:string}|undefined;if(body?.slug)tags.add(`${normalized.replace(/s$/,'')}:${body.slug}`);if(result&&typeof result==='object'&&'data'in result){const slug=(result as{data?:{slug?:string}}).data?.slug;if(slug)tags.add(`${normalized.replace(/s$/,'')}:${slug}`)}if(!tags.size)return;const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','X-Revalidation-Secret':secret},body:JSON.stringify({tags:[...tags]})});if(!response.ok)throw new Error(`HTTP ${response.status}`)}}
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  Logger,
+  NestInterceptor,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { Reflector } from '@nestjs/core';
+import { AuditAction } from '@prisma/client';
+import type { Request } from 'express';
+import { concatMap, from, type Observable } from 'rxjs';
+import { ADMIN_RESOURCE } from '../auth/permissions';
+import { AuditService } from './audit.service';
+@Injectable()
+export class AdminMutationInterceptor implements NestInterceptor {
+  private readonly logger = new Logger(AdminMutationInterceptor.name);
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly audit: AuditService,
+    private readonly config: ConfigService,
+  ) {}
+  intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
+    const resource = this.reflector.getAllAndOverride<string>(ADMIN_RESOURCE, [
+        context.getHandler(),
+        context.getClass(),
+      ]),
+      request = context.switchToHttp().getRequest<Request>();
+    if (
+      !resource ||
+      ['GET', 'HEAD', 'OPTIONS'].includes(request.method) ||
+      ['users', 'settings', 'audit'].includes(resource)
+    )
+      return next.handle() as Observable<unknown>;
+    return (next.handle() as Observable<unknown>).pipe(
+      concatMap((result) =>
+        from(this.afterCommit(request, resource, result).then(() => result)),
+      ),
+    );
+  }
+  private async afterCommit(req: Request, resource: string, result: unknown) {
+    const param = req.params.id,
+      resourceId = typeof param === 'string' ? param : this.resultId(result);
+    try {
+      await this.audit.record({
+        actorId: req.admin?.id,
+        action: this.action(req),
+        resource,
+        resourceId,
+        requestId: req.requestId,
+      });
+    } catch (e) {
+      this.logger.error(
+        `Audit write failed for ${resource}`,
+        e instanceof Error ? e.stack : String(e),
+      );
+    }
+    try {
+      await this.revalidate(resource, req, result);
+    } catch (e) {
+      this.logger.warn(
+        `Revalidation failed for ${resource}: ${e instanceof Error ? e.message : String(e)}`,
+      );
+    }
+  }
+  private action(req: Request): AuditAction {
+    if (req.path.includes('/upload')) return AuditAction.MEDIA_UPLOAD;
+    if (req.method === 'DELETE')
+      return req.path.includes('/media/')
+        ? AuditAction.MEDIA_DELETE
+        : AuditAction.DELETE;
+    const bulk = (req.body as { action?: string } | undefined)?.action;
+    if (bulk === 'publish') return AuditAction.PUBLISH;
+    if (bulk === 'archive') return AuditAction.ARCHIVE;
+    if (
+      req.path.endsWith('/status') &&
+      (req.body as { status?: string } | undefined)?.status === 'PUBLISHED'
+    )
+      return AuditAction.PUBLISH;
+    return req.method === 'POST' ? AuditAction.CREATE : AuditAction.UPDATE;
+  }
+  private resultId(result: unknown) {
+    if (typeof result === 'object' && result && 'data' in result)
+      return (result as { data?: { id?: string } }).data?.id;
+    return undefined;
+  }
+  private async revalidate(resource: string, req: Request, result: unknown) {
+    const url = this.config.get<string>('REVALIDATION_URL'),
+      secret = this.config.get<string>('REVALIDATION_SECRET');
+    if (!url || !secret) return;
+    const tags = new Set<string>(),
+      normalized =
+        resource === 'project-categories'
+          ? 'projects'
+          : resource === 'post-categories'
+            ? 'posts'
+            : resource;
+    if (
+      ['projects', 'services', 'courses', 'posts', 'homepage'].includes(
+        normalized,
+      )
+    )
+      tags.add(normalized);
+    const body = req.body as { slug?: string } | undefined;
+    if (body?.slug) tags.add(`${normalized.replace(/s$/, '')}:${body.slug}`);
+    if (result && typeof result === 'object' && 'data' in result) {
+      const slug = (result as { data?: { slug?: string } }).data?.slug;
+      if (slug) tags.add(`${normalized.replace(/s$/, '')}:${slug}`);
+    }
+    if (!tags.size) return;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Revalidation-Secret': secret,
+      },
+      body: JSON.stringify({ tags: [...tags] }),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  }
+}

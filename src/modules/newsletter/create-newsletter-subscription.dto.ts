@@ -1,2 +1,12 @@
-import { Transform } from 'class-transformer'; import { Equals, IsBoolean, IsEmail, MaxLength } from 'class-validator'; import { ApiProperty } from '@nestjs/swagger'; import { normalizeEmail } from '../../common/utils/input';
-export class CreateNewsletterSubscriptionDto { @ApiProperty({ example: 'a@example.com' }) @Transform(({ value }) => normalizeEmail(value)) @IsEmail() @MaxLength(320) email!: string; @ApiProperty({ example: true }) @IsBoolean() @Equals(true) consent!: boolean; }
+import { Transform } from 'class-transformer';
+import { Equals, IsBoolean, IsEmail, MaxLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { normalizeEmail } from '../../common/utils/input';
+export class CreateNewsletterSubscriptionDto {
+  @ApiProperty({ example: 'a@example.com' })
+  @Transform(({ value }) => normalizeEmail(value))
+  @IsEmail()
+  @MaxLength(320)
+  email!: string;
+  @ApiProperty({ example: true }) @IsBoolean() @Equals(true) consent!: boolean;
+}

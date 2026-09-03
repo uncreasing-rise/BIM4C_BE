@@ -6,4 +6,6 @@ export function normalizeText(value: unknown): unknown {
   }).join('');
   return printable.replace(/\s+/g, ' ').trim();
 }
-export function normalizeEmail(value: unknown): unknown { return typeof value === 'string' ? value.trim().toLowerCase() : value; }
+export function normalizeEmail(value: unknown): unknown {
+  return typeof value === 'string' ? value.trim().toLowerCase() : value;
+}

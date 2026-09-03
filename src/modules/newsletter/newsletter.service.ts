@@ -6,7 +6,9 @@ import type { CreateNewsletterSubscriptionDto } from './create-newsletter-subscr
 @Injectable()
 export class NewsletterService {
   constructor(private readonly prisma: PrismaService) {}
-  async subscribe(input: CreateNewsletterSubscriptionDto): Promise<MutationResponse> {
+  async subscribe(
+    input: CreateNewsletterSubscriptionDto,
+  ): Promise<MutationResponse> {
     await this.prisma.newsletterSubscription.upsert({
       where: { email: input.email },
       create: { ...input, isActive: true },
