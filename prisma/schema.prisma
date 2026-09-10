@@ -54,6 +54,9 @@ model Project {
   @@index([status, publishedAt])
   @@index([categoryId])
   @@index([createdAt])
+  @@index([deletedAt, status, sortOrder, publishedAt])
+  @@index([categoryId, deletedAt, status, sortOrder, publishedAt])
+  @@index([deletedAt, updatedAt])
   @@map("projects")
 }
 
@@ -94,6 +97,8 @@ model Service {
   deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz(3)
 
   @@index([status, publishedAt])
+  @@index([deletedAt, status, sortOrder, publishedAt])
+  @@index([deletedAt, updatedAt])
   @@map("services")
 }
 
@@ -128,6 +133,8 @@ model Course {
   curriculum       CourseSection[]
 
   @@index([status, publishedAt])
+  @@index([deletedAt, status, sortOrder, publishedAt])
+  @@index([deletedAt, updatedAt])
   @@map("courses")
 }
 
@@ -182,6 +189,9 @@ model Post {
 
   @@index([status, publishedAt])
   @@index([categoryId])
+  @@index([deletedAt, status, sortOrder, publishedAt])
+  @@index([categoryId, deletedAt, status, sortOrder, publishedAt])
+  @@index([deletedAt, updatedAt])
   @@map("posts")
 }
 
@@ -224,6 +234,7 @@ model CourseRegistration {
   @@index([courseId])
   @@index([email])
   @@index([status, createdAt])
+  @@index([courseId, status, createdAt])
   @@map("course_registrations")
 }
 
@@ -327,6 +338,7 @@ model AdminSession {
 
   @@index([userId])
   @@index([expiresAt])
+  @@index([userId, expiresAt])
   @@map("admin_sessions")
 }
 
