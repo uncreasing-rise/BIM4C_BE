@@ -21,7 +21,7 @@ npm run start:dev
 
 ## Environment variables
 
-`DATABASE_URL` is required. `PORT`, `FRONTEND_URL`, `CORS_ORIGINS`, `RATE_LIMIT_TTL_MS` and `RATE_LIMIT_MAX` have explicit development defaults in `.env.example`. `CORS_ORIGINS` accepts a comma-separated allowlist. No secret is exposed to FE.
+`DATABASE_URL` is required. Keep `connection_limit` small when using a hosted PostgreSQL pooler (the example uses `5`); for Supabase production, prefer the transaction pooler on port `6543` and set `pgbouncer=true` when required by the pooler version. `PORT`, `FRONTEND_URL`, `CORS_ORIGINS`, `RATE_LIMIT_TTL_MS` and `RATE_LIMIT_MAX` have explicit development defaults in `.env.example`. `CORS_ORIGINS` accepts a comma-separated allowlist. No secret is exposed to FE.
 
 ## Database
 

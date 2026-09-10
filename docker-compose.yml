@@ -19,7 +19,7 @@ services:
     environment:
       NODE_ENV: development
       PORT: 8080
-      DATABASE_URL: postgresql://bim4c:${POSTGRES_PASSWORD:-bim4c_dev}@postgres:5432/bim4c?schema=public
+      DATABASE_URL: postgresql://bim4c:${POSTGRES_PASSWORD:-bim4c_dev}@postgres:5432/bim4c?schema=public&connection_limit=5&pool_timeout=20
       FRONTEND_URL: http://localhost:3000
       CORS_ORIGINS: http://localhost:3000
       RATE_LIMIT_TTL_MS: 60000
