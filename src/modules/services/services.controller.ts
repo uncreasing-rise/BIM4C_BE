@@ -1,7 +1,8 @@
-import { Controller, Get, Header, Param } from '@nestjs/common';
+import { Controller, Get, Header, Param, Query } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ServicesService } from './services.service';
 import { SlugPipe } from '../../common/pipes/slug.pipe';
+import { PageQueryDto } from '../../common/pagination/page-query.dto';
 @ApiTags('services')
 @Controller('services')
 export class ServicesController {
@@ -12,8 +13,8 @@ export class ServicesController {
     'public, max-age=60, s-maxage=600, stale-while-revalidate=60',
   )
   @ApiOkResponse()
-  findAll() {
-    return this.service.findAll();
+  findAll(@Query() query: PageQueryDto) {
+    return this.service.findAll(query);
   }
   @Get(':slug')
   @Header(
