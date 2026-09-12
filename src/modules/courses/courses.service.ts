@@ -14,7 +14,7 @@ export class CoursesService {
       this.prisma.course.findMany({ where, include: { curriculum: { orderBy: { sortOrder: 'asc' } } }, skip: (query.page - 1) * query.limit, take: query.limit, orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }] }),
       this.prisma.course.count({ where }),
     ]);
-    return pageResponse(rows.map((row) => ({ ...mapContent(row), curriculum: row.curriculum, duration: row.duration, level: row.level, price: row.price, instructor: row.instructor, learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [] })), total, query.page, query.limit);
+    return pageResponse(rows.map((row) => ({ ...this.mapCourse(row), curriculum: row.curriculum })), total, query.page, query.limit);
   }
   async findBySlug(
     slug: string,
@@ -24,6 +24,9 @@ export class CoursesService {
       include: { curriculum: { orderBy: { sortOrder: 'asc' } } },
     });
     if (!row) throw new NotFoundException('Course not found');
-    return { ...mapContent(row), curriculum: row.curriculum, duration: row.duration, level: row.level, price: row.price, instructor: row.instructor, learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [] };
+    return { ...this.mapCourse(row), curriculum: row.curriculum };
+  }
+  private mapCourse(row: any) {
+    return { ...mapContent(row), duration: row.duration, duration_vi: row.duration_vi, level: row.level, level_vi: row.level_vi, price: row.price, price_vi: row.price_vi, instructor: row.instructor, instructor_vi: row.instructor_vi, learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [], learningOutcomes_vi: Array.isArray(row.learningOutcomes_vi) ? row.learningOutcomes_vi : [] };
   }
 }

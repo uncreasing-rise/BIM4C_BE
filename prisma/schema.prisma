@@ -22,24 +22,38 @@ model Project {
   id                 String          @id @default(uuid()) @db.Uuid
   slug               String          @unique @db.VarChar(180)
   title              String          @db.VarChar(240)
+  title_vi           String?         @db.VarChar(240)
   description        String          @db.VarChar(1000)
+  description_vi     String?         @db.VarChar(1000)
   image              String          @db.VarChar(500)
   eyebrow            String          @db.VarChar(160)
+  eyebrow_vi         String?         @db.VarChar(160)
   meta               String?         @db.VarChar(240)
+  meta_vi            String?         @db.VarChar(240)
   highlights         Json
+  highlights_vi      Json?
   sections           Json
+  sections_vi        Json?
   contentBlocks      Json?           @map("content_blocks")
+  contentBlocks_vi   Json?           @map("content_blocks_vi")
   seoTitle           String?         @map("seo_title") @db.VarChar(240)
+  seoTitle_vi        String?         @db.VarChar(240)
   seoDescription     String?         @map("seo_description") @db.VarChar(1000)
+  seoDescription_vi  String?         @db.VarChar(1000)
   seoImage           String?         @map("seo_image") @db.VarChar(500)
   canonicalUrl       String?         @map("canonical_url") @db.VarChar(1000)
   relatedIds         Json?           @map("related_ids")
   location           String          @db.VarChar(180)
+  location_vi        String?         @db.VarChar(180)
   year               Int
   investor           String?         @db.VarChar(1000)
+  investor_vi        String?         @db.VarChar(1000)
   expectedCompletion String?         @map("expected_completion") @db.VarChar(180)
+  expectedCompletion_vi String?      @db.VarChar(180)
   scale              String?         @db.VarChar(2000)
+  scale_vi           String?         @db.VarChar(2000)
   contractPackage    String?         @map("contract_package") @db.VarChar(500)
+  contractPackage_vi String?         @db.VarChar(500)
   status             ProjectStatus   @default(DRAFT)
   isFeatured         Boolean         @default(false) @map("is_featured")
   sortOrder          Int             @default(0) @map("sort_order")
@@ -77,15 +91,24 @@ model Service {
   id             String        @id @default(uuid()) @db.Uuid
   slug           String        @unique @db.VarChar(180)
   title          String        @db.VarChar(240)
+  title_vi       String?       @db.VarChar(240)
   description    String        @db.VarChar(1000)
+  description_vi String?       @db.VarChar(1000)
   image          String        @db.VarChar(500)
   eyebrow        String        @db.VarChar(160)
+  eyebrow_vi     String?       @db.VarChar(160)
   meta           String?       @db.VarChar(240)
+  meta_vi        String?       @db.VarChar(240)
   highlights     Json
+  highlights_vi  Json?
   sections       Json
+  sections_vi    Json?
   contentBlocks  Json?         @map("content_blocks")
+  contentBlocks_vi Json?       @map("content_blocks_vi")
   seoTitle       String?       @map("seo_title") @db.VarChar(240)
+  seoTitle_vi    String?       @db.VarChar(240)
   seoDescription String?       @map("seo_description") @db.VarChar(1000)
+  seoDescription_vi String?    @db.VarChar(1000)
   seoImage       String?       @map("seo_image") @db.VarChar(500)
   canonicalUrl   String?       @map("canonical_url") @db.VarChar(1000)
   relatedIds     Json?         @map("related_ids")
@@ -106,23 +129,37 @@ model Course {
   id               String               @id @default(uuid()) @db.Uuid
   slug             String               @unique @db.VarChar(180)
   title            String               @db.VarChar(240)
+  title_vi         String?              @db.VarChar(240)
   description      String               @db.VarChar(1000)
+  description_vi   String?              @db.VarChar(1000)
   image            String               @db.VarChar(500)
   eyebrow          String               @db.VarChar(160)
+  eyebrow_vi       String?              @db.VarChar(160)
   meta             String?              @db.VarChar(240)
+  meta_vi          String?              @db.VarChar(240)
   highlights       Json
+  highlights_vi    Json?
   sections         Json
+  sections_vi      Json?
   contentBlocks    Json?                @map("content_blocks")
+  contentBlocks_vi Json?                @map("content_blocks_vi")
   seoTitle         String?              @map("seo_title") @db.VarChar(240)
+  seoTitle_vi      String?              @db.VarChar(240)
   seoDescription   String?              @map("seo_description") @db.VarChar(1000)
+  seoDescription_vi String?             @db.VarChar(1000)
   seoImage         String?              @map("seo_image") @db.VarChar(500)
   canonicalUrl     String?              @map("canonical_url") @db.VarChar(1000)
   relatedIds       Json?                @map("related_ids")
   duration         String?              @db.VarChar(160)
+  duration_vi      String?              @db.VarChar(160)
   level            String?              @db.VarChar(160)
+  level_vi         String?              @db.VarChar(160)
   price            String?              @db.VarChar(160)
+  price_vi         String?              @db.VarChar(160)
   instructor       String?              @db.VarChar(240)
+  instructor_vi    String?              @db.VarChar(240)
   learningOutcomes Json?                @map("learning_outcomes")
+  learningOutcomes_vi Json?
   status           ContentStatus        @default(DRAFT)
   sortOrder        Int                  @default(0) @map("sort_order")
   publishedAt      DateTime?            @map("published_at") @db.Timestamptz(3)
@@ -165,15 +202,24 @@ model Post {
   id             String        @id @default(uuid()) @db.Uuid
   slug           String        @unique @db.VarChar(180)
   title          String        @db.VarChar(240)
+  title_vi       String?       @db.VarChar(240)
   description    String        @db.VarChar(1000)
+  description_vi String?       @db.VarChar(1000)
   image          String        @db.VarChar(500)
   eyebrow        String        @db.VarChar(160)
+  eyebrow_vi     String?       @db.VarChar(160)
   meta           String?       @db.VarChar(240)
+  meta_vi        String?       @db.VarChar(240)
   highlights     Json
+  highlights_vi  Json?
   sections       Json
+  sections_vi    Json?
   contentBlocks  Json?         @map("content_blocks")
+  contentBlocks_vi Json?       @map("content_blocks_vi")
   seoTitle       String?       @map("seo_title") @db.VarChar(240)
+  seoTitle_vi    String?       @db.VarChar(240)
   seoDescription String?       @map("seo_description") @db.VarChar(1000)
+  seoDescription_vi String?    @db.VarChar(1000)
   seoImage       String?       @map("seo_image") @db.VarChar(500)
   canonicalUrl   String?       @map("canonical_url") @db.VarChar(1000)
   relatedIds     Json?         @map("related_ids")

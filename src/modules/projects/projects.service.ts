@@ -13,11 +13,16 @@ import type { ProjectQueryDto } from './project-query.dto';
 export interface ProjectResponse extends ContentResponse {
   category: { id: string; name: string; slug: string };
   location: string;
+  location_vi: string | null;
   year: number;
   investor: string | null;
+  investor_vi: string | null;
   expectedCompletion: string | null;
+  expectedCompletion_vi: string | null;
   scale: string | null;
+  scale_vi: string | null;
   contractPackage: string | null;
+  contractPackage_vi: string | null;
   status: string;
   gallery: {
     id: string;
@@ -45,11 +50,16 @@ export class ProjectsService {
       ...mapContent(row),
       category: row.category,
       location: row.location,
+      location_vi: row.location_vi,
       year: row.year,
       investor: row.investor,
+      investor_vi: row.investor_vi,
       expectedCompletion: row.expectedCompletion,
+      expectedCompletion_vi: row.expectedCompletion_vi,
       scale: row.scale,
+      scale_vi: row.scale_vi,
       contractPackage: row.contractPackage,
+      contractPackage_vi: row.contractPackage_vi,
       status: publicStatus(row.status),
       gallery: row.images,
     };

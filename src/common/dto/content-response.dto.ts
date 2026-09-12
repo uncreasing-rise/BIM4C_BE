@@ -28,15 +28,24 @@ export interface ContentResponse {
   id: string;
   slug: string;
   title: string;
+  title_vi?: string | null;
   description: string;
+  description_vi?: string | null;
   image: string;
   eyebrow: string;
+  eyebrow_vi?: string | null;
   meta: string | null;
+  meta_vi?: string | null;
   highlights: string[];
+  highlights_vi?: string[];
   sections: ContentSection[];
+  sections_vi?: ContentSection[];
   contentBlocks?: ContentBlock[];
+  contentBlocks_vi?: ContentBlock[];
   seoTitle: string | null;
+  seoTitle_vi?: string | null;
   seoDescription: string | null;
+  seoDescription_vi?: string | null;
   seoImage: string | null;
   canonicalUrl: string | null;
   relatedIds: string[];
@@ -47,18 +56,27 @@ export interface ContentResponse {
 }
 interface ContentRecord extends Omit<
   ContentResponse,
-  'highlights' | 'sections' | 'contentBlocks' | 'relatedIds' | 'status' | 'publishedAt' | 'createdAt' | 'updatedAt' | 'seoTitle' | 'seoDescription' | 'seoImage' | 'canonicalUrl'
+  'highlights' | 'sections' | 'contentBlocks' | 'relatedIds' | 'status' | 'publishedAt' | 'createdAt' | 'updatedAt' | 'seoTitle' | 'seoDescription' | 'seoImage' | 'canonicalUrl' | 'highlights_vi' | 'sections_vi' | 'contentBlocks_vi'
 > {
+  title_vi?: string | null;
+  description_vi?: string | null;
+  eyebrow_vi?: string | null;
+  meta_vi?: string | null;
   highlights: Prisma.JsonValue;
+  highlights_vi?: Prisma.JsonValue | null;
   sections: Prisma.JsonValue;
+  sections_vi?: Prisma.JsonValue | null;
   contentBlocks?: Prisma.JsonValue | null;
+  contentBlocks_vi?: Prisma.JsonValue | null;
   relatedIds?: Prisma.JsonValue | null;
   status?: string;
   publishedAt?: Date | null;
   createdAt?: Date;
   updatedAt?: Date;
   seoTitle?: string | null;
+  seoTitle_vi?: string | null;
   seoDescription?: string | null;
+  seoDescription_vi?: string | null;
   seoImage?: string | null;
   canonicalUrl?: string | null;
 }
@@ -105,15 +123,24 @@ export function mapContent(record: ContentRecord): ContentResponse {
     id: record.id,
     slug: record.slug,
     title: record.title,
+    ...(record.title_vi ? { title_vi: record.title_vi } : {}),
     description: record.description,
+    ...(record.description_vi ? { description_vi: record.description_vi } : {}),
     image: record.image,
     eyebrow: record.eyebrow,
+    ...(record.eyebrow_vi ? { eyebrow_vi: record.eyebrow_vi } : {}),
     meta: record.meta,
+    ...(record.meta_vi ? { meta_vi: record.meta_vi } : {}),
     highlights: record.highlights,
+    ...(Array.isArray(record.highlights_vi) ? { highlights_vi: record.highlights_vi.filter(stringValue) as string[] } : {}),
     sections: record.sections as unknown as ContentSection[],
+    ...(Array.isArray(record.sections_vi) ? { sections_vi: record.sections_vi.filter(isSection) as unknown as ContentSection[] } : {}),
     ...(record.contentBlocks == null ? {} : { contentBlocks }),
+    ...(Array.isArray(record.contentBlocks_vi) ? { contentBlocks_vi: record.contentBlocks_vi.filter(isContentBlock) as ContentBlock[] } : {}),
     seoTitle: record.seoTitle ?? null,
+    ...(record.seoTitle_vi ? { seoTitle_vi: record.seoTitle_vi } : {}),
     seoDescription: record.seoDescription ?? null,
+    ...(record.seoDescription_vi ? { seoDescription_vi: record.seoDescription_vi } : {}),
     seoImage: record.seoImage ?? null,
     canonicalUrl: record.canonicalUrl ?? null,
     relatedIds,

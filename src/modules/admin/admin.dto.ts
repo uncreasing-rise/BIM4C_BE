@@ -95,24 +95,32 @@ export class ContentSectionDto {
 export class CreateContentDto {
   @Transform(trim) @IsString() @MinLength(2) @MaxLength(180) slug!: string;
   @Transform(trim) @IsString() @MinLength(2) @MaxLength(240) title!: string;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) title_vi?: string | null;
   @Transform(trim)
   @IsString()
   @MinLength(2)
   @MaxLength(1000)
   description!: string;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) description_vi?: string | null;
   @Transform(trim) @IsString() @MinLength(1) @MaxLength(500) image!: string;
   @Transform(trim) @IsString() @MinLength(1) @MaxLength(160) eyebrow!: string;
-  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) meta?:
-    string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(160) eyebrow_vi?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) meta?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) meta_vi?: string | null;
   @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) highlights!: string[];
+  @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) highlights_vi?: string[];
   @IsArray()
   @ArrayMaxSize(100)
   @ValidateNested({ each: true })
   @Type(() => ContentSectionDto)
   sections!: ContentSectionDto[];
   @IsOptional() @IsArray() @ArrayMaxSize(100) contentBlocks?: unknown[];
+  @IsOptional() @IsArray() @ArrayMaxSize(100) sections_vi?: ContentSectionDto[];
+  @IsOptional() @IsArray() @ArrayMaxSize(100) contentBlocks_vi?: unknown[];
   @IsOptional() @Transform(trim) @IsString() @MaxLength(240) seoTitle?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) seoTitle_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) seoDescription?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) seoDescription_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(500) seoImage?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) canonicalUrl?: string | null;
   @IsOptional() @IsArray() @ArrayMaxSize(24) @IsUUID('4', { each: true }) relatedIds?: string[];
@@ -124,10 +132,15 @@ export class UpdateContentDto extends PartialType(CreateContentDto) {}
 
 export class CreateCourseDto extends CreateContentDto {
   @IsOptional() @Transform(trim) @IsString() @MaxLength(160) duration?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(160) duration_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(160) level?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(160) level_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(160) price?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(160) price_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(240) instructor?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) instructor_vi?: string | null;
   @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) learningOutcomes?: string[];
+  @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) learningOutcomes_vi?: string[];
 }
 export class UpdateCourseDto extends PartialType(CreateCourseDto) {}
 
@@ -136,18 +149,23 @@ export class CreateProjectDto extends OmitType(CreateContentDto, [
 ] as const) {
   @IsUUID() categoryId!: string;
   @Transform(trim) @IsString() @MinLength(2) @MaxLength(180) location!: string;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(180) location_vi?: string | null;
   @IsInt() @Min(1900) @Max(2200) year!: number;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) investor?:
     string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) investor_vi?: string | null;
   @IsOptional()
   @Transform(trim)
   @IsString()
   @MaxLength(180)
   expectedCompletion?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(180) expectedCompletion_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(2000) scale?:
     string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(2000) scale_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(500) contractPackage?:
     string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(500) contractPackage_vi?: string | null;
   @IsOptional() @IsEnum(ProjectStatus) status?: ProjectStatus;
   @IsOptional() @IsBoolean() isFeatured?: boolean;
 }

@@ -155,6 +155,8 @@ export class AdminService {
     }
     if ('contentBlocks' in data && (!Array.isArray(data.contentBlocks) || !data.contentBlocks.every(isContentBlock)))
       throw new UnprocessableEntityException('Invalid content blocks');
+    if ('contentBlocks_vi' in data && data.contentBlocks_vi != null && (!Array.isArray(data.contentBlocks_vi) || !data.contentBlocks_vi.every(isContentBlock)))
+      throw new UnprocessableEntityException('Invalid Vietnamese content blocks');
     if ('relatedIds' in data && (!Array.isArray(data.relatedIds) || !data.relatedIds.every((id: unknown) => typeof id === 'string')))
       throw new UnprocessableEntityException('Invalid related content IDs');
     if ('learningOutcomes' in data && (!Array.isArray(data.learningOutcomes) || !data.learningOutcomes.every((item: unknown) => typeof item === 'string')))
