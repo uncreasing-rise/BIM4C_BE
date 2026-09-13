@@ -153,13 +153,13 @@ export class AdminService {
       if (typeof data[field] === 'string' && data[field] && !safeReference(data[field]))
         throw new UnprocessableEntityException(`Invalid ${field}`);
     }
-    if ('contentBlocks' in data && (!Array.isArray(data.contentBlocks) || !data.contentBlocks.every(isContentBlock)))
+    if ('contentBlocks' in data && data.contentBlocks != null && (!Array.isArray(data.contentBlocks) || !data.contentBlocks.every(isContentBlock)))
       throw new UnprocessableEntityException('Invalid content blocks');
     if ('contentBlocks_vi' in data && data.contentBlocks_vi != null && (!Array.isArray(data.contentBlocks_vi) || !data.contentBlocks_vi.every(isContentBlock)))
       throw new UnprocessableEntityException('Invalid Vietnamese content blocks');
-    if ('relatedIds' in data && (!Array.isArray(data.relatedIds) || !data.relatedIds.every((id: unknown) => typeof id === 'string')))
+    if ('relatedIds' in data && data.relatedIds != null && (!Array.isArray(data.relatedIds) || !data.relatedIds.every((id: unknown) => typeof id === 'string')))
       throw new UnprocessableEntityException('Invalid related content IDs');
-    if ('learningOutcomes' in data && (!Array.isArray(data.learningOutcomes) || !data.learningOutcomes.every((item: unknown) => typeof item === 'string')))
+    if ('learningOutcomes' in data && data.learningOutcomes != null && (!Array.isArray(data.learningOutcomes) || !data.learningOutcomes.every((item: unknown) => typeof item === 'string')))
       throw new UnprocessableEntityException('Invalid learning outcomes');
     if ('publishedAt' in data)
       data.publishedAt = data.publishedAt ? new Date(data.publishedAt) : null;

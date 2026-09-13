@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ContentStatus, Prisma } from '@prisma/client';
+import { ContentStatus, Course, Prisma } from '@prisma/client';
 import {
   mapContent,
 } from '../../common/dto/content-response.dto';
@@ -26,7 +26,7 @@ export class CoursesService {
     if (!row) throw new NotFoundException('Course not found');
     return { ...this.mapCourse(row), curriculum: row.curriculum };
   }
-  private mapCourse(row: any) {
+  private mapCourse(row: Course) {
     return { ...mapContent(row), duration: row.duration, duration_vi: row.duration_vi, level: row.level, level_vi: row.level_vi, price: row.price, price_vi: row.price_vi, instructor: row.instructor, instructor_vi: row.instructor_vi, learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [], learningOutcomes_vi: Array.isArray(row.learningOutcomes_vi) ? row.learningOutcomes_vi : [] };
   }
 }

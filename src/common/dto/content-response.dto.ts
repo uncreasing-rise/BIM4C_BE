@@ -132,7 +132,7 @@ export function mapContent(record: ContentRecord): ContentResponse {
     meta: record.meta,
     ...(record.meta_vi ? { meta_vi: record.meta_vi } : {}),
     highlights: record.highlights,
-    ...(Array.isArray(record.highlights_vi) ? { highlights_vi: record.highlights_vi.filter(stringValue) as string[] } : {}),
+    ...(Array.isArray(record.highlights_vi) ? { highlights_vi: record.highlights_vi.filter(stringValue) } : {}),
     sections: record.sections as unknown as ContentSection[],
     ...(Array.isArray(record.sections_vi) ? { sections_vi: record.sections_vi.filter(isSection) as unknown as ContentSection[] } : {}),
     ...(record.contentBlocks == null ? {} : { contentBlocks }),
