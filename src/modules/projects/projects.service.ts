@@ -14,7 +14,7 @@ export interface ProjectResponse extends ContentResponse {
   category: { id: string; name: string; slug: string };
   location: string;
   location_vi: string | null;
-  year: number;
+  year: number | null;
   investor: string | null;
   investor_vi: string | null;
   expectedCompletion: string | null;
@@ -33,6 +33,7 @@ export interface ProjectResponse extends ContentResponse {
   }[];
 }
 const statusMap: Record<string, ProjectStatus> = {
+  profiled: ProjectStatus.PROFILED,
   planned: ProjectStatus.PLANNED,
   in_progress: ProjectStatus.IN_PROGRESS,
   completed: ProjectStatus.COMPLETED,
@@ -73,17 +74,18 @@ export class ProjectsService {
         ? statusMap[query.status]
         : {
             in: [
+              ProjectStatus.PROFILED,
               ProjectStatus.PLANNED,
               ProjectStatus.IN_PROGRESS,
               ProjectStatus.COMPLETED,
             ],
           },
       ...(query.search
-        ? { title: { contains: query.search, mode: 'insensitive' } }
+        ? { OR: [{ title: { contains: query.search, mode: 'insensitive' } }, { title_vi: { contains: query.search, mode: 'insensitive' } }, { description: { contains: query.search, mode: 'insensitive' } }, { description_vi: { contains: query.search, mode: 'insensitive' } }] }
         : {}),
       ...(query.category ? { category: { slug: query.category } } : {}),
       ...(query.location
-        ? { location: { contains: query.location, mode: 'insensitive' } }
+        ? { AND: [{ OR: [{ location: { contains: query.location, mode: 'insensitive' } }, { location_vi: { contains: query.location, mode: 'insensitive' } }] }] }
         : {}),
       ...(query.year ? { year: query.year } : {}),
     };
@@ -111,7 +113,8 @@ export class ProjectsService {
         deletedAt: null,
         status: {
           in: [
-            ProjectStatus.PLANNED,
+            ProjectStatus.PROFILED,
+              ProjectStatus.PLANNED,
             ProjectStatus.IN_PROGRESS,
             ProjectStatus.COMPLETED,
           ],

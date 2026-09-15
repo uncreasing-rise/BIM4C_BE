@@ -9,7 +9,7 @@ import { pageResponse, type PageQueryDto, type PageResponse } from '../../common
 export class CoursesService {
   constructor(private readonly prisma: PrismaService) {}
   async findAll(query: PageQueryDto): Promise<PageResponse<unknown>> {
-    const where: Prisma.CourseWhereInput = { status: ContentStatus.PUBLISHED, deletedAt: null, ...(query.search ? { title: { contains: query.search, mode: 'insensitive' } } : {}), ...(query.category ? { category: { slug: query.category } } : {}) };
+    const where: Prisma.CourseWhereInput = { status: ContentStatus.PUBLISHED, deletedAt: null, ...(query.search ? { OR: [{ title: { contains: query.search, mode: 'insensitive' } }, { title_vi: { contains: query.search, mode: 'insensitive' } }, { description: { contains: query.search, mode: 'insensitive' } }, { description_vi: { contains: query.search, mode: 'insensitive' } }] } : {}) };
     const [rows, total] = await this.prisma.$transaction([
       this.prisma.course.findMany({ where, include: { curriculum: { orderBy: { sortOrder: 'asc' } } }, skip: (query.page - 1) * query.limit, take: query.limit, orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }] }),
       this.prisma.course.count({ where }),

@@ -45,7 +45,7 @@ model Project {
   relatedIds         Json?           @map("related_ids")
   location           String          @db.VarChar(180)
   location_vi        String?         @db.VarChar(180)
-  year               Int
+  year               Int?
   investor           String?         @db.VarChar(1000)
   investor_vi        String?         @db.VarChar(1000)
   expectedCompletion String?         @map("expected_completion") @db.VarChar(180)
@@ -428,6 +428,7 @@ enum ContentStatus {
 }
 
 enum ProjectStatus {
+  PROFILED
   DRAFT
   PLANNED
   IN_PROGRESS

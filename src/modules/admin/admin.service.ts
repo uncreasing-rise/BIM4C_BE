@@ -68,6 +68,7 @@ export class AdminService {
         domain === 'project' && status === 'PUBLISHED'
           ? {
               in: [
+                ProjectStatus.PROFILED,
                 ProjectStatus.PLANNED,
                 ProjectStatus.IN_PROGRESS,
                 ProjectStatus.COMPLETED,
@@ -166,7 +167,7 @@ export class AdminService {
     if (data.status === ContentStatus.PUBLISHED && !data.publishedAt)
       data.publishedAt = new Date();
     if (domain === 'project' && data.status === 'PUBLISHED')
-      data.status = ProjectStatus.PLANNED;
+      data.status = ProjectStatus.PROFILED;
     return data;
   }
   async remove(domain: Domain, id: string) {
@@ -214,7 +215,7 @@ export class AdminService {
           : input.action === 'unpublish'
             ? { status: 'DRAFT', publishedAt: null }
             : {
-                status: project ? 'PLANNED' : 'PUBLISHED',
+                status: project ? 'PROFILED' : 'PUBLISHED',
                 publishedAt: new Date(),
               };
     const result = await delegate.updateMany({

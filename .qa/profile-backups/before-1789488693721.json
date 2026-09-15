@@ -1,0 +1,3150 @@
+{
+  "capturedAt": "2026-09-15T16:11:26.081Z",
+  "version": "2026-09-15",
+  "projects": [
+    {
+      "id": "ffdb78f1-065d-47e1-ac76-4e9c1380d4e6",
+      "slug": "the-matrix-one-giai-doan-2",
+      "title": "The Matrix One - Giai đoạn 2",
+      "title_vi": "The Matrix One - Giai đoạn 2",
+      "description": "The Matrix One - Giai đoạn 2 ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "description_vi": "The Matrix One - Giai đoạn 2 ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "image": "/images/project-matrix.jpg",
+      "eyebrow": "DỰ ÁN BIM4C",
+      "eyebrow_vi": "DỰ ÁN BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "highlights_vi": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "sections": [
+        {
+          "body": "The Matrix One - Giai đoạn 2 được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "The Matrix One - Giai đoạn 2 được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "location": "Hà Nội",
+      "location_vi": "Hà Nội",
+      "year": 2026,
+      "investor": null,
+      "investor_vi": null,
+      "expectedCompletion": null,
+      "expectedCompletion_vi": null,
+      "scale": null,
+      "scale_vi": null,
+      "contractPackage": null,
+      "contractPackage_vi": null,
+      "status": "IN_PROGRESS",
+      "isFeatured": true,
+      "sortOrder": 1,
+      "categoryId": "7da255e7-3cfa-4f5e-b389-17c5b3fe2ef4",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:33.684Z",
+      "updatedAt": "2026-08-25T09:36:25.126Z",
+      "deletedAt": null,
+      "images": []
+    },
+    {
+      "id": "d12a302a-6108-44d5-917a-550cac23392a",
+      "slug": "elysian",
+      "title": "Elysian",
+      "title_vi": "Elysian",
+      "description": "Elysian ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "description_vi": "Elysian ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "image": "/images/project-elysian.jpg",
+      "eyebrow": "DỰ ÁN BIM4C",
+      "eyebrow_vi": "DỰ ÁN BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "highlights_vi": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "sections": [
+        {
+          "body": "Elysian được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Elysian được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "location": "TP. Hồ Chí Minh",
+      "location_vi": "TP. Hồ Chí Minh",
+      "year": 2025,
+      "investor": null,
+      "investor_vi": null,
+      "expectedCompletion": null,
+      "expectedCompletion_vi": null,
+      "scale": null,
+      "scale_vi": null,
+      "contractPackage": null,
+      "contractPackage_vi": null,
+      "status": "COMPLETED",
+      "isFeatured": true,
+      "sortOrder": 2,
+      "categoryId": "7da255e7-3cfa-4f5e-b389-17c5b3fe2ef4",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:34.653Z",
+      "updatedAt": "2026-08-25T09:36:25.260Z",
+      "deletedAt": null,
+      "images": []
+    },
+    {
+      "id": "f674619e-f09f-4574-a6cd-8412dc85b079",
+      "slug": "lumi-hanoi",
+      "title": "Lumi Hanoi",
+      "title_vi": "Lumi Hanoi",
+      "description": "Lumi Hanoi ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "description_vi": "Lumi Hanoi ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "image": "/images/project-lumi.jpg",
+      "eyebrow": "DỰ ÁN BIM4C",
+      "eyebrow_vi": "DỰ ÁN BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "highlights_vi": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "sections": [
+        {
+          "body": "Lumi Hanoi được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Lumi Hanoi được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "location": "Hà Nội",
+      "location_vi": "Hà Nội",
+      "year": 2025,
+      "investor": null,
+      "investor_vi": null,
+      "expectedCompletion": null,
+      "expectedCompletion_vi": null,
+      "scale": null,
+      "scale_vi": null,
+      "contractPackage": null,
+      "contractPackage_vi": null,
+      "status": "IN_PROGRESS",
+      "isFeatured": true,
+      "sortOrder": 0,
+      "categoryId": "7da255e7-3cfa-4f5e-b389-17c5b3fe2ef4",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:32.129Z",
+      "updatedAt": "2026-08-25T09:36:24.861Z",
+      "deletedAt": null,
+      "images": []
+    },
+    {
+      "id": "8bd888f6-8906-4a76-9052-08c615ac6699",
+      "slug": "metro-depot-digital-coordination",
+      "title": "Metro Depot Digital Coordination",
+      "title_vi": "Metro Depot Digital Coordination",
+      "description": "Metro Depot Digital Coordination ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "description_vi": "Metro Depot Digital Coordination ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "image": "/images/news-digital-twin.webp",
+      "eyebrow": "DỰ ÁN BIM4C",
+      "eyebrow_vi": "DỰ ÁN BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "highlights_vi": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "sections": [
+        {
+          "body": "Metro Depot Digital Coordination được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Metro Depot Digital Coordination được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "location": "TP. Hồ Chí Minh",
+      "location_vi": "TP. Hồ Chí Minh",
+      "year": 2026,
+      "investor": null,
+      "investor_vi": null,
+      "expectedCompletion": null,
+      "expectedCompletion_vi": null,
+      "scale": null,
+      "scale_vi": null,
+      "contractPackage": null,
+      "contractPackage_vi": null,
+      "status": "IN_PROGRESS",
+      "isFeatured": false,
+      "sortOrder": 7,
+      "categoryId": "a8e48933-d2aa-4e7c-a337-a7f2f38d65da",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:10.763Z",
+      "updatedAt": "2026-08-25T09:36:25.930Z",
+      "deletedAt": null,
+      "images": []
+    },
+    {
+      "id": "1b032f22-a4b9-485f-85b1-daa755bf0f54",
+      "slug": "tt-avio",
+      "title": "TT Avio",
+      "title_vi": "TT Avio",
+      "description": "TT Avio ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "description_vi": "TT Avio ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "image": "/images/hero.jpg",
+      "eyebrow": "DỰ ÁN BIM4C",
+      "eyebrow_vi": "DỰ ÁN BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "highlights_vi": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "sections": [
+        {
+          "body": "TT Avio được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "TT Avio được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "location": "Đường DT743A, P. Tân Đông Hiệp, TP. Dĩ An, tỉnh Bình Dương",
+      "location_vi": "Đường DT743A, P. Tân Đông Hiệp, TP. Dĩ An, tỉnh Bình Dương",
+      "year": 2026,
+      "investor": "Đơn vị Đầu Tư & Phát Triển liên doanh Nhật Bản Cosmos Initia - TT Capital – Koterasu Partner",
+      "investor_vi": "Đơn vị Đầu Tư & Phát Triển liên doanh Nhật Bản Cosmos Initia - TT Capital – Koterasu Partner",
+      "expectedCompletion": "N/a",
+      "expectedCompletion_vi": null,
+      "scale": "Diện tích khu đất: 1,6 ha gồm 2 tháp với 2 hầm chung, Tháp A: 30 tầng, Tháp B: 37 tầng",
+      "scale_vi": "Diện tích khu đất: 1,6 ha gồm 2 tháp với 2 hầm chung, Tháp A: 30 tầng, Tháp B: 37 tầng",
+      "contractPackage": "Tổng thầu thi công",
+      "contractPackage_vi": null,
+      "status": "IN_PROGRESS",
+      "isFeatured": false,
+      "sortOrder": 3,
+      "categoryId": "7da255e7-3cfa-4f5e-b389-17c5b3fe2ef4",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:35.621Z",
+      "updatedAt": "2026-08-25T09:36:25.394Z",
+      "deletedAt": null,
+      "images": []
+    },
+    {
+      "id": "af3c39e6-deff-41f8-aaae-3179ac434dbf",
+      "slug": "central-park-residences",
+      "title": "Central Park Residences",
+      "title_vi": "Central Park Residences",
+      "description": "Central Park Residences ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "description_vi": "Central Park Residences ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "image": "/images/about.jpg",
+      "eyebrow": "DỰ ÁN BIM4C",
+      "eyebrow_vi": "DỰ ÁN BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "highlights_vi": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "sections": [
+        {
+          "body": "Central Park Residences được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Central Park Residences được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "location": "Nghệ An",
+      "location_vi": "Nghệ An",
+      "year": 2025,
+      "investor": null,
+      "investor_vi": null,
+      "expectedCompletion": null,
+      "expectedCompletion_vi": null,
+      "scale": null,
+      "scale_vi": null,
+      "contractPackage": null,
+      "contractPackage_vi": null,
+      "status": "COMPLETED",
+      "isFeatured": false,
+      "sortOrder": 4,
+      "categoryId": "a8e48933-d2aa-4e7c-a337-a7f2f38d65da",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:36.590Z",
+      "updatedAt": "2026-08-25T09:36:25.531Z",
+      "deletedAt": null,
+      "images": []
+    },
+    {
+      "id": "25c0ca35-8633-4378-8e9b-376c1943a147",
+      "slug": "northgate-logistics-hub",
+      "title": "Northgate Logistics Hub",
+      "title_vi": "Northgate Logistics Hub",
+      "description": "Northgate Logistics Hub ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "description_vi": "Northgate Logistics Hub ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "image": "/images/news-site-safety.webp",
+      "eyebrow": "DỰ ÁN BIM4C",
+      "eyebrow_vi": "DỰ ÁN BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "highlights_vi": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "sections": [
+        {
+          "body": "Northgate Logistics Hub được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Northgate Logistics Hub được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "location": "Bắc Ninh",
+      "location_vi": "Bắc Ninh",
+      "year": 2026,
+      "investor": null,
+      "investor_vi": null,
+      "expectedCompletion": null,
+      "expectedCompletion_vi": null,
+      "scale": null,
+      "scale_vi": null,
+      "contractPackage": null,
+      "contractPackage_vi": null,
+      "status": "IN_PROGRESS",
+      "isFeatured": false,
+      "sortOrder": 5,
+      "categoryId": "e0825897-0a4c-4be8-b2d9-e9de6baff8c8",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:10.504Z",
+      "updatedAt": "2026-08-25T09:36:25.665Z",
+      "deletedAt": null,
+      "images": []
+    },
+    {
+      "id": "02feba72-5a64-4866-8823-bc0189c2b15e",
+      "slug": "greenfield-smart-factory",
+      "title": "Greenfield Smart Factory",
+      "title_vi": "Greenfield Smart Factory",
+      "description": "Greenfield Smart Factory ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "description_vi": "Greenfield Smart Factory ứng dụng quy trình phối hợp số để kiểm soát thiết kế, thi công, chất lượng và dữ liệu bàn giao xuyên suốt.",
+      "image": "/images/service-design.jpg",
+      "eyebrow": "DỰ ÁN BIM4C",
+      "eyebrow_vi": "DỰ ÁN BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "highlights_vi": [
+        "Phối hợp BIM",
+        "Quản lý thi công",
+        "Kiểm soát chất lượng"
+      ],
+      "sections": [
+        {
+          "body": "Greenfield Smart Factory được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Greenfield Smart Factory được triển khai trong điều kiện nhiều bộ môn cùng phát triển hồ sơ, tiến độ thiết kế thay đổi liên tục và các quyết định kỹ thuật có ảnh hưởng trực tiếp đến thi công. Thách thức không chỉ nằm ở việc tạo mô hình, mà ở khả năng duy trì một nguồn thông tin đáng tin cậy để chủ đầu tư, tư vấn và nhà thầu cùng sử dụng.\n\nNgay từ giai đoạn khởi động, BIM4C cùng ban dự án xác định mục tiêu ứng dụng BIM, ma trận trách nhiệm, mốc trao đổi dữ liệu và tiêu chí chấp nhận cho từng đầu ra. Cách tiếp cận này giúp công nghệ phục vụ đúng nhu cầu điều hành thay vì trở thành một lớp công việc tách rời.",
+          "title": "Bối cảnh dự án"
+        },
+        {
+          "body": "Phạm vi được tổ chức theo các gói công việc có đầu vào, người phê duyệt và thời hạn rõ ràng. Mô hình liên kết được cập nhật theo chu kỳ thống nhất, đi kèm báo cáo chất lượng và danh mục vấn đề để các bên có thể theo dõi toàn bộ lịch sử xử lý.",
+          "title": "Phạm vi BIM4C thực hiện",
+          "unorderedList": [
+            "Rà soát BEP, tiêu chuẩn mô hình và cấu trúc Common Data Environment",
+            "Tổng hợp mô hình kiến trúc, kết cấu và MEP theo đúng hệ tọa độ dự án",
+            "Kiểm tra xung đột, không gian lắp đặt, tiếp cận bảo trì và tính khả thi thi công",
+            "Quản lý issue, biên bản phối hợp và dashboard trạng thái theo từng mốc",
+            "Hỗ trợ hồ sơ thi công, nghiệm thu mô hình và dữ liệu bàn giao"
+          ]
+        },
+        {
+          "body": "Mỗi chu kỳ phối hợp bắt đầu bằng việc kiểm tra tính hợp lệ của dữ liệu đầu vào trước khi chạy các bộ quy tắc chuyên môn. Vấn đề được phân loại theo mức độ ảnh hưởng, vị trí, bộ môn chịu trách nhiệm và thời hạn phản hồi; các xung đột trùng lặp hoặc không có giá trị thi công được loại bỏ để đội ngũ tập trung vào nội dung thực sự quan trọng.\n\nCác phiên coordination không dừng ở việc trình chiếu clash. BIM4C chuẩn bị phương án, dữ liệu liên quan và tác động tiến độ để cuộc họp đi đến quyết định có thể thực thi. Sau cuộc họp, trạng thái được cập nhật trong CDE và kiểm tra lại ở phiên bản kế tiếp.",
+          "title": "Quy trình phối hợp và kiểm soát",
+          "orderedList": [
+            "Kiểm tra và tiếp nhận mô hình",
+            "Phân tích xung đột theo ma trận ưu tiên",
+            "Tổ chức phiên phối hợp liên ngành",
+            "Theo dõi hành động khắc phục",
+            "Xác nhận đóng và phát hành báo cáo"
+          ]
+        },
+        {
+          "body": "Hồ sơ bàn giao được cấu trúc để đội ngũ dự án có thể tiếp tục sử dụng sau khi kết thúc một giai đoạn phối hợp. Ngoài mô hình đã kiểm tra, BIM4C cung cấp báo cáo issue, danh mục thay đổi, tài liệu phương pháp và dữ liệu phục vụ nghiệm thu theo phạm vi được phê duyệt.",
+          "title": "Đầu ra bàn giao",
+          "unorderedList": [
+            "Mô hình liên kết theo mốc phát hành",
+            "Báo cáo QA/QC và clash report có thể truy vết",
+            "Dashboard tiến độ đóng vấn đề",
+            "Biên bản quyết định và danh mục thay đổi",
+            "Bộ dữ liệu bàn giao theo yêu cầu của chủ đầu tư"
+          ]
+        },
+        {
+          "body": "Giá trị lớn nhất đến từ việc vấn đề được nhìn thấy sớm hơn và quyết định được đưa ra trên cùng một nguồn dữ liệu. Điều này giảm nguy cơ sửa đổi tại công trường, hạn chế thời gian chờ giữa các bộ môn và giúp ban điều hành nhận biết khu vực rủi ro trước khi ảnh hưởng đến đường găng.\n\nHiệu quả được đánh giá thông qua các chỉ số như tỷ lệ issue đóng đúng hạn, số xung đột nghiêm trọng còn tồn tại theo từng mốc, thời gian phản hồi và mức độ đầy đủ của dữ liệu bàn giao.",
+          "quote": "Mô hình chỉ tạo ra giá trị khi nó giúp đội ngũ dự án đưa ra quyết định sớm hơn, rõ ràng hơn và có thể kiểm chứng.",
+          "title": "Giá trị đối với dự án"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "location": "Hải Phòng",
+      "location_vi": "Hải Phòng",
+      "year": 2025,
+      "investor": null,
+      "investor_vi": null,
+      "expectedCompletion": null,
+      "expectedCompletion_vi": null,
+      "scale": null,
+      "scale_vi": null,
+      "contractPackage": null,
+      "contractPackage_vi": null,
+      "status": "COMPLETED",
+      "isFeatured": false,
+      "sortOrder": 6,
+      "categoryId": "e0825897-0a4c-4be8-b2d9-e9de6baff8c8",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:10.634Z",
+      "updatedAt": "2026-08-25T09:36:25.798Z",
+      "deletedAt": null,
+      "images": []
+    }
+  ],
+  "services": [
+    {
+      "id": "7f1f4a30-7100-4ae0-a236-5a3d07f7ad20",
+      "slug": "dao-tao",
+      "title": "Đào tạo",
+      "title_vi": "Đào tạo",
+      "description": "Giải pháp đào tạo được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "description_vi": "Giải pháp đào tạo được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "image": "/images/service-training.jpg",
+      "eyebrow": "DỊCH VỤ BIM4C",
+      "eyebrow_vi": "DỊCH VỤ BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Lộ trình theo năng lực",
+        "Bài tập dự án thực tế",
+        "Đánh giá đầu ra"
+      ],
+      "highlights_vi": [
+        "Lộ trình theo năng lực",
+        "Bài tập dự án thực tế",
+        "Đánh giá đầu ra"
+      ],
+      "sections": [
+        {
+          "body": "Đào tạo được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Đào tạo được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "status": "PUBLISHED",
+      "sortOrder": 1,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:29.220Z",
+      "updatedAt": "2026-08-25T09:36:24.191Z",
+      "deletedAt": null
+    },
+    {
+      "id": "5de6e6f2-c8e5-4014-8663-f94babd8cce2",
+      "slug": "thiet-ke",
+      "title": "Thiết kế",
+      "title_vi": "Thiết kế",
+      "description": "Giải pháp thiết kế được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "description_vi": "Giải pháp thiết kế được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "image": "/images/service-design.jpg",
+      "eyebrow": "DỊCH VỤ BIM4C",
+      "eyebrow_vi": "DỊCH VỤ BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Thiết kế đa bộ môn",
+        "Clash Detection",
+        "Hồ sơ đồng bộ"
+      ],
+      "highlights_vi": [
+        "Thiết kế đa bộ môn",
+        "Clash Detection",
+        "Hồ sơ đồng bộ"
+      ],
+      "sections": [
+        {
+          "body": "Thiết kế được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Thiết kế được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "status": "PUBLISHED",
+      "sortOrder": 2,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:30.189Z",
+      "updatedAt": "2026-08-25T09:36:24.328Z",
+      "deletedAt": null
+    },
+    {
+      "id": "dcb83929-f88b-4d19-b7f8-f600bda0212c",
+      "slug": "tu-van-giam-sat",
+      "title": "Tư vấn giám sát",
+      "title_vi": "Tư vấn giám sát",
+      "description": "Giải pháp tư vấn giám sát được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "description_vi": "Giải pháp tư vấn giám sát được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "image": "/images/service-consulting.jpg",
+      "eyebrow": "DỊCH VỤ BIM4C",
+      "eyebrow_vi": "DỊCH VỤ BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Giám sát hiện trường",
+        "Kiểm soát tiến độ",
+        "Báo cáo minh bạch"
+      ],
+      "highlights_vi": [
+        "Giám sát hiện trường",
+        "Kiểm soát tiến độ",
+        "Báo cáo minh bạch"
+      ],
+      "sections": [
+        {
+          "body": "Tư vấn giám sát được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Tư vấn giám sát được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "status": "PUBLISHED",
+      "sortOrder": 3,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:31.160Z",
+      "updatedAt": "2026-08-25T09:36:24.461Z",
+      "deletedAt": null
+    },
+    {
+      "id": "9e6feafa-fb08-4bf9-b716-0b46d142d66d",
+      "slug": "tu-van-bim",
+      "title": "Tư vấn BIM",
+      "title_vi": "Tư vấn BIM",
+      "description": "Giải pháp tư vấn bim được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "description_vi": "Giải pháp tư vấn bim được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "image": "/images/service-bim.jpg",
+      "eyebrow": "DỊCH VỤ BIM4C",
+      "eyebrow_vi": "DỊCH VỤ BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "BIM Execution Plan",
+        "Common Data Environment",
+        "Kiểm soát chất lượng mô hình"
+      ],
+      "highlights_vi": [
+        "BIM Execution Plan",
+        "Common Data Environment",
+        "Kiểm soát chất lượng mô hình"
+      ],
+      "sections": [
+        {
+          "body": "Tư vấn BIM được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Tư vấn BIM được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "status": "PUBLISHED",
+      "sortOrder": 0,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:27.673Z",
+      "updatedAt": "2026-08-25T09:36:23.926Z",
+      "deletedAt": null
+    },
+    {
+      "id": "a67b366d-66ac-4213-9b33-e1de1dec41ce",
+      "slug": "bim-coordination",
+      "title": "BIM Coordination",
+      "title_vi": "BIM Coordination",
+      "description": "Giải pháp bim coordination được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "description_vi": "Giải pháp bim coordination được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "image": "/images/news-project-coordination.webp",
+      "eyebrow": "DỊCH VỤ BIM4C",
+      "eyebrow_vi": "DỊCH VỤ BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Federated Model",
+        "Clash Management",
+        "Issue Tracking"
+      ],
+      "highlights_vi": [
+        "Federated Model",
+        "Clash Management",
+        "Issue Tracking"
+      ],
+      "sections": [
+        {
+          "body": "BIM Coordination được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "BIM Coordination được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "status": "PUBLISHED",
+      "sortOrder": 4,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:09.446Z",
+      "updatedAt": "2026-08-25T09:36:24.597Z",
+      "deletedAt": null
+    },
+    {
+      "id": "87bde944-a343-4319-b45d-29a0fb16e18d",
+      "slug": "digital-twin-va-du-lieu-tai-san",
+      "title": "Digital Twin & Dữ liệu tài sản",
+      "title_vi": "Digital Twin & Dữ liệu tài sản",
+      "description": "Giải pháp digital twin & dữ liệu tài sản được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "description_vi": "Giải pháp digital twin & dữ liệu tài sản được thiết kế theo mục tiêu, quy mô và mức độ sẵn sàng của từng tổ chức hoặc dự án.",
+      "image": "/images/news-digital-twin.webp",
+      "eyebrow": "DỊCH VỤ BIM4C",
+      "eyebrow_vi": "DỊCH VỤ BIM4C",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Asset Information",
+        "Digital Handover",
+        "Operational Insights"
+      ],
+      "highlights_vi": [
+        "Asset Information",
+        "Digital Handover",
+        "Operational Insights"
+      ],
+      "sections": [
+        {
+          "body": "Digital Twin & Dữ liệu tài sản được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Digital Twin & Dữ liệu tài sản được xây dựng cho các tổ chức đang gặp khoảng cách giữa mục tiêu chuyển đổi số và khả năng triển khai thực tế. Quy trình thiếu thống nhất, dữ liệu phân tán, vai trò chưa rõ hoặc mô hình không được sử dụng để ra quyết định là những nguyên nhân phổ biến khiến đầu tư BIM chưa tạo ra hiệu quả tương xứng.\n\nBIM4C bắt đầu bằng việc đánh giá hiện trạng và xác định vấn đề ưu tiên. Giải pháp chỉ được đề xuất khi có người sử dụng rõ ràng, đầu ra cụ thể và chỉ số để đánh giá sau triển khai.",
+          "title": "Bài toán chúng tôi giải quyết"
+        },
+        {
+          "body": "Phạm vi được tùy chỉnh theo giai đoạn dự án, năng lực nội bộ và hệ thống công nghệ hiện có. BIM4C có thể đảm nhiệm vai trò tư vấn độc lập, đơn vị triển khai hoặc nhóm hỗ trợ trực tiếp cho ban quản lý dự án.",
+          "title": "Phạm vi dịch vụ",
+          "unorderedList": [
+            "Khảo sát hiện trạng, mục tiêu và mức độ sẵn sàng",
+            "Xây dựng tiêu chuẩn, quy trình và ma trận trách nhiệm",
+            "Thiết lập môi trường dữ liệu và biểu mẫu kiểm soát",
+            "Triển khai thí điểm trên phạm vi có thể đo lường",
+            "Chuyển giao, đào tạo và hỗ trợ vận hành"
+          ]
+        },
+        {
+          "body": "Dịch vụ được chia thành các giai đoạn ngắn với đầu ra và điểm phê duyệt cụ thể. BIM4C làm việc cùng nhóm nòng cốt của khách hàng để giải pháp phù hợp với cách tổ chức hiện tại, đồng thời tạo đủ thay đổi để giải quyết nguyên nhân gốc.\n\nTrong quá trình triển khai, các chỉ số về chất lượng dữ liệu, thời gian phản hồi, tỷ lệ hoàn thành và mức độ sử dụng được theo dõi định kỳ. Những điều chỉnh được ghi nhận vào quy trình thay vì xử lý như ngoại lệ không có hệ thống.",
+          "title": "Cách thức triển khai",
+          "orderedList": [
+            "Đánh giá và thống nhất mục tiêu",
+            "Thiết kế giải pháp cùng tiêu chuẩn",
+            "Thử nghiệm trên phạm vi kiểm soát",
+            "Đo lường và hiệu chỉnh",
+            "Chuyển giao để vận hành ổn định"
+          ]
+        },
+        {
+          "body": "Khách hàng nhận được bộ đầu ra có thể tiếp tục sử dụng và cập nhật sau khi kết thúc dịch vụ. Tài liệu không chỉ mô tả nguyên tắc mà bao gồm cấu trúc dữ liệu, biểu mẫu, checklist và hướng dẫn trách nhiệm cho từng vai trò.",
+          "title": "Sản phẩm bàn giao",
+          "unorderedList": [
+            "Báo cáo đánh giá hiện trạng và lộ trình ưu tiên",
+            "BEP, EIR hoặc bộ tiêu chuẩn áp dụng theo phạm vi",
+            "Workflow, checklist QA/QC và dashboard theo dõi",
+            "Mô hình hoặc bộ dữ liệu mẫu đã được kiểm chứng",
+            "Tài liệu chuyển giao và kế hoạch nâng cao năng lực"
+          ]
+        },
+        {
+          "body": "Hiệu quả được xem xét trên cả chất lượng đầu ra và khả năng duy trì của tổ chức. Các mục tiêu thường bao gồm giảm thời gian tìm kiếm thông tin, giảm vòng lặp phối hợp, phát hiện vấn đề sớm hơn, nâng cao tính nhất quán của hồ sơ và cải thiện khả năng truy vết quyết định.\n\nBIM4C ưu tiên những thay đổi có thể áp dụng trong công việc hằng ngày, sau đó mới mở rộng sang các lớp công nghệ phức tạp hơn.",
+          "quote": "Một giải pháp tốt không làm quy trình phức tạp hơn; nó làm cho trách nhiệm, dữ liệu và quyết định trở nên rõ ràng hơn.",
+          "title": "Hiệu quả kỳ vọng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "status": "PUBLISHED",
+      "sortOrder": 5,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:09.582Z",
+      "updatedAt": "2026-08-25T09:36:24.729Z",
+      "deletedAt": null
+    }
+  ],
+  "courses": [
+    {
+      "id": "6e1a213a-0b23-4311-94c5-39db3f0dc84b",
+      "slug": "bim-foundation",
+      "title": "BIM Foundation",
+      "title_vi": "BIM Foundation",
+      "description": "Chương trình BIM Foundation kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "description_vi": "Chương trình BIM Foundation kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "image": "/images/service-training.jpg",
+      "eyebrow": "NỀN TẢNG · 8 TUẦN",
+      "eyebrow_vi": "NỀN TẢNG · 8 TUẦN",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "highlights_vi": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "sections": [
+        {
+          "body": "BIM Foundation được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "BIM Foundation được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "duration": null,
+      "duration_vi": null,
+      "level": null,
+      "level_vi": null,
+      "price": null,
+      "price_vi": null,
+      "instructor": null,
+      "instructor_vi": null,
+      "learningOutcomes": null,
+      "learningOutcomes_vi": null,
+      "status": "PUBLISHED",
+      "sortOrder": 0,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:37.565Z",
+      "updatedAt": "2026-08-25T09:36:26.063Z",
+      "deletedAt": null
+    },
+    {
+      "id": "cb788ebb-ca7b-4ea9-9ce5-bd93bdb15f79",
+      "slug": "bim-management",
+      "title": "BIM Management",
+      "title_vi": "BIM Management",
+      "description": "Chương trình BIM Management kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "description_vi": "Chương trình BIM Management kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "image": "/images/service-consulting.jpg",
+      "eyebrow": "QUẢN LÝ · 6 TUẦN",
+      "eyebrow_vi": "QUẢN LÝ · 6 TUẦN",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "highlights_vi": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "sections": [
+        {
+          "body": "BIM Management được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "BIM Management được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "duration": null,
+      "duration_vi": null,
+      "level": null,
+      "level_vi": null,
+      "price": null,
+      "price_vi": null,
+      "instructor": null,
+      "instructor_vi": null,
+      "learningOutcomes": null,
+      "learningOutcomes_vi": null,
+      "status": "PUBLISHED",
+      "sortOrder": 2,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:39.513Z",
+      "updatedAt": "2026-08-25T09:36:26.457Z",
+      "deletedAt": null
+    },
+    {
+      "id": "271a013d-5697-4503-af28-5494f4ca9908",
+      "slug": "bim-coordination",
+      "title": "BIM Coordination",
+      "title_vi": "BIM Coordination",
+      "description": "Chương trình BIM Coordination kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "description_vi": "Chương trình BIM Coordination kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "image": "/images/service-bim.jpg",
+      "eyebrow": "CHUYÊN SÂU · 10 TUẦN",
+      "eyebrow_vi": "CHUYÊN SÂU · 10 TUẦN",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "highlights_vi": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "sections": [
+        {
+          "body": "BIM Coordination được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "BIM Coordination được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "duration": null,
+      "duration_vi": null,
+      "level": null,
+      "level_vi": null,
+      "price": null,
+      "price_vi": null,
+      "instructor": null,
+      "instructor_vi": null,
+      "learningOutcomes": null,
+      "learningOutcomes_vi": null,
+      "status": "PUBLISHED",
+      "sortOrder": 1,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-20T08:00:38.802Z",
+      "updatedAt": "2026-08-25T09:36:26.324Z",
+      "deletedAt": null
+    },
+    {
+      "id": "b58d7ce7-c2b6-4bb2-a3ff-65b2dcb7d5e3",
+      "slug": "revit-structure-professional",
+      "title": "Revit Structure Professional",
+      "title_vi": "Revit Structure Professional",
+      "description": "Chương trình Revit Structure Professional kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "description_vi": "Chương trình Revit Structure Professional kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "image": "/images/service-design.jpg",
+      "eyebrow": "CHUYÊN NGÀNH · 8 TUẦN",
+      "eyebrow_vi": "CHUYÊN NGÀNH · 8 TUẦN",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "highlights_vi": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "sections": [
+        {
+          "body": "Revit Structure Professional được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Revit Structure Professional được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "duration": null,
+      "duration_vi": null,
+      "level": null,
+      "level_vi": null,
+      "price": null,
+      "price_vi": null,
+      "instructor": null,
+      "instructor_vi": null,
+      "learningOutcomes": null,
+      "learningOutcomes_vi": null,
+      "status": "PUBLISHED",
+      "sortOrder": 3,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:11.418Z",
+      "updatedAt": "2026-08-25T09:36:26.595Z",
+      "deletedAt": null
+    },
+    {
+      "id": "8a4c4b0b-3101-4189-a268-9fc546174ba2",
+      "slug": "navisworks-clash-detection",
+      "title": "Navisworks & Clash Detection",
+      "title_vi": "Navisworks & Clash Detection",
+      "description": "Chương trình Navisworks & Clash Detection kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "description_vi": "Chương trình Navisworks & Clash Detection kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "image": "/images/news-project-coordination.webp",
+      "eyebrow": "THỰC CHIẾN · 5 TUẦN",
+      "eyebrow_vi": "THỰC CHIẾN · 5 TUẦN",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "highlights_vi": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "sections": [
+        {
+          "body": "Navisworks & Clash Detection được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Navisworks & Clash Detection được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "duration": null,
+      "duration_vi": null,
+      "level": null,
+      "level_vi": null,
+      "price": null,
+      "price_vi": null,
+      "instructor": null,
+      "instructor_vi": null,
+      "learningOutcomes": null,
+      "learningOutcomes_vi": null,
+      "status": "PUBLISHED",
+      "sortOrder": 4,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:11.549Z",
+      "updatedAt": "2026-08-25T09:36:26.733Z",
+      "deletedAt": null
+    },
+    {
+      "id": "b1971dc8-61ef-4f4b-9133-1a8935be0aa1",
+      "slug": "cde-iso-19650",
+      "title": "CDE & ISO 19650",
+      "title_vi": "CDE & ISO 19650",
+      "description": "Chương trình CDE & ISO 19650 kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "description_vi": "Chương trình CDE & ISO 19650 kết hợp nền tảng chuyên môn, bài tập dự án và đánh giá năng lực đầu ra cho đội ngũ ngành xây dựng.",
+      "image": "/images/news-digital-twin.webp",
+      "eyebrow": "QUẢN TRỊ THÔNG TIN · 6 TUẦN",
+      "eyebrow_vi": "QUẢN TRỊ THÔNG TIN · 6 TUẦN",
+      "meta": null,
+      "meta_vi": null,
+      "highlights": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "highlights_vi": [
+        "Bài tập thực hành",
+        "Dữ liệu dự án",
+        "Đánh giá đầu ra"
+      ],
+      "sections": [
+        {
+          "body": "CDE & ISO 19650 được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "CDE & ISO 19650 được thiết kế để người học không chỉ biết thao tác công cụ mà hiểu cách sử dụng công cụ trong một quy trình dự án thực tế. Mỗi chủ đề đều gắn với đầu ra công việc, tiêu chí kiểm tra và tình huống phối hợp thường gặp trong doanh nghiệp.\n\nSau chương trình, học viên có thể tự tổ chức công việc, kiểm tra chất lượng sản phẩm và trao đổi chuyên môn với các bộ môn liên quan thay vì phụ thuộc hoàn toàn vào hướng dẫn từng bước.",
+          "title": "Mục tiêu chương trình"
+        },
+        {
+          "body": "Chương trình phù hợp với kỹ sư, kiến trúc sư, BIM Modeler, BIM Coordinator hoặc nhân sự quản lý đang cần chuẩn hóa năng lực. Trước khi bắt đầu, BIM4C đánh giá kinh nghiệm, công cụ đang sử dụng và mục tiêu nghề nghiệp để đề xuất lộ trình phù hợp.",
+          "title": "Đối tượng và yêu cầu đầu vào",
+          "unorderedList": [
+            "Nhân sự dự án cần áp dụng BIM vào công việc hằng ngày",
+            "Đội ngũ doanh nghiệp cần thống nhất quy trình và tiêu chuẩn đầu ra",
+            "Sinh viên năm cuối đã có kiến thức chuyên ngành cơ bản",
+            "Quản lý cần hiểu cách tổ chức và đánh giá hoạt động BIM"
+          ]
+        },
+        {
+          "body": "Nội dung được triển khai theo mô hình học ngắn – thực hành sâu – nhận phản hồi. Giảng viên giới thiệu nguyên tắc cốt lõi, phân tích một tình huống dự án, sau đó học viên thực hiện trên bộ dữ liệu có yêu cầu và tiêu chí nghiệm thu cụ thể.\n\nBài tập sau mỗi module liên kết với nhau để hình thành sản phẩm cuối khóa hoàn chỉnh. Học viên được yêu cầu giải thích quyết định kỹ thuật, ghi nhận vấn đề và trình bày phương án, tương tự cách làm việc trong một phiên phối hợp thực tế.",
+          "title": "Cấu trúc học tập",
+          "orderedList": [
+            "Nắm nguyên tắc và tiêu chuẩn",
+            "Thực hành có hướng dẫn",
+            "Xử lý tình huống dự án",
+            "Nhận review trực tiếp",
+            "Hoàn thiện sản phẩm cuối khóa"
+          ]
+        },
+        {
+          "body": "Tùy theo chương trình, đầu ra có thể là mô hình chuyên ngành, bộ hồ sơ, báo cáo clash, BEP, workflow CDE hoặc dashboard quản lý thông tin. Mỗi sản phẩm được đánh giá trên độ chính xác, tính nhất quán, khả năng sử dụng và cách học viên kiểm soát chất lượng.",
+          "title": "Nội dung và sản phẩm đầu ra",
+          "unorderedList": [
+            "Tài liệu hướng dẫn và bộ dữ liệu thực hành",
+            "Checklist tự kiểm tra theo từng module",
+            "Bài tập cá nhân hoặc bài tập nhóm có phản biện",
+            "Sản phẩm cuối khóa có thể đưa vào portfolio",
+            "Đánh giá năng lực và khuyến nghị lộ trình tiếp theo"
+          ]
+        },
+        {
+          "body": "BIM4C không đánh giá dựa trên thời lượng tham gia đơn thuần. Kết quả được xác định bằng chất lượng sản phẩm, khả năng phát hiện lỗi, cách tổ chức dữ liệu và mức độ chủ động khi giải quyết tình huống. Phản hồi cuối khóa chỉ rõ năng lực đã đạt, khoảng trống cần cải thiện và những bước tiếp theo để ứng dụng vào công việc.",
+          "quote": "Mục tiêu của đào tạo không phải hoàn thành nhiều thao tác hơn, mà là tạo ra một đầu ra đúng, có thể kiểm tra và sử dụng được trong dự án.",
+          "title": "Phương pháp đánh giá"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "duration": null,
+      "duration_vi": null,
+      "level": null,
+      "level_vi": null,
+      "price": null,
+      "price_vi": null,
+      "instructor": null,
+      "instructor_vi": null,
+      "learningOutcomes": null,
+      "learningOutcomes_vi": null,
+      "status": "PUBLISHED",
+      "sortOrder": 5,
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:11.679Z",
+      "updatedAt": "2026-08-25T09:36:26.874Z",
+      "deletedAt": null
+    }
+  ],
+  "categories": [
+    {
+      "id": "7da255e7-3cfa-4f5e-b389-17c5b3fe2ef4",
+      "slug": "nha-cao-tang",
+      "name": "Nhà cao tầng",
+      "createdAt": "2026-08-20T08:00:27.086Z",
+      "updatedAt": "2026-08-25T09:36:23.399Z"
+    },
+    {
+      "id": "a8e48933-d2aa-4e7c-a337-a7f2f38d65da",
+      "slug": "ha-tang",
+      "name": "Hạ tầng",
+      "createdAt": "2026-08-20T08:00:27.477Z",
+      "updatedAt": "2026-08-25T09:36:23.659Z"
+    },
+    {
+      "id": "e0825897-0a4c-4be8-b2d9-e9de6baff8c8",
+      "slug": "cong-nghiep",
+      "name": "Công nghiệp",
+      "createdAt": "2026-08-25T09:26:08.654Z",
+      "updatedAt": "2026-08-25T09:36:23.790Z"
+    },
+    {
+      "id": "d9eb7fc7-a825-496d-8fd9-679f036f1a69",
+      "slug": "audit-cat-1789369776417",
+      "name": "Chuyên mục Test Dự án",
+      "createdAt": "2026-09-14T07:09:37.531Z",
+      "updatedAt": "2026-09-14T07:09:37.531Z"
+    },
+    {
+      "id": "8eb29afd-640c-45eb-a67c-4b38b65af071",
+      "slug": "empty-cat-test-1789369803333",
+      "name": "Empty Cat Test",
+      "createdAt": "2026-09-14T07:10:04.620Z",
+      "updatedAt": "2026-09-14T07:10:04.620Z"
+    }
+  ],
+  "posts": [
+    {
+      "id": "b6406bcc-1204-437f-9b66-021bc86e2fc2",
+      "slug": "du-lieu-so-nang-cao-an-toan-cong-truong",
+      "title": "Ứng dụng dữ liệu số để chủ động kiểm soát an toàn công trường",
+      "title_vi": "Ứng dụng dữ liệu số để chủ động kiểm soát an toàn công trường",
+      "description": "Quy trình kiểm tra số hóa giúp đội ngũ nhận diện rủi ro, theo dõi hành động khắc phục và duy trì tiêu chuẩn an toàn nhất quán.",
+      "description_vi": "Quy trình kiểm tra số hóa giúp đội ngũ nhận diện rủi ro, theo dõi hành động khắc phục và duy trì tiêu chuẩn an toàn nhất quán.",
+      "image": "/images/news-site-safety.webp",
+      "eyebrow": "AN TOÀN",
+      "eyebrow_vi": "AN TOÀN",
+      "meta": "12.08.2026",
+      "meta_vi": "12.08.2026",
+      "highlights": [
+        "Nhận diện rủi ro",
+        "Kiểm tra số hóa",
+        "An toàn chủ động"
+      ],
+      "highlights_vi": [
+        "Nhận diện rủi ro",
+        "Kiểm tra số hóa",
+        "An toàn chủ động"
+      ],
+      "sections": [
+        {
+          "body": "Ứng dụng dữ liệu số để chủ động kiểm soát an toàn công trường được phân tích từ góc nhìn triển khai thực tế, tập trung vào mối liên hệ giữa con người, quy trình và dữ liệu trong dự án xây dựng.",
+          "title": "Bối cảnh"
+        },
+        {
+          "body": "Nội dung làm rõ nguyên nhân, tác động và những điều kiện cần thiết để giải pháp có thể được áp dụng hiệu quả trong tổ chức.",
+          "title": "Phân tích chuyên môn"
+        },
+        {
+          "body": "BIM4C đề xuất cách tiếp cận theo từng bước, có tiêu chí đánh giá và cơ chế phản hồi để cải tiến sau mỗi giai đoạn.",
+          "title": "Khuyến nghị áp dụng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Ứng dụng dữ liệu số để chủ động kiểm soát an toàn công trường được phân tích từ góc nhìn triển khai thực tế, tập trung vào mối liên hệ giữa con người, quy trình và dữ liệu trong dự án xây dựng.",
+          "title": "Bối cảnh"
+        },
+        {
+          "body": "Nội dung làm rõ nguyên nhân, tác động và những điều kiện cần thiết để giải pháp có thể được áp dụng hiệu quả trong tổ chức.",
+          "title": "Phân tích chuyên môn"
+        },
+        {
+          "body": "BIM4C đề xuất cách tiếp cận theo từng bước, có tiêu chí đánh giá và cơ chế phản hồi để cải tiến sau mỗi giai đoạn.",
+          "title": "Khuyến nghị áp dụng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "authorName": null,
+      "status": "PUBLISHED",
+      "sortOrder": 3,
+      "categoryId": "e944be3c-d188-4692-82c9-61936950eeb2",
+      "publishedAt": "2026-08-16T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:12.980Z",
+      "updatedAt": "2026-08-25T09:36:28.339Z",
+      "deletedAt": null
+    },
+    {
+      "id": "8b856596-d33d-4519-bee1-8d8a7c63c6c7",
+      "slug": "phoi-hop-bim-du-an-cao-tang",
+      "title": "Phối hợp BIM tại dự án cao tầng: Từ mô hình đến quyết định hiện trường",
+      "title_vi": "Phối hợp BIM tại dự án cao tầng: Từ mô hình đến quyết định hiện trường",
+      "description": "Đội ngũ BIM4C kết nối mô hình, bản vẽ và dữ liệu hiện trường để phát hiện sớm xung đột và hỗ trợ quyết định thi công chính xác.",
+      "description_vi": "Đội ngũ BIM4C kết nối mô hình, bản vẽ và dữ liệu hiện trường để phát hiện sớm xung đột và hỗ trợ quyết định thi công chính xác.",
+      "image": "/images/news-project-coordination.webp",
+      "eyebrow": "DỰ ÁN",
+      "eyebrow_vi": "DỰ ÁN",
+      "meta": "15.08.2026",
+      "meta_vi": "15.08.2026",
+      "highlights": [
+        "Phối hợp đa bộ môn",
+        "Kiểm soát xung đột",
+        "Dữ liệu hiện trường"
+      ],
+      "highlights_vi": [
+        "Phối hợp đa bộ môn",
+        "Kiểm soát xung đột",
+        "Dữ liệu hiện trường"
+      ],
+      "sections": [
+        {
+          "body": "Phối hợp BIM tại dự án cao tầng: Từ mô hình đến quyết định hiện trường được phân tích từ góc nhìn triển khai thực tế, tập trung vào mối liên hệ giữa con người, quy trình và dữ liệu trong dự án xây dựng.",
+          "title": "Bối cảnh"
+        },
+        {
+          "body": "Nội dung làm rõ nguyên nhân, tác động và những điều kiện cần thiết để giải pháp có thể được áp dụng hiệu quả trong tổ chức.",
+          "title": "Phân tích chuyên môn"
+        },
+        {
+          "body": "BIM4C đề xuất cách tiếp cận theo từng bước, có tiêu chí đánh giá và cơ chế phản hồi để cải tiến sau mỗi giai đoạn.",
+          "title": "Khuyến nghị áp dụng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Phối hợp BIM tại dự án cao tầng: Từ mô hình đến quyết định hiện trường được phân tích từ góc nhìn triển khai thực tế, tập trung vào mối liên hệ giữa con người, quy trình và dữ liệu trong dự án xây dựng.",
+          "title": "Bối cảnh"
+        },
+        {
+          "body": "Nội dung làm rõ nguyên nhân, tác động và những điều kiện cần thiết để giải pháp có thể được áp dụng hiệu quả trong tổ chức.",
+          "title": "Phân tích chuyên môn"
+        },
+        {
+          "body": "BIM4C đề xuất cách tiếp cận theo từng bước, có tiêu chí đánh giá và cơ chế phản hồi để cải tiến sau mỗi giai đoạn.",
+          "title": "Khuyến nghị áp dụng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "authorName": null,
+      "status": "PUBLISHED",
+      "sortOrder": 0,
+      "categoryId": "0d73300b-961e-406a-a134-b187d67029c7",
+      "publishedAt": "2026-08-19T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:12.455Z",
+      "updatedAt": "2026-08-25T09:36:27.652Z",
+      "deletedAt": null
+    },
+    {
+      "id": "336c8235-26b9-409c-8ebe-c1d932a9cb44",
+      "slug": "digital-twin-trong-quan-ly-cong-trinh",
+      "title": "Digital Twin mở ra cách tiếp cận mới trong quản lý vòng đời công trình",
+      "title_vi": "Digital Twin mở ra cách tiếp cận mới trong quản lý vòng đời công trình",
+      "description": "Mô hình số đồng bộ dữ liệu thiết kế, thi công và vận hành, tạo nền tảng trực quan cho quản trị tài sản và dự báo rủi ro.",
+      "description_vi": "Mô hình số đồng bộ dữ liệu thiết kế, thi công và vận hành, tạo nền tảng trực quan cho quản trị tài sản và dự báo rủi ro.",
+      "image": "/images/news-digital-twin.webp",
+      "eyebrow": "CÔNG NGHỆ",
+      "eyebrow_vi": "CÔNG NGHỆ",
+      "meta": "14.08.2026",
+      "meta_vi": "14.08.2026",
+      "highlights": [
+        "Digital Twin",
+        "Dữ liệu thời gian thực",
+        "Quản trị vòng đời"
+      ],
+      "highlights_vi": [
+        "Digital Twin",
+        "Dữ liệu thời gian thực",
+        "Quản trị vòng đời"
+      ],
+      "sections": [
+        {
+          "body": "Digital Twin mở ra cách tiếp cận mới trong quản lý vòng đời công trình được phân tích từ góc nhìn triển khai thực tế, tập trung vào mối liên hệ giữa con người, quy trình và dữ liệu trong dự án xây dựng.",
+          "title": "Bối cảnh"
+        },
+        {
+          "body": "Nội dung làm rõ nguyên nhân, tác động và những điều kiện cần thiết để giải pháp có thể được áp dụng hiệu quả trong tổ chức.",
+          "title": "Phân tích chuyên môn"
+        },
+        {
+          "body": "BIM4C đề xuất cách tiếp cận theo từng bước, có tiêu chí đánh giá và cơ chế phản hồi để cải tiến sau mỗi giai đoạn.",
+          "title": "Khuyến nghị áp dụng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Digital Twin mở ra cách tiếp cận mới trong quản lý vòng đời công trình được phân tích từ góc nhìn triển khai thực tế, tập trung vào mối liên hệ giữa con người, quy trình và dữ liệu trong dự án xây dựng.",
+          "title": "Bối cảnh"
+        },
+        {
+          "body": "Nội dung làm rõ nguyên nhân, tác động và những điều kiện cần thiết để giải pháp có thể được áp dụng hiệu quả trong tổ chức.",
+          "title": "Phân tích chuyên môn"
+        },
+        {
+          "body": "BIM4C đề xuất cách tiếp cận theo từng bước, có tiêu chí đánh giá và cơ chế phản hồi để cải tiến sau mỗi giai đoạn.",
+          "title": "Khuyến nghị áp dụng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "authorName": null,
+      "status": "PUBLISHED",
+      "sortOrder": 1,
+      "categoryId": "12fd8572-aa38-4c4d-8eb3-44779f88f0e2",
+      "publishedAt": "2026-08-18T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:12.720Z",
+      "updatedAt": "2026-08-25T09:36:28.075Z",
+      "deletedAt": null
+    },
+    {
+      "id": "9f652fdc-c841-4301-a0dd-ef21c1483ba9",
+      "slug": "dao-tao-bim-thuc-chien-cho-ky-su",
+      "title": "Đào tạo BIM thực chiến: Nâng cao năng lực phối hợp cho đội ngũ kỹ sư",
+      "title_vi": "Đào tạo BIM thực chiến: Nâng cao năng lực phối hợp cho đội ngũ kỹ sư",
+      "description": "Chương trình học dựa trên tình huống dự án giúp kỹ sư hình thành tư duy phối hợp, kiểm soát thông tin và xử lý vấn đề có hệ thống.",
+      "description_vi": "Chương trình học dựa trên tình huống dự án giúp kỹ sư hình thành tư duy phối hợp, kiểm soát thông tin và xử lý vấn đề có hệ thống.",
+      "image": "/images/news-bim-training.webp",
+      "eyebrow": "ĐÀO TẠO",
+      "eyebrow_vi": "ĐÀO TẠO",
+      "meta": "13.08.2026",
+      "meta_vi": "13.08.2026",
+      "highlights": [
+        "Học từ dự án",
+        "Thực hành mô hình",
+        "Phát triển năng lực"
+      ],
+      "highlights_vi": [
+        "Học từ dự án",
+        "Thực hành mô hình",
+        "Phát triển năng lực"
+      ],
+      "sections": [
+        {
+          "body": "Đào tạo BIM thực chiến: Nâng cao năng lực phối hợp cho đội ngũ kỹ sư được phân tích từ góc nhìn triển khai thực tế, tập trung vào mối liên hệ giữa con người, quy trình và dữ liệu trong dự án xây dựng.",
+          "title": "Bối cảnh"
+        },
+        {
+          "body": "Nội dung làm rõ nguyên nhân, tác động và những điều kiện cần thiết để giải pháp có thể được áp dụng hiệu quả trong tổ chức.",
+          "title": "Phân tích chuyên môn"
+        },
+        {
+          "body": "BIM4C đề xuất cách tiếp cận theo từng bước, có tiêu chí đánh giá và cơ chế phản hồi để cải tiến sau mỗi giai đoạn.",
+          "title": "Khuyến nghị áp dụng"
+        }
+      ],
+      "sections_vi": [
+        {
+          "body": "Đào tạo BIM thực chiến: Nâng cao năng lực phối hợp cho đội ngũ kỹ sư được phân tích từ góc nhìn triển khai thực tế, tập trung vào mối liên hệ giữa con người, quy trình và dữ liệu trong dự án xây dựng.",
+          "title": "Bối cảnh"
+        },
+        {
+          "body": "Nội dung làm rõ nguyên nhân, tác động và những điều kiện cần thiết để giải pháp có thể được áp dụng hiệu quả trong tổ chức.",
+          "title": "Phân tích chuyên môn"
+        },
+        {
+          "body": "BIM4C đề xuất cách tiếp cận theo từng bước, có tiêu chí đánh giá và cơ chế phản hồi để cải tiến sau mỗi giai đoạn.",
+          "title": "Khuyến nghị áp dụng"
+        }
+      ],
+      "contentBlocks": null,
+      "contentBlocks_vi": null,
+      "seoTitle": null,
+      "seoTitle_vi": null,
+      "seoDescription": null,
+      "seoDescription_vi": null,
+      "seoImage": null,
+      "canonicalUrl": null,
+      "relatedIds": null,
+      "authorName": null,
+      "status": "PUBLISHED",
+      "sortOrder": 2,
+      "categoryId": "c265417a-b6bb-481d-a093-630ea4cc539b",
+      "publishedAt": "2026-08-17T00:00:00.000Z",
+      "createdAt": "2026-08-25T09:26:12.850Z",
+      "updatedAt": "2026-08-25T09:36:28.207Z",
+      "deletedAt": null
+    }
+  ],
+  "postCategories": [
+    {
+      "id": "d7ce3d0b-0a83-4f73-9b41-0b6fa6bda7b0",
+      "slug": "tin-tuc",
+      "name": "Tin tức",
+      "createdAt": "2026-08-20T08:00:40.222Z",
+      "updatedAt": "2026-08-20T08:00:40.222Z"
+    },
+    {
+      "id": "0d73300b-961e-406a-a134-b187d67029c7",
+      "slug": "du-an",
+      "name": "Dự án",
+      "createdAt": "2026-08-25T09:26:11.810Z",
+      "updatedAt": "2026-08-25T09:36:27.006Z"
+    },
+    {
+      "id": "12fd8572-aa38-4c4d-8eb3-44779f88f0e2",
+      "slug": "cong-nghe",
+      "name": "Công nghệ",
+      "createdAt": "2026-08-25T09:26:12.069Z",
+      "updatedAt": "2026-08-25T09:36:27.263Z"
+    },
+    {
+      "id": "c265417a-b6bb-481d-a093-630ea4cc539b",
+      "slug": "dao-tao",
+      "name": "Đào tạo",
+      "createdAt": "2026-08-25T09:26:12.198Z",
+      "updatedAt": "2026-08-25T09:36:27.393Z"
+    },
+    {
+      "id": "e944be3c-d188-4692-82c9-61936950eeb2",
+      "slug": "an-toan",
+      "name": "An toàn",
+      "createdAt": "2026-08-25T09:26:12.327Z",
+      "updatedAt": "2026-08-25T09:36:27.522Z"
+    }
+  ],
+  "partners": [
+    {
+      "id": "e2ae7d64-092b-42b4-b8a6-1dfe179ef85b",
+      "name": "Masterise Homes",
+      "logo": "/images/partners/masterise.png",
+      "website": null,
+      "sortOrder": 0,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:46.536Z",
+      "updatedAt": "2026-08-20T08:00:46.536Z"
+    },
+    {
+      "id": "9c497417-445b-4c86-95b2-e2d17243fda4",
+      "name": "Gamuda Land",
+      "logo": "/images/partners/gamuda.png",
+      "website": null,
+      "sortOrder": 1,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:46.536Z",
+      "updatedAt": "2026-08-20T08:00:46.536Z"
+    },
+    {
+      "id": "93325ac8-79f2-4271-9573-4ebfa683881a",
+      "name": "Ecopark",
+      "logo": "/images/partners/ecopark.png",
+      "website": null,
+      "sortOrder": 2,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:46.536Z",
+      "updatedAt": "2026-08-20T08:00:46.536Z"
+    },
+    {
+      "id": "b561dc1d-b7fa-4374-ad2d-47854ab38880",
+      "name": "Nam Long",
+      "logo": "/images/partners/namlong.png",
+      "website": null,
+      "sortOrder": 3,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:46.536Z",
+      "updatedAt": "2026-08-20T08:00:46.536Z"
+    },
+    {
+      "id": "741a33a3-ac2b-46db-b07b-7286ad91f979",
+      "name": "MIK Group",
+      "logo": "/images/partners/mik.png",
+      "website": null,
+      "sortOrder": 4,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:46.536Z",
+      "updatedAt": "2026-08-20T08:00:46.536Z"
+    },
+    {
+      "id": "2767371d-e237-4ca8-abdb-170eb34c6697",
+      "name": "Bitexco",
+      "logo": "/images/partners/bitexco.png",
+      "website": null,
+      "sortOrder": 5,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:46.536Z",
+      "updatedAt": "2026-08-20T08:00:46.536Z"
+    }
+  ],
+  "slides": [
+    {
+      "id": "45554d88-0ff7-4b9b-8470-2af18f1bd789",
+      "eyebrow": "DỰ ÁN TIÊU BIỂU",
+      "title": "CHẤT LƯỢNG TẠO NÊN UY TÍN",
+      "image": "/images/project-lumi.jpg",
+      "alt": "Dự án Lumi Hanoi",
+      "sortOrder": 1,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:45.684Z",
+      "updatedAt": "2026-08-20T08:00:45.684Z"
+    },
+    {
+      "id": "39e7ba6b-3b76-4412-9439-fbecffb0a996",
+      "eyebrow": "CÔNG NGHỆ BIM",
+      "title": "CHUYỂN ĐỔI SỐ NGÀNH XÂY DỰNG",
+      "image": "/images/project-matrix.jpg",
+      "alt": "Ứng dụng BIM",
+      "sortOrder": 2,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:45.684Z",
+      "updatedAt": "2026-08-20T08:00:45.684Z"
+    },
+    {
+      "id": "792b8cb1-7b55-4898-8324-c61ee7e91e5d",
+      "eyebrow": "BIM4C CONSTRUCTION",
+      "title": "KIẾN TẠO GIÁ TRỊ BỀN VỮNG",
+      "image": "/images/hero.jpg",
+      "alt": "Công trình BIM4C",
+      "sortOrder": 0,
+      "isActive": true,
+      "createdAt": "2026-08-20T08:00:45.684Z",
+      "updatedAt": "2026-08-24T13:48:08.952Z"
+    }
+  ],
+  "settings": [
+    {
+      "id": "default",
+      "companyName": "BIM4C Construction",
+      "email": "info@bim4c.vn",
+      "phone": null,
+      "address": null,
+      "socialLinks": {},
+      "defaultSeoTitle": "BIM4C Construction - BIM Solutions",
+      "defaultSeoDescription": "Giải pháp BIM và quản lý xây dựng hiện đại cho doanh nghiệp.",
+      "defaultOgImage": null,
+      "createdAt": "2026-08-24T11:23:45.969Z",
+      "updatedAt": "2026-09-14T08:46:03.668Z"
+    }
+  ]
+}

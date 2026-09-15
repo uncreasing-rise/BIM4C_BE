@@ -23,5 +23,5 @@ export class ProjectQueryDto extends PageQueryDto {
   @Min(1900)
   @Max(2200)
   year?: number;
-  @IsOptional() @IsIn(['planned', 'in_progress', 'completed']) status?: string;
+  @IsOptional() @IsIn(['profiled', 'planned', 'in_progress', 'completed']) status?: string;
 }

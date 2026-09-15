@@ -18,7 +18,7 @@ export class PostsService {
       status: ContentStatus.PUBLISHED,
       deletedAt: null,
       ...(query.search
-        ? { title: { contains: query.search, mode: 'insensitive' } }
+        ? { OR: [{ title: { contains: query.search, mode: 'insensitive' } }, { title_vi: { contains: query.search, mode: 'insensitive' } }, { description: { contains: query.search, mode: 'insensitive' } }, { description_vi: { contains: query.search, mode: 'insensitive' } }] }
         : {}),
       ...(query.category ? { category: { slug: query.category } } : {}),
     };

@@ -40,6 +40,7 @@ export class AdminListQueryDto {
     'draft',
     'published',
     'archived',
+    'profiled',
     'planned',
     'in_progress',
     'completed',
@@ -150,7 +151,7 @@ export class CreateProjectDto extends OmitType(CreateContentDto, [
   @IsUUID() categoryId!: string;
   @Transform(trim) @IsString() @MinLength(2) @MaxLength(180) location!: string;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(180) location_vi?: string | null;
-  @IsInt() @Min(1900) @Max(2200) year!: number;
+  @IsOptional() @IsInt() @Min(1900) @Max(2200) year?: number | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) investor?:
     string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(1000) investor_vi?: string | null;
