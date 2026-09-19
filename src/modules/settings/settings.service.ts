@@ -15,9 +15,10 @@ export class SettingsService {
     });
   }
   async update(dto: UpdateSettingsDto, actorId: string, requestId?: string) {
+    const data: Record<string, unknown> = { ...dto };
     const row = await this.prisma.siteSettings.update({
       where: { id: 'default' },
-      data: dto,
+      data: data as any,
     });
     await this.audit.record({
       actorId,
@@ -35,6 +36,8 @@ export class SettingsService {
       email: x.email,
       phone: x.phone,
       address: x.address,
+      brochureUrl: x.brochureUrl,
+      metrics: x.metrics,
       socialLinks: x.socialLinks,
       defaultSeoTitle: x.defaultSeoTitle,
       defaultSeoDescription: x.defaultSeoDescription,

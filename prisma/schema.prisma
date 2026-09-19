@@ -411,6 +411,8 @@ model SiteSettings {
   email                 String   @db.VarChar(320)
   phone                 String?  @db.VarChar(32)
   address               String?  @db.VarChar(500)
+  brochureUrl           String?  @map("brochure_url") @db.VarChar(1000)
+  metrics               Json?    @map("metrics")
   socialLinks           Json     @map("social_links")
   defaultSeoTitle       String   @map("default_seo_title") @db.VarChar(240)
   defaultSeoDescription String   @map("default_seo_description") @db.VarChar(500)

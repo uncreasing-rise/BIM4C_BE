@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsEmail,
   IsObject,
   IsOptional,
@@ -7,11 +8,14 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+
 export class UpdateSettingsDto {
   @IsString() @MinLength(2) @MaxLength(200) companyName!: string;
   @IsEmail() @MaxLength(320) email!: string;
   @IsOptional() @IsString() @MaxLength(32) phone?: string | null;
   @IsOptional() @IsString() @MaxLength(500) address?: string | null;
+  @IsOptional() @IsString() @MaxLength(1000) brochureUrl?: string | null;
+  @IsOptional() metrics?: unknown;
   @IsObject() socialLinks!: Record<string, string>;
   @IsString() @MinLength(2) @MaxLength(240) defaultSeoTitle!: string;
   @IsString() @MinLength(10) @MaxLength(500) defaultSeoDescription!: string;
@@ -20,3 +24,4 @@ export class UpdateSettingsDto {
   @MaxLength(1000)
   defaultOgImage?: string | null;
 }
+
