@@ -5,6 +5,7 @@ import {
   Get,
   Header,
   HttpCode,
+  HttpStatus,
   Param,
   ParseFilePipeBuilder,
   ParseUUIDPipe,

@@ -14,7 +14,7 @@ export class SettingsService {
   ) {}
   async get() {
     const now = Date.now();
-    if (this.settingsCache && now - this.settingsCache.cachedAt < 30_000) {
+    if (this.settingsCache && now - this.settingsCache.cachedAt < 120_000) {
       return this.settingsCache.data;
     }
     const row = await this.prisma.siteSettings.findUniqueOrThrow({
@@ -53,7 +53,7 @@ export class SettingsService {
   }
   async public() {
     const now = Date.now();
-    if (this.publicCache && now - this.publicCache.cachedAt < 30_000) {
+    if (this.publicCache && now - this.publicCache.cachedAt < 120_000) {
       return this.publicCache.data;
     }
     const x = await this.get();

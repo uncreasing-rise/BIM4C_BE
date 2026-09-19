@@ -12,24 +12,23 @@ describe('production admin auth and RBAC', () => {
     passwordHash: hashSync('valid-password-123', 4),
     roles: [{ role: 'SUPER_ADMIN' }],
   };
-  const tx = {
+  const prisma = {
+    adminUser: {
+      findUnique: jest.fn().mockResolvedValue(user),
+      update: jest.fn().mockResolvedValue(user),
+    },
     adminSession: {
-      deleteMany: jest.fn(),
+      deleteMany: jest.fn().mockResolvedValue({ count: 1 }),
       create: jest.fn().mockResolvedValue({ id: 's1' }),
     },
-    adminUser: { update: jest.fn() },
-  };
-  const prisma = {
-    adminUser: { findUnique: jest.fn().mockResolvedValue(user) },
-    adminSession: { deleteMany: jest.fn() },
-    $transaction: jest.fn((fn: (x: typeof tx) => unknown) => fn(tx)),
+    $transaction: jest.fn((promises: Promise<unknown>[]) => Promise.all(promises)),
   };
   const config = {
     get: jest.fn((key: string) =>
       key === 'AUTH_SESSION_TTL_HOURS' ? 8 : undefined,
     ),
   };
-  const audit = { record: jest.fn() };
+  const audit = { record: jest.fn().mockResolvedValue({ id: 'a1' }) };
   const service = new AuthService(
     prisma as never,
     config as never,
@@ -42,7 +41,7 @@ describe('production admin auth and RBAC', () => {
       'request-1',
     );
     expect(result.token.length).toBeGreaterThan(32);
-    expect(tx.adminSession.create).toHaveBeenCalled();
+    expect(prisma.adminSession.create).toHaveBeenCalled();
     expect(audit.record).toHaveBeenCalled();
   });
   it('rejects an invalid password', async () => {

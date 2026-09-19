@@ -13,10 +13,11 @@ import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import type { Request, Response } from 'express';
+import { createHash } from 'node:crypto';
 import { ChangePasswordDto, LoginDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { CsrfGuard } from './csrf.guard';
-import { SessionAuthGuard } from './session-auth.guard';
+import { SessionAuthGuard, invalidateSessionCache } from './session-auth.guard';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -44,6 +45,11 @@ export class AuthController {
   @HttpCode(204)
   @UseGuards(SessionAuthGuard, CsrfGuard)
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const token = req.cookies?.[this.cookieName()] as string | undefined;
+    if (token) {
+      const tokenHash = createHash('sha256').update(token).digest('hex');
+      invalidateSessionCache(tokenHash);
+    }
     await this.service.logout(
       req.admin!.sessionId,
       req.admin!.id,
@@ -57,7 +63,8 @@ export class AuthController {
   @Patch('change-password')
   @HttpCode(204)
   @UseGuards(SessionAuthGuard, CsrfGuard)
-  changePassword(@Body() dto: ChangePasswordDto, @Req() req: Request) {
+  async changePassword(@Body() dto: ChangePasswordDto, @Req() req: Request) {
+    invalidateSessionCache();
     return this.service.changePassword(
       req.admin!.id,
       req.admin!.sessionId,

@@ -10,7 +10,7 @@ interface CacheEntry<T> {
   cachedAt: number;
 }
 const cache = new Map<string, CacheEntry<unknown>>();
-const CACHE_TTL_MS = 30_000;
+const CACHE_TTL_MS = 120_000; // 2 minutes
 
 @Injectable()
 export class CoursesService {
