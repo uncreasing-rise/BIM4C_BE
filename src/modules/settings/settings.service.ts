@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AuditAction } from '@prisma/client';
+import { AuditAction, Prisma } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import { AuditService } from '../audit/audit.service';
 import type { UpdateSettingsDto } from './settings.dto';
@@ -15,10 +15,21 @@ export class SettingsService {
     });
   }
   async update(dto: UpdateSettingsDto, actorId: string, requestId?: string) {
-    const data: Record<string, unknown> = { ...dto };
+    const data: Prisma.SiteSettingsUpdateInput = {
+      companyName: dto.companyName,
+      email: dto.email,
+      phone: dto.phone,
+      address: dto.address,
+      brochureUrl: dto.brochureUrl,
+      metrics: (dto.metrics as Prisma.InputJsonValue) ?? undefined,
+      socialLinks: dto.socialLinks,
+      defaultSeoTitle: dto.defaultSeoTitle,
+      defaultSeoDescription: dto.defaultSeoDescription,
+      defaultOgImage: dto.defaultOgImage,
+    };
     const row = await this.prisma.siteSettings.update({
       where: { id: 'default' },
-      data: data as any,
+      data,
     });
     await this.audit.record({
       actorId,
