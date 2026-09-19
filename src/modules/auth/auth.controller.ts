@@ -70,10 +70,14 @@ export class AuthController {
     return this.config.get<string>('AUTH_COOKIE_NAME') ?? 'bim4c_admin_session';
   }
   private cookieOptions(maxAge: number) {
+    const sameSite = (this.config.get<string>('AUTH_COOKIE_SAME_SITE') ?? 'lax') as
+      | 'lax'
+      | 'strict'
+      | 'none';
     return {
       httpOnly: true,
       secure: this.config.get<string>('NODE_ENV') === 'production',
-      sameSite: 'strict' as const,
+      sameSite,
       path: '/',
       maxAge: maxAge * 1000,
     };
