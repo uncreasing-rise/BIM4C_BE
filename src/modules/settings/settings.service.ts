@@ -5,16 +5,27 @@ import { AuditService } from '../audit/audit.service';
 import type { UpdateSettingsDto } from './settings.dto';
 @Injectable()
 export class SettingsService {
+  private publicCache: { data: any; cachedAt: number } | null = null;
+  private settingsCache: { data: any; cachedAt: number } | null = null;
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
   ) {}
-  get() {
-    return this.prisma.siteSettings.findUniqueOrThrow({
+  async get() {
+    const now = Date.now();
+    if (this.settingsCache && now - this.settingsCache.cachedAt < 30_000) {
+      return this.settingsCache.data;
+    }
+    const row = await this.prisma.siteSettings.findUniqueOrThrow({
       where: { id: 'default' },
     });
+    this.settingsCache = { data: row, cachedAt: now };
+    return row;
   }
   async update(dto: UpdateSettingsDto, actorId: string, requestId?: string) {
+    this.publicCache = null;
+    this.settingsCache = null;
     const data: Prisma.SiteSettingsUpdateInput = {
       companyName: dto.companyName,
       email: dto.email,
@@ -31,18 +42,22 @@ export class SettingsService {
       where: { id: 'default' },
       data,
     });
-    await this.audit.record({
+    void this.audit.record({
       actorId,
       action: AuditAction.SETTINGS_UPDATE,
       resource: 'settings',
       resourceId: 'default',
       requestId,
-    });
+    }).catch(() => {});
     return row;
   }
   async public() {
+    const now = Date.now();
+    if (this.publicCache && now - this.publicCache.cachedAt < 30_000) {
+      return this.publicCache.data;
+    }
     const x = await this.get();
-    return {
+    const data = {
       companyName: x.companyName,
       email: x.email,
       phone: x.phone,
@@ -54,5 +69,7 @@ export class SettingsService {
       defaultSeoDescription: x.defaultSeoDescription,
       defaultOgImage: x.defaultOgImage,
     };
+    this.publicCache = { data, cachedAt: now };
+    return data;
   }
 }

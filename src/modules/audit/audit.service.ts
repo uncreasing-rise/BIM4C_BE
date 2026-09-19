@@ -26,7 +26,7 @@ export class AuditService {
       ...(resource ? { resource } : {}),
       ...(action ? { action } : {}),
     };
-    const [data, total] = await this.prisma.$transaction([
+    const [data, total] = await Promise.all([
       this.prisma.auditLog.findMany({
         where,
         include: { actor: { select: { id: true, name: true, email: true } } },

@@ -26,32 +26,41 @@ export class AuthService {
       !(await compare(input.password, user.passwordHash))
     )
       throw new UnauthorizedException('Invalid email or password');
+
     const token = randomBytes(48).toString('base64url');
     const ttl = this.config.get<number>('AUTH_SESSION_TTL_HOURS') ?? 8;
-    const session = await this.prisma.$transaction(async (tx) => {
-      await tx.adminSession.deleteMany({
-        where: { expiresAt: { lt: new Date() } },
-      });
-      const created = await tx.adminSession.create({
+    const tokenHash = createHash('sha256').update(token).digest('hex');
+    const expiresAt = new Date(Date.now() + ttl * 3600000);
+
+    const [session] = await Promise.all([
+      this.prisma.adminSession.create({
         data: {
           userId: user.id,
-          tokenHash: createHash('sha256').update(token).digest('hex'),
-          expiresAt: new Date(Date.now() + ttl * 3600000),
+          tokenHash,
+          expiresAt,
         },
-      });
-      await tx.adminUser.update({
+      }),
+      this.prisma.adminUser.update({
         where: { id: user.id },
         data: { lastLoginAt: new Date() },
-      });
-      return created;
-    });
-    await this.audit.record({
-      actorId: user.id,
-      action: AuditAction.LOGIN,
-      resource: 'auth',
-      resourceId: session.id,
-      requestId,
-    });
+      }),
+    ]);
+
+    // Clean expired sessions and record audit log asynchronously
+    void this.prisma.adminSession
+      .deleteMany({ where: { expiresAt: { lt: new Date() } } })
+      .catch(() => {});
+
+    void this.audit
+      .record({
+        actorId: user.id,
+        action: AuditAction.LOGIN,
+        resource: 'auth',
+        resourceId: session.id,
+        requestId,
+      })
+      .catch(() => {});
+
     return {
       token,
       maxAge: ttl * 3600,
@@ -62,13 +71,15 @@ export class AuthService {
     await this.prisma.adminSession.deleteMany({
       where: { id: sessionId, userId: actorId },
     });
-    await this.audit.record({
-      actorId,
-      action: AuditAction.LOGOUT,
-      resource: 'auth',
-      resourceId: sessionId,
-      requestId,
-    });
+    void this.audit
+      .record({
+        actorId,
+        action: AuditAction.LOGOUT,
+        resource: 'auth',
+        resourceId: sessionId,
+        requestId,
+      })
+      .catch(() => {});
   }
   async changePassword(
     userId: string,

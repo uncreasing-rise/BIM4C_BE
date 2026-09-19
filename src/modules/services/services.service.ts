@@ -6,22 +6,69 @@ import {
 } from '../../common/dto/content-response.dto';
 import { PrismaService } from '../../database/prisma.service';
 import { pageResponse, type PageQueryDto, type PageResponse } from '../../common/pagination/page-query.dto';
+interface CacheEntry<T> {
+  data: T;
+  cachedAt: number;
+}
+const cache = new Map<string, CacheEntry<unknown>>();
+const CACHE_TTL_MS = 30_000;
+
 @Injectable()
 export class ServicesService {
   constructor(private readonly prisma: PrismaService) {}
+
   async findAll(query: PageQueryDto): Promise<PageResponse<ContentResponse>> {
-    const where: Prisma.ServiceWhereInput = { status: ContentStatus.PUBLISHED, deletedAt: null, ...(query.search ? { OR: [{ title: { contains: query.search, mode: 'insensitive' } }, { title_vi: { contains: query.search, mode: 'insensitive' } }, { description: { contains: query.search, mode: 'insensitive' } }, { description_vi: { contains: query.search, mode: 'insensitive' } }] } : {}) };
-    const [rows, total] = await this.prisma.$transaction([
-      this.prisma.service.findMany({ where, skip: (query.page - 1) * query.limit, take: query.limit, orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }] }),
+    const page = Math.max(1, Number(query.page) || 1);
+    const limit = Math.min(100, Math.max(1, Number(query.limit) || 10));
+
+    const cacheKey = `list:${page}:${limit}:${query.search || ''}`;
+    const hit = cache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
+      return hit.data as PageResponse<ContentResponse>;
+    }
+
+    const where: Prisma.ServiceWhereInput = {
+      status: ContentStatus.PUBLISHED,
+      deletedAt: null,
+      ...(query.search
+        ? {
+            OR: [
+              { title: { contains: query.search, mode: 'insensitive' } },
+              { title_vi: { contains: query.search, mode: 'insensitive' } },
+              { description: { contains: query.search, mode: 'insensitive' } },
+              { description_vi: { contains: query.search, mode: 'insensitive' } },
+            ],
+          }
+        : {}),
+    };
+    const [rows, total] = await Promise.all([
+      this.prisma.service.findMany({
+        where,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }],
+      }),
       this.prisma.service.count({ where }),
     ]);
-    return pageResponse(rows.map(mapContent), total, query.page, query.limit);
+    const result = pageResponse(rows.map(mapContent), total, page, limit);
+    cache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
+
   async findBySlug(slug: string): Promise<ContentResponse> {
+    const cacheKey = `slug:${slug}`;
+    const hit = cache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
+      return hit.data as ContentResponse;
+    }
+
     const row = await this.prisma.service.findFirst({
       where: { slug, status: ContentStatus.PUBLISHED, deletedAt: null },
     });
     if (!row) throw new NotFoundException('Service not found');
-    return mapContent(row);
+    const result = mapContent(row);
+    cache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
 }
+

@@ -10,6 +10,19 @@ import type { Request } from 'express';
 import { PrismaService } from '../../database/prisma.service';
 import { permissionsFor } from './permissions';
 
+interface CachedSession {
+  admin: NonNullable<Request['admin']>;
+  cachedAt: number;
+}
+
+const sessionCache = new Map<string, CachedSession>();
+const CACHE_TTL_MS = 30_000; // 30 seconds
+
+export function invalidateSessionCache(tokenHash?: string) {
+  if (tokenHash) sessionCache.delete(tokenHash);
+  else sessionCache.clear();
+}
+
 @Injectable()
 export class SessionAuthGuard implements CanActivate {
   constructor(
@@ -23,18 +36,30 @@ export class SessionAuthGuard implements CanActivate {
     ] as string | undefined;
     if (!token || token.length < 32)
       throw new UnauthorizedException('Authentication required');
+
+    const tokenHash = createHash('sha256').update(token).digest('hex');
+    const now = Date.now();
+    const cached = sessionCache.get(tokenHash);
+
+    if (cached && now - cached.cachedAt < CACHE_TTL_MS) {
+      request.admin = cached.admin;
+      return true;
+    }
+
     const session = await this.prisma.adminSession.findUnique({
-      where: { tokenHash: createHash('sha256').update(token).digest('hex') },
+      where: { tokenHash },
       include: { user: { include: { roles: true } } },
     });
     if (
       !session ||
       session.expiresAt <= new Date() ||
       session.user.status !== 'ACTIVE'
-    )
+    ) {
+      sessionCache.delete(tokenHash);
       throw new UnauthorizedException('Session expired');
+    }
     const roles = session.user.roles.map((item) => item.role);
-    request.admin = {
+    const adminData = {
       id: session.user.id,
       email: session.user.email,
       name: session.user.name,
@@ -42,6 +67,8 @@ export class SessionAuthGuard implements CanActivate {
       permissions: permissionsFor(roles),
       sessionId: session.id,
     };
+    request.admin = adminData;
+    sessionCache.set(tokenHash, { admin: adminData, cachedAt: now });
     return true;
   }
 }

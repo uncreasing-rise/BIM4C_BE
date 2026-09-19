@@ -5,28 +5,92 @@ import {
 } from '../../common/dto/content-response.dto';
 import { PrismaService } from '../../database/prisma.service';
 import { pageResponse, type PageQueryDto, type PageResponse } from '../../common/pagination/page-query.dto';
+interface CacheEntry<T> {
+  data: T;
+  cachedAt: number;
+}
+const cache = new Map<string, CacheEntry<unknown>>();
+const CACHE_TTL_MS = 30_000;
+
 @Injectable()
 export class CoursesService {
   constructor(private readonly prisma: PrismaService) {}
+
   async findAll(query: PageQueryDto): Promise<PageResponse<unknown>> {
-    const where: Prisma.CourseWhereInput = { status: ContentStatus.PUBLISHED, deletedAt: null, ...(query.search ? { OR: [{ title: { contains: query.search, mode: 'insensitive' } }, { title_vi: { contains: query.search, mode: 'insensitive' } }, { description: { contains: query.search, mode: 'insensitive' } }, { description_vi: { contains: query.search, mode: 'insensitive' } }] } : {}) };
-    const [rows, total] = await this.prisma.$transaction([
-      this.prisma.course.findMany({ where, include: { curriculum: { orderBy: { sortOrder: 'asc' } } }, skip: (query.page - 1) * query.limit, take: query.limit, orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }] }),
+    const page = Math.max(1, Number(query.page) || 1);
+    const limit = Math.min(100, Math.max(1, Number(query.limit) || 10));
+
+    const cacheKey = `list:${page}:${limit}:${query.search || ''}:${query.category || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
+    const hit = cache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
+      return hit.data as PageResponse<unknown>;
+    }
+
+    const where: Prisma.CourseWhereInput = {
+      status: ContentStatus.PUBLISHED,
+      deletedAt: null,
+      ...(query.search
+        ? {
+            OR: [
+              { title: { contains: query.search, mode: 'insensitive' } },
+              { title_vi: { contains: query.search, mode: 'insensitive' } },
+              { description: { contains: query.search, mode: 'insensitive' } },
+              { description_vi: { contains: query.search, mode: 'insensitive' } },
+            ],
+          }
+        : {}),
+    };
+    const [rows, total] = await Promise.all([
+      this.prisma.course.findMany({
+        where,
+        include: { curriculum: { orderBy: { sortOrder: 'asc' } } },
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }],
+      }),
       this.prisma.course.count({ where }),
     ]);
-    return pageResponse(rows.map((row) => ({ ...this.mapCourse(row), curriculum: row.curriculum })), total, query.page, query.limit);
+    const result = pageResponse(
+      rows.map((row) => ({ ...this.mapCourse(row), curriculum: row.curriculum })),
+      total,
+      page,
+      limit,
+    );
+    cache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
-  async findBySlug(
-    slug: string,
-  ): Promise<unknown> {
+
+  async findBySlug(slug: string): Promise<unknown> {
+    const cacheKey = `slug:${slug}`;
+    const hit = cache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
+      return hit.data;
+    }
+
     const row = await this.prisma.course.findFirst({
       where: { slug, status: ContentStatus.PUBLISHED, deletedAt: null },
       include: { curriculum: { orderBy: { sortOrder: 'asc' } } },
     });
     if (!row) throw new NotFoundException('Course not found');
-    return { ...this.mapCourse(row), curriculum: row.curriculum };
+    const result = { ...this.mapCourse(row), curriculum: row.curriculum };
+    cache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
+
   private mapCourse(row: Course) {
-    return { ...mapContent(row), duration: row.duration, duration_vi: row.duration_vi, level: row.level, level_vi: row.level_vi, price: row.price, price_vi: row.price_vi, instructor: row.instructor, instructor_vi: row.instructor_vi, learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [], learningOutcomes_vi: Array.isArray(row.learningOutcomes_vi) ? row.learningOutcomes_vi : [] };
+    return {
+      ...mapContent(row),
+      duration: row.duration,
+      duration_vi: row.duration_vi,
+      level: row.level,
+      level_vi: row.level_vi,
+      price: row.price,
+      price_vi: row.price_vi,
+      instructor: row.instructor,
+      instructor_vi: row.instructor_vi,
+      learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [],
+      learningOutcomes_vi: Array.isArray(row.learningOutcomes_vi) ? row.learningOutcomes_vi : [],
+    };
   }
 }
+

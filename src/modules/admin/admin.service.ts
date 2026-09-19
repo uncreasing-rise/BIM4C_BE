@@ -46,8 +46,28 @@ const allowedSort = new Set([
   'sortOrder',
 ]);
 
+interface AdminCacheEntry<T> {
+  data: T;
+  cachedAt: number;
+}
+const adminCache = new Map<string, AdminCacheEntry<unknown>>();
+const ADMIN_CACHE_TTL_MS = 15_000;
+
+export function invalidateAdminCache(pattern?: string) {
+  if (pattern) {
+    for (const key of adminCache.keys()) {
+      if (key.startsWith(pattern)) adminCache.delete(key);
+    }
+  } else {
+    adminCache.clear();
+  }
+}
+
 @Injectable()
 export class AdminService {
+  private dashboardCache: { data: unknown; cachedAt: number } | null = null;
+  private recentCache: { data: unknown; cachedAt: number } | null = null;
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly storage: MediaStorageService,
@@ -81,6 +101,11 @@ export class AdminService {
     return where;
   }
   async list(domain: Domain, query: AdminListQueryDto) {
+    const cacheKey = `list:${domain}:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.category || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
+    const hit = adminCache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
+      return hit.data;
+    }
     const delegate = this.delegate(domain);
     const where = this.where(domain, query);
     const include =
@@ -92,7 +117,7 @@ export class AdminService {
             ? { curriculum: { orderBy: { sortOrder: 'asc' } } }
             : undefined;
     const sortBy = allowedSort.has(query.sortBy) ? query.sortBy : 'updatedAt';
-    const [rows, total] = await this.prisma.$transaction([
+    const [rows, total] = await Promise.all([
       delegate.findMany({
         where,
         include,
@@ -102,7 +127,9 @@ export class AdminService {
       }),
       delegate.count({ where }),
     ]);
-    return pageResponse(rows, total, query.page, query.limit);
+    const result = pageResponse(rows, total, query.page, query.limit);
+    adminCache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
   async detail(domain: Domain, id: string) {
     const include =
@@ -120,14 +147,22 @@ export class AdminService {
     if (!row) throw new NotFoundException(`${domain} not found`);
     return row;
   }
+  private invalidateMutation(domain?: Domain) {
+    this.dashboardCache = null;
+    this.recentCache = null;
+    if (domain) invalidateAdminCache(`list:${domain}`);
+    else invalidateAdminCache();
+  }
   async create(
     domain: Domain,
     input: CreateContentDto | CreateProjectDto | CreatePostDto,
   ) {
     try {
-      return await this.delegate(domain).create({
+      const created = await this.delegate(domain).create({
         data: this.writeData(domain, input),
       });
+      this.invalidateMutation(domain);
+      return created;
     } catch (error) {
       this.writeError(error);
     }
@@ -139,10 +174,12 @@ export class AdminService {
   ) {
     await this.detail(domain, id);
     try {
-      return await this.delegate(domain).update({
+      const updated = await this.delegate(domain).update({
         where: { id },
         data: this.writeData(domain, input),
       });
+      this.invalidateMutation(domain);
+      return updated;
     } catch (error) {
       this.writeError(error);
     }
@@ -364,6 +401,11 @@ export class AdminService {
       : {};
   }
   async contacts(query: AdminListQueryDto) {
+    const cacheKey = `contacts:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.from || ''}:${query.to || ''}:${query.sortOrder || ''}`;
+    const hit = adminCache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
+      return hit.data;
+    }
     const where: any = {
       ...this.dateWhere(query),
       ...(query.status ? { status: query.status.toUpperCase() } : {}),
@@ -375,7 +417,7 @@ export class AdminService {
           }
         : {}),
     };
-    const [data, total] = await this.prisma.$transaction([
+    const [data, total] = await Promise.all([
       this.prisma.contact.findMany({
         where,
         skip: (query.page - 1) * query.limit,
@@ -384,7 +426,9 @@ export class AdminService {
       }),
       this.prisma.contact.count({ where }),
     ]);
-    return pageResponse(data, total, query.page, query.limit);
+    const result = pageResponse(data, total, query.page, query.limit);
+    adminCache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
   async contact(id: string) {
     const row = await this.prisma.contact.findUnique({ where: { id } });
@@ -393,13 +437,23 @@ export class AdminService {
   }
   async updateContact(id: string, input: SubmissionStatusDto) {
     await this.contact(id);
-    return this.prisma.contact.update({ where: { id }, data: input });
+    const res = await this.prisma.contact.update({ where: { id }, data: input });
+    invalidateAdminCache('contacts');
+    this.dashboardCache = null;
+    return res;
   }
   async deleteContact(id: string) {
     await this.contact(id);
     await this.prisma.contact.delete({ where: { id } });
+    invalidateAdminCache('contacts');
+    this.dashboardCache = null;
   }
   async registrations(query: AdminListQueryDto) {
+    const cacheKey = `registrations:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.course || ''}:${query.from || ''}:${query.to || ''}:${query.sortOrder || ''}`;
+    const hit = adminCache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
+      return hit.data;
+    }
     const where: any = {
       ...this.dateWhere(query),
       ...(query.course ? { courseId: query.course } : {}),
@@ -412,7 +466,7 @@ export class AdminService {
           }
         : {}),
     };
-    const [data, total] = await this.prisma.$transaction([
+    const [data, total] = await Promise.all([
       this.prisma.courseRegistration.findMany({
         where,
         include: { course: { select: { id: true, title: true, slug: true } } },
@@ -422,7 +476,9 @@ export class AdminService {
       }),
       this.prisma.courseRegistration.count({ where }),
     ]);
-    return pageResponse(data, total, query.page, query.limit);
+    const result = pageResponse(data, total, query.page, query.limit);
+    adminCache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
   async registration(id: string) {
     const row = await this.prisma.courseRegistration.findUnique({
@@ -434,16 +490,26 @@ export class AdminService {
   }
   async updateRegistration(id: string, input: SubmissionStatusDto) {
     await this.registration(id);
-    return this.prisma.courseRegistration.update({
+    const res = await this.prisma.courseRegistration.update({
       where: { id },
       data: input,
     });
+    invalidateAdminCache('registrations');
+    this.dashboardCache = null;
+    return res;
   }
   async deleteRegistration(id: string) {
     await this.registration(id);
     await this.prisma.courseRegistration.delete({ where: { id } });
+    invalidateAdminCache('registrations');
+    this.dashboardCache = null;
   }
   async subscriptions(query: AdminListQueryDto) {
+    const cacheKey = `subscriptions:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.sortOrder || ''}`;
+    const hit = adminCache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
+      return hit.data;
+    }
     const where: any = {
       ...this.dateWhere(query),
       ...(query.status ? { isActive: query.status === 'active' } : {}),
@@ -451,7 +517,7 @@ export class AdminService {
         ? { email: { contains: query.search, mode: 'insensitive' } }
         : {}),
     };
-    const [data, total] = await this.prisma.$transaction([
+    const [data, total] = await Promise.all([
       this.prisma.newsletterSubscription.findMany({
         where,
         skip: (query.page - 1) * query.limit,
@@ -460,7 +526,9 @@ export class AdminService {
       }),
       this.prisma.newsletterSubscription.count({ where }),
     ]);
-    return pageResponse(data, total, query.page, query.limit);
+    const result = pageResponse(data, total, query.page, query.limit);
+    adminCache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
   async subscription(id: string) {
     const row = await this.prisma.newsletterSubscription.findUnique({
@@ -471,7 +539,7 @@ export class AdminService {
   }
   async updateSubscription(id: string, input: NewsletterStatusDto) {
     await this.subscription(id);
-    return this.prisma.newsletterSubscription.update({
+    const res = await this.prisma.newsletterSubscription.update({
       where: { id },
       data: {
         isActive: input.isActive,
@@ -479,10 +547,15 @@ export class AdminService {
         unsubscribedAt: input.isActive ? null : new Date(),
       },
     });
+    invalidateAdminCache('subscriptions');
+    this.dashboardCache = null;
+    return res;
   }
   async deleteSubscription(id: string) {
     await this.subscription(id);
     await this.prisma.newsletterSubscription.delete({ where: { id } });
+    invalidateAdminCache('subscriptions');
+    this.dashboardCache = null;
   }
   private csv(rows: unknown[][]) {
     const cell = (value: unknown) => {
@@ -587,7 +660,12 @@ export class AdminService {
       ]),
     ]);
   }
+
   async dashboard() {
+    const now = Date.now();
+    if (this.dashboardCache && now - this.dashboardCache.cachedAt < 15_000) {
+      return this.dashboardCache.data;
+    }
     const [
       projects,
       services,
@@ -608,7 +686,7 @@ export class AdminService {
         _count: true,
       }),
     ]);
-    return {
+    const data = {
       projects,
       services,
       courses,
@@ -617,6 +695,8 @@ export class AdminService {
       registrations,
       newsletter,
     };
+    this.dashboardCache = { data, cachedAt: now };
+    return data;
   }
   private async countStatuses(domain: Domain) {
     const rows = await this.delegate(domain).groupBy({
@@ -632,6 +712,10 @@ export class AdminService {
     };
   }
   async recent() {
+    const now = Date.now();
+    if (this.recentCache && now - this.recentCache.cachedAt < 15_000) {
+      return this.recentCache.data;
+    }
     const domains: Domain[] = ['project', 'service', 'course', 'post'];
     const rows = await Promise.all(
       domains.map(async (domain) =>
@@ -652,12 +736,22 @@ export class AdminService {
         ).map((x: any) => ({ ...x, type: domain })),
       ),
     );
-    return rows
+    const data = rows
       .flat()
-      .sort((a, b) => +new Date(b.updatedAt) - +new Date(a.updatedAt))
+      .sort(
+        (a: any, b: any) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+      )
       .slice(0, 10);
+    this.recentCache = { data, cachedAt: now };
+    return data;
   }
   async media(query: AdminListQueryDto) {
+    const cacheKey = `media:${query.page}:${query.limit}:${query.search || ''}:${query.sortOrder || ''}`;
+    const hit = adminCache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
+      return hit.data;
+    }
     const where = query.search
       ? {
           OR: [
@@ -676,16 +770,18 @@ export class AdminService {
           ],
         }
       : {};
-    const [data, total] = await this.prisma.$transaction([
+    const [data, total] = await Promise.all([
       this.prisma.media.findMany({
         where,
         skip: (query.page - 1) * query.limit,
         take: query.limit,
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: query.sortOrder },
       }),
       this.prisma.media.count({ where }),
     ]);
-    return pageResponse(data, total, query.page, query.limit);
+    const result = pageResponse(data, total, query.page, query.limit);
+    adminCache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
   }
   async mediaDetail(id: string) {
     const row = await this.prisma.media.findUnique({ where: { id } });
@@ -694,12 +790,14 @@ export class AdminService {
   }
   async updateMedia(id: string, input: UpdateMediaDto) {
     await this.mediaDetail(id);
-    return this.prisma.media.update({ where: { id }, data: input });
+    const res = await this.prisma.media.update({ where: { id }, data: input });
+    invalidateAdminCache('media');
+    return res;
   }
   async uploadMedia(file: Express.Multer.File, alt?: string) {
     const stored = await this.storage.save(file);
     try {
-      return await this.prisma.media.create({
+      const res = await this.prisma.media.create({
         data: {
           ...stored,
           filename: file.originalname,
@@ -708,6 +806,8 @@ export class AdminService {
           alt: alt?.trim() || null,
         },
       });
+      invalidateAdminCache('media');
+      return res;
     } catch (error) {
       await this.storage.remove(stored.storageKey);
       throw error;
@@ -717,5 +817,6 @@ export class AdminService {
     const row = await this.mediaDetail(id);
     await this.storage.remove(row.storageKey);
     await this.prisma.media.delete({ where: { id } });
+    invalidateAdminCache('media');
   }
 }
