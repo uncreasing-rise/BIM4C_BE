@@ -16,6 +16,7 @@ import { ApiExceptionFilter } from '../src/common/filters/api-exception.filter';
 
 const expressApp = express();
 let isInitialized = false;
+let initializationPromise: Promise<typeof expressApp> | undefined;
 
 function validationException(
   errors: ValidationError[],
@@ -35,66 +36,78 @@ function validationException(
 
 async function bootstrap() {
   if (!isInitialized) {
-    const app = await NestFactory.create(
-      AppModule,
-      new ExpressAdapter(expressApp),
-      {
-        bodyParser: false,
-        bufferLogs: true,
-      },
-    );
+    // Vercel can invoke the same cold-started function concurrently. Keep a
+    // single in-flight bootstrap promise so concurrent requests do not create
+    // multiple Nest applications (and multiple Prisma pools).
+    if (!initializationPromise) {
+      initializationPromise = (async () => {
+        const app = await NestFactory.create(
+          AppModule,
+          new ExpressAdapter(expressApp),
+          {
+            bodyParser: false,
+            bufferLogs: true,
+          },
+        );
 
-    const config = app.get(ConfigService);
-    const origins = (
-      config.get<string>('CORS_ORIGINS') ??
-      config.getOrThrow<string>('FRONTEND_URL')
-    )
-      .split(',')
-      .map((origin) => origin.trim())
-      .filter(Boolean);
+        const config = app.get(ConfigService);
+        const origins = (
+          config.get<string>('CORS_ORIGINS') ??
+          config.getOrThrow<string>('FRONTEND_URL')
+        )
+          .split(',')
+          .map((origin) => origin.trim())
+          .filter(Boolean);
 
-    app.use(helmet());
-    app.use(cookieParser());
-    app.use(json({ limit: '100kb' }));
-    app.use(urlencoded({ extended: false, limit: '100kb' }));
+        app.use(helmet());
+        app.use(cookieParser());
+        app.use(json({ limit: '100kb' }));
+        app.use(urlencoded({ extended: false, limit: '100kb' }));
 
-    // Filter out numeric query parameters added by Vercel's rewrite rule
-    app.use((request: Request, response: Response, next: NextFunction) => {
-      if (request.query) {
-        for (const key of Object.keys(request.query)) {
-          if (/^\d+$/.test(key)) {
-            delete request.query[key];
+        // Filter out numeric query parameters added by Vercel's rewrite rule
+        app.use((request: Request, response: Response, next: NextFunction) => {
+          if (request.query) {
+            for (const key of Object.keys(request.query)) {
+              if (/^\d+$/.test(key)) {
+                delete request.query[key];
+              }
+            }
           }
-        }
-      }
-      next();
-    });
+          next();
+        });
 
-    app.enableCors({
-      origin: origins,
-      methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Authorization', 'Content-Type', 'X-Request-ID'],
-      exposedHeaders: ['X-Request-ID'],
-      credentials: true,
-      maxAge: 86400,
-    });
+        app.enableCors({
+          origin: origins,
+          methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+          allowedHeaders: ['Authorization', 'Content-Type', 'X-Request-ID'],
+          exposedHeaders: ['X-Request-ID'],
+          credentials: true,
+          maxAge: 86400,
+        });
 
-    app.useGlobalPipes(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        stopAtFirstError: false,
-        exceptionFactory: validationException,
-      }),
-    );
+        app.useGlobalPipes(
+          new ValidationPipe({
+            transform: true,
+            whitelist: true,
+            forbidNonWhitelisted: true,
+            stopAtFirstError: false,
+            exceptionFactory: validationException,
+          }),
+        );
 
-    app.useGlobalFilters(new ApiExceptionFilter());
+        app.useGlobalFilters(new ApiExceptionFilter());
 
-    await app.init();
-    isInitialized = true;
+        await app.init();
+        isInitialized = true;
+        return expressApp;
+      })().catch((error) => {
+        // Allow a later invocation to retry if initialization failed.
+        initializationPromise = undefined;
+        throw error;
+      });
+    }
   }
-  return expressApp;
+  return initializationPromise ?? expressApp;
 }
 
 export default async function handler(req: any, res: any) {
