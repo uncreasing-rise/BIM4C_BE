@@ -10,6 +10,19 @@ import {
   type PageQueryDto,
 } from '../../common/pagination/page-query.dto';
 import { PrismaService } from '../../database/prisma.service';
+
+export interface PostResponse extends ContentResponse {
+  authorName: string | null;
+  category?: { id: string; name: string; slug: string } | null;
+}
+
+export interface PostCategoryResponse {
+  id: string;
+  name: string;
+  slug: string;
+  count: number;
+}
+
 interface CacheEntry<T> {
   data: T;
   cachedAt: number;
@@ -17,13 +30,17 @@ interface CacheEntry<T> {
 const cache = new Map<string, CacheEntry<unknown>>();
 const CACHE_TTL_MS = 120_000; // 2 minutes
 
+export function clearPostsCache(): void {
+  cache.clear();
+}
+
 @Injectable()
 export class PostsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll(
     query: PageQueryDto,
-  ): Promise<PageResponse<ContentResponse & { authorName: string | null }>> {
+  ): Promise<PageResponse<PostResponse>> {
     const page = Math.max(1, Number(query.page) || 1);
     const limit = Math.min(100, Math.max(1, Number(query.limit) || 10));
     const sortBy = query.sortBy || 'publishedAt';
@@ -32,7 +49,7 @@ export class PostsService {
     const cacheKey = `list:${page}:${limit}:${query.search || ''}:${query.category || ''}:${sortBy}:${sortOrder}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
-      return hit.data as PageResponse<ContentResponse & { authorName: string | null }>;
+      return hit.data as PageResponse<PostResponse>;
     }
 
     const where: Prisma.PostWhereInput = {
@@ -48,11 +65,21 @@ export class PostsService {
             ],
           }
         : {}),
-      ...(query.category ? { category: { slug: query.category } } : {}),
+      ...(query.category
+        ? {
+            category: {
+              OR: [
+                { slug: { equals: query.category, mode: 'insensitive' } },
+                { name: { contains: query.category, mode: 'insensitive' } },
+              ],
+            },
+          }
+        : {}),
     };
     const [rows, total] = await Promise.all([
       this.prisma.post.findMany({
         where,
+        include: { category: true },
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { [sortBy]: sortOrder },
@@ -60,7 +87,13 @@ export class PostsService {
       this.prisma.post.count({ where }),
     ]);
     const result = pageResponse(
-      rows.map((row) => ({ ...mapContent(row), authorName: row.authorName })),
+      rows.map((row) => ({
+        ...mapContent(row),
+        authorName: row.authorName,
+        category: row.category
+          ? { id: row.category.id, name: row.category.name, slug: row.category.slug }
+          : null,
+      })),
       total,
       page,
       limit,
@@ -69,22 +102,57 @@ export class PostsService {
     return result;
   }
 
-  async findBySlug(
-    slug: string,
-  ): Promise<ContentResponse & { authorName: string | null }> {
+  async findBySlug(slug: string): Promise<PostResponse> {
     const cacheKey = `slug:${slug}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
-      return hit.data as ContentResponse & { authorName: string | null };
+      return hit.data as PostResponse;
     }
 
     const row = await this.prisma.post.findFirst({
       where: { slug, status: ContentStatus.PUBLISHED, deletedAt: null },
+      include: { category: true },
     });
     if (!row) throw new NotFoundException('Post not found');
-    const result = { ...mapContent(row), authorName: row.authorName };
+    const result: PostResponse = {
+      ...mapContent(row),
+      authorName: row.authorName,
+      category: row.category
+        ? { id: row.category.id, name: row.category.name, slug: row.category.slug }
+        : null,
+    };
+    cache.set(cacheKey, { data: result, cachedAt: Date.now() });
+    return result;
+  }
+
+  async getCategories(): Promise<PostCategoryResponse[]> {
+    const cacheKey = 'categories:all';
+    const hit = cache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
+      return hit.data as PostCategoryResponse[];
+    }
+
+    const categories = await this.prisma.postCategory.findMany({
+      orderBy: { name: 'asc' },
+      include: {
+        _count: {
+          select: {
+            posts: {
+              where: { status: ContentStatus.PUBLISHED, deletedAt: null },
+            },
+          },
+        },
+      },
+    });
+    const result: PostCategoryResponse[] = categories.map((c) => ({
+      id: c.id,
+      name: c.name,
+      slug: c.slug,
+      count: c._count.posts,
+    }));
     cache.set(cacheKey, { data: result, cachedAt: Date.now() });
     return result;
   }
 }
+
 

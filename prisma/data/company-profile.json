@@ -3,244 +3,585 @@
   "source": "HSNL - BIM4C.pdf",
   "articles": [
     {
+      "slug": "quy-trinh-scan-to-bim-point-cloud-3d",
+      "title": "Scan-to-BIM Workflow: From 3D Point Clouds to As-Built Models",
+      "title_vi": "Quy trình Scan-to-BIM từ Dữ liệu Point Cloud 3D sang Mô hình Hoàn công",
+      "description": "Comprehensive guide on laser scanning technology, point cloud processing, and creating millimeter-accurate As-Built Revit models for renovation and heritage conservation.",
+      "description_vi": "Hướng dẫn toàn diện về công nghệ quét 3D Laser Scanning, xử lý đám mây điểm Point Cloud và xây dựng mô hình hoàn công As-Built Revit chuẩn xác từng milimet cho công trình cải tạo và di sản.",
+      "image": "/images/profile/bim-3d.webp",
+      "eyebrow": "SURVEY & SCAN-TO-BIM",
+      "eyebrow_vi": "KHẢO SÁT & SCAN-TO-BIM",
+      "category": "Khảo sát & Scan-to-BIM",
+      "categorySlug": "khao-sat-scan-to-bim",
+      "authorName": "BIM4C Specialist Team",
+      "highlights": [
+        "Terrestrial 3D Laser Scanning with millimeter accuracy (FARO, Leica RTC360)",
+        "Point cloud filtering, registration and geo-referencing in Leica Cyclone and Autodesk ReCap",
+        "As-Built modeling in Autodesk Revit at LOD 300 - LOD 400 for architectural and MEP systems",
+        "Clash and deviation analysis comparing physical site conditions against original design models"
+      ],
+      "highlights_vi": [
+        "Khảo sát hiện trạng bằng máy quét 3D Laser Scanner độ chính xác milimet (FARO, Leica RTC360)",
+        "Lọc nhiễu, ghép trạm và gán tọa độ chuẩn lưới khống chế trong Leica Cyclone và Autodesk ReCap",
+        "Dựng mô hình hoàn công As-Built trên Autodesk Revit đạt mức độ chi tiết LOD 300 - LOD 400",
+        "Kiểm tra sai lệch kích thước thực tế so với bản vẽ thiết kế ban đầu và phát hiện biến dạng kết cấu"
+      ],
+      "sections": [
+        {
+          "title": "Field Data Capture & 3D Laser Scanning",
+          "body": "Modern Scan-to-BIM workflows begin with high-definition optical and LiDAR scanners collecting millions of coordinate points per second. Establishing high-accuracy control benchmarks on site ensures registration errors remain below 2-3 mm across large industrial facilities and heritage structures.",
+          "unorderedList": [
+            "Establish unified project coordinate system using total station control points",
+            "Perform multiple scan stations with optimal overlap (minimum 30-40%) to eliminate occlusions",
+            "Capture HDR photographic textures for realistic material rendering and inspection"
+          ]
+        },
+        {
+          "title": "Point Cloud Registration & Data Preparation",
+          "body": "Raw scans are processed to remove noise, floating artifacts, and moving elements before indexing. The point cloud is segmented into logical building zones and subsampled to balance graphics performance with spatial accuracy during model authoring in Revit.",
+          "unorderedList": [
+            "Target-based and cloud-to-cloud registration verification with strict RMS error limits",
+            "Export structured RCS/RCP formats partitioned by building level and disciplinary scope",
+            "Perform surface plane detection and edge extraction to guide model geometry creation"
+          ]
+        },
+        {
+          "title": "Parametric As-Built Modeling & Quality Assurance",
+          "body": "Revit native families are modeled directly against the dense point cloud cross-sections. Specialized deviation heatmaps (Navisworks / CloudCompare) verify that wall deflections, sagging beams, and conduit pathways reflect real-world site conditions with documented tolerances."
+        }
+      ],
+      "sections_vi": [
+        {
+          "title": "Khảo sát thực địa và Thu thập Dữ liệu Quét 3D",
+          "body": "Quy trình Scan-to-BIM hiện đại bắt đầu bằng việc sử dụng thiết bị quét 3D Terrestrial Laser Scanner (TLS) thu thập hàng triệu điểm ảnh mỗi giây. Việc thiết lập hệ thống lưới mốc khống chế trắc địa nghiêm ngặt tại công trường giúp sai số ghép trạm luôn được kiểm soát dưới 2-3mm đối với nhà máy công nghiệp và công trình di sản.",
+          "unorderedList": [
+            "Đo lưới tọa độ chuẩn quốc gia VN-2000 bằng máy toàn đạc điện tử",
+            "Bố trí vị trí đặt trạm quét với độ phủ chồng lấn tối thiểu 30-40% nhằm triệt tiêu điểm mù",
+            "Chụp ảnh toàn cảnh HDR màu thực tế phục vụ gán vân bề mặt và phân tích trực quan hiện trạng"
+          ]
+        },
+        {
+          "title": "Xử lý, Ghép Trạm và Tiền Xử lý Đám mây điểm Point Cloud",
+          "body": "Dữ liệu thô từ các trạm quét được đưa vào phần mềm chuyên dụng (Leica Cyclone, Autodesk ReCap) để loại bỏ nhiễu, vật thể di chuyển và người qua lại. Đám mây điểm sau đó được chia lưới theo tầng, khu vực chức năng nhằm tối ưu hóa hiệu năng phần cứng máy tính khi import vào môi trường Revit.",
+          "unorderedList": [
+            "Ghép nối trạm quét kết hợp giữa tọa độ mục tiêu (Target) và thuật toán Cloud-to-Cloud",
+            "Xuất định dạng RCP/RCS phân tách theo từng cốt tầng và bộ môn phục vụ dựng hình",
+            "Kiểm tra mặt phẳng tham chiếu, cao độ dầm sàn và tim trục kiến trúc kết cấu hiện trạng"
+          ]
+        },
+        {
+          "title": "Dựng Mô hình Hoàn công As-Built & Kiểm soát Dung sai",
+          "body": "Các cấu kiện Revit được mô hình hóa bám sát tiết diện cắt ngang của Point Cloud. Bản đồ nhiệt kiểm tra sai lệch (Deviation Analysis) giúp chủ đầu tư và ban quản lý xác định chính xác vị trí võng sàn, nghiêng tường và độ xê dịch vị trí ống ngầm so với thiết kế lý thuyết."
+        }
+      ],
+      "seoTitle": "Quy trình Scan-to-BIM từ Point Cloud 3D sang Mô hình Hoàn công | BIM4C",
+      "seoTitle_vi": "Quy trình Scan-to-BIM từ Point Cloud 3D sang Mô hình Hoàn công | BIM4C",
+      "seoDescription": "Tìm hiểu quy trình Scan-to-BIM chuyên sâu từ 3D Laser Scanning, xử lý dữ liệu Point Cloud đến mô hình As-Built Revit LOD 300-400 chính xác từng mm.",
+      "seoDescription_vi": "Tìm hiểu quy trình Scan-to-BIM chuyên sâu từ 3D Laser Scanning, xử lý dữ liệu Point Cloud đến mô hình As-Built Revit LOD 300-400 chính xác từng mm."
+    },
+    {
+      "slug": "tieu-chuan-bim-iso-19650-moi-truong-du-lieu-chung-cde",
+      "title": "ISO 19650 Standards & Common Data Environment (CDE) Strategy",
+      "title_vi": "Tiêu chuẩn BIM ISO 19650 & Chiến lược Xây dựng Môi trường Dữ liệu Chung (CDE)",
+      "description": "How to structure EIR, BEP, and deploy a Common Data Environment compliant with ISO 19650-1 and ISO 19650-2 for large-scale infrastructure and building projects.",
+      "description_vi": "Cách thiết lập yêu cầu thông tin EIR, kế hoạch thực thi BEP và vận hành Môi trường dữ liệu chung CDE chuẩn ISO 19650-1 và ISO 19650-2 cho dự án xây dựng.",
+      "image": "/images/profile/hoa-xuan.webp",
+      "eyebrow": "PROCESSES & STANDARDS",
+      "eyebrow_vi": "QUY TRÌNH & TIÊU CHUẨN",
+      "category": "Quy trình & Tiêu chuẩn",
+      "categorySlug": "quy-trinh-tieu-chuan",
+      "authorName": "BIM4C Specialist Team",
+      "highlights": [
+        "ISO 19650 information management principles across design and delivery stages",
+        "Structuring Exchange Information Requirements (EIR) and BIM Execution Plans (BEP)",
+        "Information state workflows: Work In Progress (WIP) -> SHARED -> PUBLISHED -> ARCHIVED",
+        "Deployment on Autodesk Construction Cloud (ACC), Trimble Connect and BIM Track"
+      ],
+      "highlights_vi": [
+        "Nguyên tắc quản trị thông tin chuẩn ISO 19650 xuyên suốt giai đoạn thiết kế và thi công",
+        "Xây dựng khung Yêu cầu Thông tin Trao đổi (EIR) và Kế hoạch Thực thi BIM (BEP)",
+        "Quy trình luân chuyển trạng thái thông tin: Đang xử lý (WIP) -> Chia sẻ (SHARED) -> Xuất bản (PUBLISHED) -> Lưu trữ (ARCHIVED)",
+        "Ứng dụng thực tế trên nền tảng Autodesk Construction Cloud (ACC), Trimble Connect và OpenBIM"
+      ],
+      "sections": [
+        {
+          "title": "The Strategic Foundation of ISO 19650",
+          "body": "ISO 19650 establishes the international benchmark for managing information throughout the lifecycle of built assets using BIM. It standardizes naming conventions, role designations, and milestone-based information exchange deliverables across multidisciplinary teams.",
+          "unorderedList": [
+            "Organizational Information Requirements (OIR) mapping into Project Information Requirements (PIR)",
+            "Detailed Exchange Information Requirements (EIR) specifying Level of Information Need (LOIN)",
+            "Pre-contract and Post-contract BIM Execution Plan (BEP) alignment with lead appointed parties"
+          ]
+        },
+        {
+          "title": "Common Data Environment (CDE) Workflow Architecture",
+          "body": "A compliant CDE is not simply cloud storage; it enforces governance, revision control, and strict status containers. Every model, drawing, and schedule moves through gated approvals before being consumed by project participants.",
+          "unorderedList": [
+            "WIP Container: Unchecked internal development by authoring disciplines",
+            "SHARED Container: Verified models for coordination and clash inspection",
+            "PUBLISHED Container: Authorized information for procurement, fabrication, and construction",
+            "ARCHIVE Container: Audit trail of all milestone packages and as-built records"
+          ]
+        },
+        {
+          "title": "Information Security & Intellectual Property Governance",
+          "body": "Implementing granular permissions based on RACI matrices safeguards sensitive commercial data while enabling seamless collaboration across architects, structural engineers, and trade contractors."
+        }
+      ],
+      "sections_vi": [
+        {
+          "title": "Khung Tiêu chuẩn Quốc tế ISO 19650 trong Quản lý Dự án",
+          "body": "Bộ tiêu chuẩn ISO 19650 xác lập chuẩn mực quốc tế về quản lý và số hóa thông tin công trình trong suốt vòng đời dự án. Tiêu chuẩn này đồng bộ hóa quy tắc đặt tên tệp, phân định vai trò trách nhiệm và mốc chuyển giao dữ liệu giữa Chủ đầu tư, Ban QLDA, Tư vấn thiết kế và Tổng thầu.",
+          "unorderedList": [
+            "Chuyển hóa Yêu cầu Thông tin Doanh nghiệp (OIR) thành Yêu cầu Thông tin Dự án (PIR)",
+            "Biên soạn Hồ sơ Yêu cầu Trao đổi Thông tin (EIR) với Mức độ Nhu cầu Thông tin (LOIN) rõ ràng",
+            "Lập và chuẩn hóa Kế hoạch Thực thi BIM (BEP) trước và sau khi trao thầu cho các nhà thầu chính"
+          ]
+        },
+        {
+          "title": "Kiến trúc Luồng Dữ liệu trên Môi trường CDE",
+          "body": "Môi trường Dữ liệu Chung CDE không đơn thuần là kho lưu trữ đám mây, mà là hệ thống kiểm soát quyền hạn, phiên bản và trạng thái pháp lý của từng tài liệu. Mọi mô hình 3D và bản vẽ 2D đều phải trải qua các cổng kiểm duyệt nghiêm ngặt.",
+          "unorderedList": [
+            "Trạng thái WIP: Nội bộ từng bộ môn tự phát triển và hoàn thiện dữ liệu",
+            "Trạng thái SHARED: Dữ liệu đã được kiểm tra nội bộ, chia sẻ cho các bộ môn khác phối hợp va chạm",
+            "Trạng thái PUBLISHED: Hồ sơ đã được Tư vấn Giám sát và Chủ đầu tư phê duyệt để thi công",
+            "Trạng thái ARCHIVED: Toàn bộ lịch sử các mốc bàn giao được lưu trữ phục vụ tra cứu và kiểm toán"
+          ]
+        },
+        {
+          "title": "Bảo mật Dữ liệu và Phân quyền Ma trận RACI",
+          "body": "Thiết lập ma trận phân quyền chi tiết theo vai trò giúp bảo vệ quyền sở hữu trí tuệ, tránh xung đột bản quyền thiết kế và đảm bảo tính minh bạch tối đa trong mọi quyết định phê duyệt dự án."
+        }
+      ],
+      "seoTitle": "Tiêu chuẩn BIM ISO 19650 & Môi trường Dữ liệu Chung CDE | BIM4C",
+      "seoTitle_vi": "Tiêu chuẩn BIM ISO 19650 & Môi trường Dữ liệu Chung CDE | BIM4C",
+      "seoDescription": "Khám phá cách áp dụng tiêu chuẩn ISO 19650, xây dựng EIR, BEP và vận hành môi trường CDE tối ưu cho dự án xây dựng hiện đại.",
+      "seoDescription_vi": "Khám phá cách áp dụng tiêu chuẩn ISO 19650, xây dựng EIR, BEP và vận hành môi trường CDE tối ưu cho dự án xây dựng hiện đại."
+    },
+    {
+      "slug": "tu-dong-hoa-bim-revit-api-dynamo-python",
+      "title": "BIM Automation with Revit API, Dynamo & Python Programming",
+      "title_vi": "Tự động hóa BIM với Revit API, Dynamo và Lập trình Python",
+      "description": "Accelerate BIM production by up to 70% using computational design, custom Revit add-ins, automated sheet generation, and data extraction scripts.",
+      "description_vi": "Tăng tốc độ sản xuất mô hình và hồ sơ bản vẽ lên đến 70% nhờ tự động hóa tính toán với Revit API, script Dynamo chuyên dụng và lập trình Python.",
+      "image": "/images/profile/bim-2d.webp",
+      "eyebrow": "TECHNOLOGY & AUTOMATION",
+      "eyebrow_vi": "CÔNG NGHỆ & TỰ ĐỘNG HÓA",
+      "category": "Công nghệ & Tự động hóa",
+      "categorySlug": "cong-nghe-tu-dong-hoa",
+      "authorName": "BIM4C Specialist Team",
+      "highlights": [
+        "Revit API plugin development in C# and pyRevit for rapid feature deployment",
+        "Visual programming with Dynamo for parametric modeling and geometry optimization",
+        "Automated quantity takeoff (QTO) and bi-directional synchronization with Microsoft Excel",
+        "Batch creation of floor plans, section cuts, dimensions, and sheet indexing"
+      ],
+      "highlights_vi": [
+        "Phát triển plugin Revit API bằng C# và nền tảng pyRevit để tùy biến chức năng theo dự án",
+        "Lập trình trực quan với Dynamo cho các bài toán tối ưu hóa hình học phức tạp và chia lưới cấu kiện",
+        "Tự động trích xuất bảng thống kê khối lượng (QTO) và đồng bộ hai chiều với Microsoft Excel",
+        "Tự động tạo hàng loạt mặt bằng, mặt cắt, ghi kích thước cấu kiện và sắp xếp khung tên bản vẽ"
+      ],
+      "sections": [
+        {
+          "title": "The Power of Computational Design & API Automation",
+          "body": "Repetitive modeling tasks and manual annotation consume up to 40% of engineering hours on large projects. By unlocking the Revit API and leveraging visual programming scripts in Dynamo, engineering teams can eliminate human error and focus on high-value design decisions.",
+          "unorderedList": [
+            "Parametric rule-based element placement along curves, grids, and terrain surfaces",
+            "Batch renaming of families, types, and parameter values across massive federated models",
+            "Automated rebar detailing and schedule generation for complex concrete geometries"
+          ]
+        },
+        {
+          "title": "Building Custom Tools with Python & pyRevit",
+          "body": "pyRevit allows rapid prototyping of productivity tools directly within the Revit ribbon. Scripts written in Python can query model elements, renumber doors/windows automatically, and perform instantaneous QA/QC parameter validation before milestone submissions.",
+          "unorderedList": [
+            "Instant detection of missing parameter metadata and naming discrepancies",
+            "Automated sheet layout generation based on bounding-box calculations",
+            "Exporting model data directly to structured JSON/SQL formats for web analytics"
+          ]
+        },
+        {
+          "title": "Scalable Enterprise Add-Ins with C# .NET",
+          "body": "For enterprise-grade deployment across dozens of concurrent projects, compiled C# plugins deliver optimal execution speed, thread safety, and seamless integration with corporate databases and cloud endpoints."
+        }
+      ],
+      "sections_vi": [
+        {
+          "title": "Sức mạnh của Lập trình Tự động hóa và Thiết kế Tính toán",
+          "body": "Các thao tác dựng hình lặp đi lặp lại và ghi chú kích thước thủ công thường chiếm tới 40% thời gian của kỹ sư trên các dự án quy mô lớn. Ứng dụng Revit API và Dynamo giúp giải phóng kỹ sư khỏi các công việc thủ công đơn điệu, triệt tiêu sai sót do con người và tối ưu hóa thời gian thực hiện dự án.",
+          "unorderedList": [
+            "Bố trí cấu kiện tham số tự động bám theo tim tuyến đường ray, cầu đường và địa hình trắc địa",
+            "Đổi tên hàng loạt Family, Type và thuộc tính tham số trên toàn bộ các file dự án liên kết",
+            "Tự động tạo chi tiết cốt thép và trích xuất bảng thống kê thép cho kết cấu bê tông phức tạp"
+          ]
+        },
+        {
+          "title": "Phát triển Công cụ Tùy biến với Python & Nền tảng pyRevit",
+          "body": "Nền tảng pyRevit cho phép phát triển và triển khai nhanh chóng các nút lệnh hữu ích ngay trên thanh công cụ của Revit. Các kịch bản viết bằng Python có thể kiểm tra dữ liệu đầu vào, tự động đánh số phòng/cửa, và kiểm tra tính toàn vẹn của mô hình trước khi xuất hồ sơ.",
+          "unorderedList": [
+            "Quét phát hiện tức thời các đối tượng thiếu thuộc tính hoặc sai lệch quy ước đặt tên",
+            "Tự động tính toán khung nhìn và căn chỉnh các mặt bằng lên khung tên bản vẽ chuẩn xác",
+            "Xuất dữ liệu mô hình trực tiếp sang định dạng JSON/Excel phục vụ báo cáo quản trị"
+          ]
+        },
+        {
+          "title": "Xây dựng Plugin Chuyên nghiệp Chuẩn C# .NET cho Doanh nghiệp",
+          "body": "Đối với các giải pháp quy mô lớn cần bảo mật và tốc độ xử lý nhanh nhất, việc phát triển Add-in bằng ngôn ngữ C# .NET giúp doanh nghiệp chuẩn hóa quy trình làm việc và tích hợp sâu với hệ thống ERP quản lý dự án."
+        }
+      ],
+      "seoTitle": "Tự động hóa BIM với Revit API, Dynamo & Python | BIM4C",
+      "seoTitle_vi": "Tự động hóa BIM với Revit API, Dynamo & Python | BIM4C",
+      "seoDescription": "Khám phá giải pháp tự động hóa BIM bằng Revit API, Dynamo và Python giúp tiết kiệm 70% thời gian triển khai mô hình và xuất bản vẽ.",
+      "seoDescription_vi": "Khám phá giải pháp tự động hóa BIM bằng Revit API, Dynamo và Python giúp tiết kiệm 70% thời gian triển khai mô hình và xuất bản vẽ."
+    },
+    {
+      "slug": "phoi-hop-bim-mep-xu-ly-va-cham-clash-detection",
+      "title": "Advanced MEP BIM Coordination & Clash Detection Workflows",
+      "title_vi": "Phối hợp BIM Cơ Điện MEP & Xử lý Va chạm Clash Detection Chuyên sâu",
+      "description": "Master MEP clash detection, multi-trade coordination matrices, opening reservations, and digital issue tracking across Navisworks, Revizto, and Solibri.",
+      "description_vi": "Làm chủ quy trình phối hợp cơ điện MEP, lập ma trận ưu tiên xung đột, đặt lỗ mở xuyên dầm sàn Sleeve/Opening và quản lý lỗi va chạm với Navisworks, Revizto và Solibri.",
+      "image": "/images/profile/bim-3d.webp",
+      "eyebrow": "COORDINATION & CLASH DETECTION",
+      "eyebrow_vi": "PHỐI HỢP & XỬ LÝ VA CHẠM",
+      "category": "Phối hợp & Xử lý va chạm",
+      "categorySlug": "phoi-hop-bim-mep",
+      "authorName": "BIM4C Specialist Team",
+      "highlights": [
+        "Multi-trade spatial priority hierarchy (Gravity drainage -> HVAC ducts -> Pressurized pipes -> Cable trays)",
+        "Automated clash test rule matrix in Autodesk Navisworks and Solibri Model Checker",
+        "Sleeve and wall/slab opening reservation workflows synchronized with structural engineers",
+        "BCF-based issue tracking and resolution tracking with Revizto and BIM Track"
+      ],
+      "highlights_vi": [
+        "Thiết lập thang bậc ưu tiên không gian không gian kỹ thuật (Ống thoát tự chảy -> Ống gió lớn -> Ống cấp áp lực -> Thang máng cáp)",
+        "Thiết lập bộ quy tắc kiểm tra va chạm tự động (Clash Matrix) trong Navisworks và Solibri",
+        "Quy trình phối hợp đặt lỗ mở xuyên sàn/dầm (Sleeve/Opening) đồng bộ với kỹ sư kết cấu",
+        "Quản lý vòng đời lỗi va chạm qua định dạng mở BCF trên Revizto và BIM Track"
+      ],
+      "sections": [
+        {
+          "title": "MEP Spatial Hierarchy & Routing Principles",
+          "body": "Effective MEP coordination avoids trial-and-error by adhering strictly to physical routing hierarchy. Slope-dependent gravity drainage pipes take first priority, followed by large ductwork with insulation clearances, pressurized domestic water/fire protection piping, and electrical cable containment.",
+          "unorderedList": [
+            "Enforce dedicated utility corridors above corridors and service lobbies",
+            "Maintain essential maintenance access zones for valves, VAV boxes, and dampers",
+            "Include insulation thickness and seismic hanger spacing within clash test geometries"
+          ]
+        },
+        {
+          "title": "Clash Matrix Strategy & Noise Reduction",
+          "body": "Running indiscriminate clash tests results in thousands of false positives. Creating tailored test sets separated by discipline, level, and clearance type allows coordination teams to focus immediately on high-severity clashes that jeopardize construction schedules.",
+          "unorderedList": [
+            "Hard clashes: Physical overlap of solid geometries requiring rerouting",
+            "Clearance clashes: Violations of required insulation, maintenance, or fire separation space",
+            "Duplicate element detection: Unintentional overlapping copies in authoring models"
+          ]
+        },
+        {
+          "title": "Closing the Loop with BCF Issue Collaboration",
+          "body": "Exporting viewpoints via OpenBIM BIM Collaboration Format (BCF) delivers pinpoint camera angles and element GUIDs directly to designers' Revit interfaces, reducing turnaround times from weeks to hours."
+        }
+      ],
+      "sections_vi": [
+        {
+          "title": "Nguyên tắc Thứ tự Ưu tiên Không gian Cơ Điện MEP",
+          "body": "Phối hợp cơ điện hiệu quả đòi hỏi sự tuân thủ nghiêm ngặt ma trận ưu tiên không gian tuyến ống. Tuyến ống thoát nước tự chảy phụ thuộc độ dốc luôn được ưu tiên đi thẳng và định vị đầu tiên, tiếp theo là hệ thống ống gió kích thước lớn, ống cấp nước áp lực, ống chữa cháy và cuối cùng là hệ thống thang máng cáp điện.",
+          "unorderedList": [
+            "Quy hoạch không gian hành lang kỹ thuật trần trục chính nhằm tập trung tuyến ống",
+            "Bảo đảm khoảng hở thao tác bảo trì van, hộp VAV và cửa thăm kỹ thuật đạt chuẩn",
+            "Tính toán đầy đủ lớp bảo ôn cách nhiệt và ty treo giá đỡ chống rung khi kiểm tra va chạm"
+          ]
+        },
+        {
+          "title": "Xây dựng Ma trận Va chạm Clash Matrix & Lọc Bỏ Nhiễu",
+          "body": "Việc chạy kiểm tra va chạm tổng thể không chọn lọc sẽ sinh ra hàng nghìn xung đột giả. Xây dựng bộ quy tắc lọc theo từng cặp bộ môn, phân vùng thi công và khoảng dung sai kích thước giúp đội ngũ BIM tập trung giải quyết ngay các va chạm nghiêm trọng có nguy cơ gây đình trệ công trường.",
+          "unorderedList": [
+            "Va chạm cứng (Hard Clash): Giao cắt vật lý giữa các cấu kiện (ví dụ: ống xuyên dầm bê tông)",
+            "Va chạm mềm (Clearance Clash): Vi phạm khoảng cách an toàn điện hoặc khoảng hở thi công lắp đặt",
+            "Phát hiện cấu kiện trùng lặp: Các đối tượng bị vẽ đè lên nhau giữa các file liên kết"
+          ]
+        },
+        {
+          "title": "Theo dõi và Đóng Lỗi Va chạm bằng Định dạng Mở BCF",
+          "body": "Sử dụng định dạng chuẩn mở BCF giúp chuyển giao chính xác góc nhìn và mã định danh cấu kiện (GUID) về thẳng màn hình làm việc của kỹ sư thiết kế trên Revit, rút ngắn thời gian xử lý hồ sơ từ nhiều ngày xuống chỉ vài giờ."
+        }
+      ],
+      "seoTitle": "Phối hợp BIM MEP & Xử lý Va chạm Clash Detection | BIM4C",
+      "seoTitle_vi": "Phối hợp BIM MEP & Xử lý Va chạm Clash Detection | BIM4C",
+      "seoDescription": "Quy trình phối hợp BIM cơ điện MEP, ma trận va chạm Clash Matrix và giải pháp xử lý xung đột không gian trần kỹ thuật tối ưu.",
+      "seoDescription_vi": "Quy trình phối hợp BIM cơ điện MEP, ma trận va chạm Clash Matrix và giải pháp xử lý xung đột không gian trần kỹ thuật tối ưu."
+    },
+    {
+      "slug": "ung-dung-bim-4d-tien-do-5d-chi-phi-quan-ly-du-an",
+      "title": "4D Schedule Simulation & 5D Cost Estimation in BIM Project Management",
+      "title_vi": "Ứng dụng BIM 4D Tiến độ và BIM 5D Chi phí trong Quản lý Dự án",
+      "description": "Integrate 3D models with construction schedules (4D) and bill of quantities (5D) to optimize cash flow, simulate logistics, and reduce budget overruns.",
+      "description_vi": "Tích hợp mô hình 3D với tiến độ thi công (4D) và bóc tách khối lượng dự toán (5D) để tối ưu hóa dòng tiền, mô phỏng mặt bằng thi công và kiểm soát ngân sách.",
+      "image": "/images/profile/bim-4d.webp",
+      "eyebrow": "PROJECT MANAGEMENT BIM",
+      "eyebrow_vi": "QUẢN LÝ DỰ ÁN BIM",
+      "category": "Quản lý Dự án BIM",
+      "categorySlug": "quan-ly-du-an-bim",
+      "authorName": "BIM4C Specialist Team",
+      "highlights": [
+        "Linking WBS tasks from Oracle Primavera P6 / MS Project directly to 3D geometry",
+        "Visual simulation of site logistics, tower crane coverage, and temporary shoring sequences",
+        "Automated 5D Quantity Takeoff linked with unit cost databases for dynamic budget tracking",
+        "Earned Value Management (EVM) visual reporting comparing Planned vs. Actual progress"
+      ],
+      "highlights_vi": [
+        "Liên kết cây phân việc WBS từ Oracle Primavera P6 / MS Project trực tiếp vào mô hình 3D",
+        "Mô phỏng trực quan biện pháp thi công, bán kính cẩu tháp, dàn giáo và luân chuyển cốp pha",
+        "Bóc tách khối lượng tự động 5D kết nối cơ sở dữ liệu đơn giá phục vụ kiểm soát ngân sách",
+        "Báo cáo tiến độ trực quan theo phương pháp Quản lý Giá trị Thu được (EVM: Planned vs. Actual)"
+      ],
+      "sections": [
+        {
+          "title": "BIM 4D: Visualizing Time & Construction Sequences",
+          "body": "Traditional Gantt charts fail to communicate spatial bottlenecks on congested construction sites. BIM 4D links schedule activities directly to geometric objects, allowing project directors to rehearse critical path milestones and verify crane placement before breaking ground.",
+          "unorderedList": [
+            "Simulate sub-structure excavation, diaphragm wall installation, and top-down casting phases",
+            "Identify site logistics conflicts between concurrent trade contractors",
+            "Produce compelling milestone videos for owner briefings and stakeholder alignment"
+          ]
+        },
+        {
+          "title": "BIM 5D: Precision Quantity Takeoff & Cash Flow Dynamics",
+          "body": "By attaching unit rates to model element properties, estimators generate instant bills of quantities that update dynamically whenever design adjustments occur. Linking 4D time data with 5D cost parameters enables predictive cash-flow forecasting month by month.",
+          "unorderedList": [
+            "Automated volume extraction for concrete pours, formwork areas, and rebar tonnage",
+            "Real-time cost variation analysis when architectural finishes or structural sections change",
+            "Transparent subcontractor payment certification tied to verified on-site installation status"
+          ]
+        },
+        {
+          "title": "Driving Project Predictability & Mitigating Claims",
+          "body": "The combination of 4D and 5D empowers project managers with undeniable visual evidence for change order verification, preventing contentious delay claims and keeping capital delivery on budget."
+        }
+      ],
+      "sections_vi": [
+        {
+          "title": "BIM 4D: Trực quan hóa Thời gian và Trình tự Thi công",
+          "body": "Biểu đồ Gantt truyền thống không thể hiện được các nút thắt về không gian trên công trường chật hẹp. BIM 4D kết nối các đầu mục công việc với cấu kiện 3D tương ứng, giúp Ban điều hành dự án rà soát các đường găng tiến độ, kiểm tra vùng hoạt động của cẩu tháp và mặt bằng tập kết vật tư trước khi thi công.",
+          "unorderedList": [
+            "Mô phỏng biện pháp đào đất, thi công tường vây và đổ bê tông theo phương pháp Top-down",
+            "Phát hiện sớm các xung đột mặt bằng giữa các nhà thầu thi công đồng thời",
+            "Xuất video mô phỏng tiến độ trực quan phục vụ báo cáo Chủ đầu tư và các bên liên quan"
+          ]
+        },
+        {
+          "title": "BIM 5D: Bóc tách Khối lượng Chuẩn xác & Dự báo Dòng tiền",
+          "body": "Bằng việc gán mã định mức và đơn giá vào các thuộc tính cấu kiện, kỹ sư dự toán có thể trích xuất khối lượng tự động và cập nhật tức thời mỗi khi bản vẽ có thay đổi. Sự kết hợp giữa thời gian (4D) và chi phí (5D) tạo ra biểu đồ kế hoạch giải ngân và dòng tiền chi tiết theo từng tháng.",
+          "unorderedList": [
+            "Bóc tách tự động thể tích bê tông, diện tích ván khuôn và khối lượng thép theo từng phân đợt",
+            "Đánh giá tác động chi phí tức thời khi thay đổi phương án vật liệu hoàn thiện",
+            "Xác nhận khối lượng nghiệm thu thanh toán cho nhà thầu phụ minh bạch dựa trên mô hình"
+          ]
+        },
+        {
+          "title": "Nâng cao Tính Dự báo & Kiểm soát Rủi ro Phát sinh",
+          "body": "Ứng dụng đồng thời BIM 4D và 5D cung cấp cơ sở dữ liệu số tin cậy để đánh giá các phát sinh ngoài hợp đồng, hạn chế tối đa tranh chấp và giữ cho dự án luôn hoàn thành trong giới hạn ngân sách được duyệt."
+        }
+      ],
+      "seoTitle": "Ứng dụng BIM 4D Tiến độ & 5D Chi phí trong Dự án | BIM4C",
+      "seoTitle_vi": "Ứng dụng BIM 4D Tiến độ & 5D Chi phí trong Dự án | BIM4C",
+      "seoDescription": "Tìm hiểu cách ứng dụng BIM 4D mô phỏng tiến độ thi công và BIM 5D quản lý chi phí dự toán giúp tối ưu hóa ngân sách và dòng tiền công trình.",
+      "seoDescription_vi": "Tìm hiểu cách ứng dụng BIM 4D mô phỏng tiến độ thi công và BIM 5D quản lý chi phí dự toán giúp tối ưu hóa ngân sách và dòng tiền công trình."
+    },
+    {
+      "slug": "digital-twin-bim-7d-quan-ly-van-hanh-cong-trinh",
+      "title": "Digital Twins & BIM 7D for Smart Building and Facility Management",
+      "title_vi": "Dữ liệu Tài sản Số & Digital Twin trong Vận hành Tòa nhà Thông minh (BIM 7D)",
+      "description": "Bridge the gap between construction handover and facility operations using COBie data standards, IoT sensor integration, and predictive maintenance twins.",
+      "description_vi": "Kết nối dữ liệu từ giai đoạn bàn giao hoàn công sang quản lý vận hành tòa nhà thông qua chuẩn dữ liệu COBie, tích hợp cảm biến IoT và bảo trì dự đoán.",
+      "image": "/images/profile/bim-7d.webp",
+      "eyebrow": "OPERATIONS & DIGITAL TWIN",
+      "eyebrow_vi": "VẬN HÀNH & DIGITAL TWIN",
+      "category": "Vận hành & Digital Twin",
+      "categorySlug": "van-hanh-digital-twin",
+      "authorName": "BIM4C Specialist Team",
+      "highlights": [
+        "COBie (Construction Operations Building Information Exchange) data structuring and validation",
+        "Bi-directional integration between BIM models, BMS (Building Management System) and IoT sensors",
+        "Predictive maintenance workflows reducing equipment downtime and energy consumption",
+        "Interactive 3D facility operations dashboards for property managers and owners"
+      ],
+      "highlights_vi": [
+        "Chuẩn hóa và thẩm định cơ sở dữ liệu COBie phục vụ bàn giao dữ liệu vận hành tài sản",
+        "Tích hợp hai chiều giữa mô hình BIM, hệ thống điều khiển tòa nhà BMS và cảm biến thông minh IoT",
+        "Thiết lập quy trình bảo trì dự đoán (Predictive Maintenance) giúp giảm thời gian dừng thiết bị và tiết kiệm năng lượng",
+        "Giao diện Dashboard 3D trực quan dành cho ban quản lý tòa nhà và chủ sở hữu tài sản"
+      ],
+      "sections": [
+        {
+          "title": "Transitioning from As-Built BIM to Digital Twins",
+          "body": "A digital twin extends beyond static 3D models by connecting live telemetric data streams from physical equipment. When AHUs, chillers, and energy meters transmit real-time performance indicators to the 3D model, facilities teams gain instant visibility into building health.",
+          "unorderedList": [
+            "COBie parameter enrichment: Serial numbers, warranty expiration dates, and maintenance schedules",
+            "Spatial asset mapping linking equipment tags directly to operations manuals and spare-part catalogs",
+            "Real-time occupancy and indoor air quality tracking through distributed environmental sensors"
+          ]
+        },
+        {
+          "title": "Energy Optimization & Predictive Maintenance",
+          "body": "Rather than relying on reactive repairs when equipment fails, a digital twin utilizes machine learning to identify anomalous vibration, pressure drops, or excessive power draw before catastrophic failure occurs.",
+          "unorderedList": [
+            "Automated work order generation dispatched directly to technicians' mobile devices",
+            "Historical energy benchmarking identifying underperforming zones and thermal leaks",
+            "Lifecycle replacement cost modeling for long-term capital expenditure budgeting"
+          ]
+        },
+        {
+          "title": "Maximizing Lifecycle Return on Investment (ROI)",
+          "body": "With over 75% of a building's total lifecycle cost incurred during the operational phase, implementing a structured 7D BIM asset strategy delivers continuous financial returns for decades."
+        }
+      ],
+      "sections_vi": [
+        {
+          "title": "Chuyển giao từ Mô hình As-Built sang Digital Twin Sống",
+          "body": "Bản sao số Digital Twin vượt xa mô hình 3D tĩnh bằng cách kết nối trực tiếp luồng dữ liệu thời gian thực từ các thiết bị vật lý trong công trình. Khi các cụm AHU, Chiller, bơm nước và công tơ điện thông minh truyền dữ liệu liên tục về mô hình, ban quản lý tòa nhà có thể nắm bắt trạng thái hoạt động tức thì.",
+          "unorderedList": [
+            "Làm giàu thông tin COBie: Số serial, thời hạn bảo hành, thông số định mức và nhà cung cấp",
+            "Định vị không gian tài sản: Tra cứu nhanh sổ tay hướng dẫn vận hành và danh mục linh kiện thay thế",
+            "Giám sát mật độ người và chất lượng không khí trong phòng qua hệ thống cảm biến môi trường"
+          ]
+        },
+        {
+          "title": "Tối ưu hóa Năng lượng & Bảo trì Dự đoán Thiết bị",
+          "body": "Thay vì sửa chữa thụ động sau khi máy móc hỏng hóc, Digital Twin kết hợp thuật toán phân tích dữ liệu để phát hiện sớm các dấu hiệu rung động bất thường, tụt áp hoặc tiêu hao điện năng vượt mức cho phép.",
+          "unorderedList": [
+            "Tự động phát hành phiếu yêu cầu bảo trì (Work Order) tới ứng dụng di động của kỹ thuật viên",
+            "Đánh giá hiệu suất năng lượng theo thời gian thực và phát hiện rò rỉ nhiệt độ",
+            "Lập kế hoạch ngân sách thay thế tài sản định kỳ chính xác dựa trên tuổi thọ thực tế"
+          ]
+        },
+        {
+          "title": "Tối đa hóa Hiệu quả Đầu tư Vòng đời Công trình (ROI)",
+          "body": "Vì hơn 75% tổng chi phí vòng đời của một công trình nằm ở giai đoạn vận hành, việc xây dựng chiến lược dữ liệu tài sản BIM 7D ngay từ đầu mang lại giá trị kinh tế bền vững trong suốt hàng chục năm sử dụng."
+        }
+      ],
+      "seoTitle": "Dữ liệu Tài sản Số & Digital Twin Vận hành BIM 7D | BIM4C",
+      "seoTitle_vi": "Dữ liệu Tài sản Số & Digital Twin Vận hành BIM 7D | BIM4C",
+      "seoDescription": "Khám phá giải pháp bản sao số Digital Twin và dữ liệu tài sản BIM 7D giúp tối ưu hóa vận hành tòa nhà, tiết kiệm năng lượng và nâng cao tuổi thọ thiết bị.",
+      "seoDescription_vi": "Khám phá giải pháp bản sao số Digital Twin và dữ liệu tài sản BIM 7D giúp tối ưu hóa vận hành tòa nhà, tiết kiệm năng lượng và nâng cao tuổi thọ thiết bị."
+    },
+    {
       "slug": "phoi-hop-bim-du-an-cao-tang",
-      "title": "Multidisciplinary BIM coordination",
-      "title_vi": "Phối hợp BIM đa bộ môn",
-      "description": "Federate models, identify clashes and coordinate issues across architecture, structures, MEP and infrastructure.",
-      "description_vi": "Tổng hợp mô hình, phát hiện va chạm và phối hợp xử lý các vấn đề giữa kiến trúc, kết cấu, cơ điện và hạ tầng.",
+      "title": "Multidisciplinary BIM Coordination for High-Rise Towers",
+      "title_vi": "Phối hợp BIM Đa bộ môn cho Dự án Nhà cao tầng",
+      "description": "Federate models, identify clashes and coordinate issues across architecture, structures, MEP and infrastructure for high-rise buildings.",
+      "description_vi": "Tổng hợp mô hình, phát hiện va chạm và phối hợp xử lý các vấn đề giữa kiến trúc, kết cấu, cơ điện và hạ tầng cho công trình nhà cao tầng.",
       "image": "/images/profile/bim-3d.webp",
       "eyebrow": "BIM KNOWLEDGE",
       "eyebrow_vi": "KIẾN THỨC BIM",
+      "category": "Kiến thức BIM",
+      "categorySlug": "kien-thuc-bim",
+      "authorName": "BIM4C Specialist Team",
       "highlights": [
-        "Federated models",
-        "Clash checks",
-        "Multidisciplinary issue tracking"
+        "Federated model management for complex high-rise structures",
+        "Clash checks across architecture, structure, MEP and facades",
+        "Multidisciplinary issue tracking and resolution workflows"
       ],
       "highlights_vi": [
-        "Mô hình phối hợp",
-        "Kiểm tra va chạm",
-        "Theo dõi vấn đề liên bộ môn"
+        "Quản lý mô hình phối hợp cho công trình cao tầng phức tạp",
+        "Kiểm tra va chạm liên bộ môn kiến trúc, kết cấu, MEP và mặt dựng facade",
+        "Quy trình theo dõi và giải quyết xung đột đa bộ môn"
       ],
       "sections": [
         {
-          "title": "Service scope",
-          "body": "Federate models, identify clashes and coordinate issues across architecture, structures, MEP and infrastructure.",
+          "title": "High-Rise Coordination Scope",
+          "body": "High-rise projects require meticulous vertical shaft alignment, facade anchorage coordination, and mechanical floor zoning. Federating all disciplines inside a shared coordinate space ensures constructability before site mobilization.",
           "unorderedList": [
-            "Federated models",
-            "Clash checks",
-            "Multidisciplinary issue tracking"
+            "Vertical riser coordination for plumbing and electrical feeds",
+            "Structural transfer beam clearance verification",
+            "Facade bracket clash checks with perimeter slabs and structural columns"
           ]
         },
         {
-          "title": "Outputs and coordination",
-          "body": "Review reports and coordination issues organised around the scope, priorities and responsibilities agreed with the project team."
+          "title": "Outputs and Coordination Deliverables",
+          "body": "Weekly coordination workshops utilize BCF issue logs and federated Navisworks models to achieve zero critical clashes ahead of floor slab pours."
         }
       ],
       "sections_vi": [
         {
-          "title": "Phạm vi dịch vụ",
-          "body": "Tổng hợp mô hình, phát hiện va chạm và phối hợp xử lý các vấn đề giữa kiến trúc, kết cấu, cơ điện và hạ tầng.",
+          "title": "Phạm vi Phối hợp Nhà cao tầng",
+          "body": "Dự án nhà cao tầng đòi hỏi sự chuẩn xác tuyệt đối trong việc định vị hộp kỹ thuật đứng, liên kết mặt dựng facade và phân vùng tầng kỹ thuật. Mô hình phối hợp đa bộ môn giúp phát hiện toàn bộ rủi ro trước khi thi công thực tế.",
           "unorderedList": [
-            "Mô hình phối hợp",
-            "Kiểm tra va chạm",
-            "Theo dõi vấn đề liên bộ môn"
+            "Định tuyến trục đứng cấp thoát nước và đường cáp điện",
+            "Kiểm tra khoảng sáng gầm sàn tại khu vực dầm chuyển kết cấu",
+            "Xử lý va chạm giữa bản mã liên kết mặt dựng với mép sàn bê tông"
           ]
         },
         {
-          "title": "Đầu ra và phối hợp",
-          "body": "Báo cáo kiểm tra và các vấn đề cần phối hợp theo phạm vi, mức độ ưu tiên và trách nhiệm được thống nhất với nhóm dự án."
+          "title": "Đầu ra và Báo cáo Phối hợp",
+          "body": "Các buổi họp phối hợp hàng tuần sử dụng nhật ký BCF và mô hình tổng hợp Navisworks nhằm giải quyết triệt để va chạm trước khi tiến hành đổ bê tông sàn."
         }
       ],
-      "seoTitle": "Multidisciplinary BIM coordination",
-      "seoTitle_vi": "Phối hợp BIM đa bộ môn",
-      "seoDescription": "Federate models, identify clashes and coordinate issues across architecture, structures, MEP and infrastructure.",
-      "seoDescription_vi": "Tổng hợp mô hình, phát hiện va chạm và phối hợp xử lý các vấn đề giữa kiến trúc, kết cấu, cơ điện và hạ tầng.",
-      "sourcePages": [
-        12,
-        13
-      ],
-      "authorName": "BIM4C"
-    },
-    {
-      "slug": "digital-twin-trong-quan-ly-cong-trinh",
-      "title": "Asset information and digital twins",
-      "title_vi": "Dữ liệu tài sản và Digital Twin",
-      "description": "Prepare building information for handover, operation, maintenance and lifecycle asset management.",
-      "description_vi": "Chuẩn bị dữ liệu công trình phục vụ bàn giao, vận hành, bảo trì và quản lý tài sản trong suốt vòng đời.",
-      "image": "/images/profile/bim-7d.webp",
-      "eyebrow": "BIM KNOWLEDGE",
-      "eyebrow_vi": "KIẾN THỨC BIM",
-      "highlights": [
-        "Asset information and maintenance schedules",
-        "Technical documentation and warranty information",
-        "Operational data and digital twin integration"
-      ],
-      "highlights_vi": [
-        "Dữ liệu tài sản và lịch bảo trì",
-        "Hồ sơ kỹ thuật và thông tin bảo hành",
-        "Kết nối dữ liệu vận hành và Digital Twin"
-      ],
-      "sections": [
-        {
-          "title": "Service scope",
-          "body": "Prepare building information for handover, operation, maintenance and lifecycle asset management.",
-          "unorderedList": [
-            "Asset information and maintenance schedules",
-            "Technical documentation and warranty information",
-            "Operational data and digital twin integration"
-          ]
-        },
-        {
-          "title": "Outputs and coordination",
-          "body": "Models and asset data are structured around the operator’s needs; IoT integration and analytics are scoped to practical objectives."
-        }
-      ],
-      "sections_vi": [
-        {
-          "title": "Phạm vi dịch vụ",
-          "body": "Chuẩn bị dữ liệu công trình phục vụ bàn giao, vận hành, bảo trì và quản lý tài sản trong suốt vòng đời.",
-          "unorderedList": [
-            "Dữ liệu tài sản và lịch bảo trì",
-            "Hồ sơ kỹ thuật và thông tin bảo hành",
-            "Kết nối dữ liệu vận hành và Digital Twin"
-          ]
-        },
-        {
-          "title": "Đầu ra và phối hợp",
-          "body": "Mô hình và dữ liệu tài sản được tổ chức theo nhu cầu của đơn vị vận hành; phương án kết nối IoT và phân tích được xác định theo mục tiêu thực tế."
-        }
-      ],
-      "seoTitle": "Asset information and digital twins",
-      "seoTitle_vi": "Dữ liệu tài sản và Digital Twin",
-      "seoDescription": "Prepare building information for handover, operation, maintenance and lifecycle asset management.",
-      "seoDescription_vi": "Chuẩn bị dữ liệu công trình phục vụ bàn giao, vận hành, bảo trì và quản lý tài sản trong suốt vòng đời.",
-      "sourcePages": [
-        3,
-        18
-      ],
-      "authorName": "BIM4C"
+      "seoTitle": "Phối hợp BIM Đa bộ môn cho Nhà cao tầng | BIM4C",
+      "seoTitle_vi": "Phối hợp BIM Đa bộ môn cho Nhà cao tầng | BIM4C",
+      "seoDescription": "Giải pháp phối hợp mô hình BIM đa bộ môn cho công trình nhà cao tầng giúp giải quyết xung đột kỹ thuật và kiểm soát rủi ro thi công.",
+      "seoDescription_vi": "Giải pháp phối hợp mô hình BIM đa bộ môn cho công trình nhà cao tầng giúp giải quyết xung đột kỹ thuật và kiểm soát rủi ro thi công."
     },
     {
       "slug": "dao-tao-bim-thuc-chien-cho-ky-su",
-      "title": "BIM training around team needs",
-      "title_vi": "Đào tạo BIM theo nhu cầu đội ngũ",
-      "description": "BIM training for businesses, owners, project management teams and students in construction, architecture and infrastructure.",
-      "description_vi": "Đào tạo BIM cho doanh nghiệp, chủ đầu tư, ban quản lý dự án và sinh viên xây dựng, kiến trúc, hạ tầng.",
+      "title": "Practical BIM Training for Engineers and Project Teams",
+      "title_vi": "Đào tạo BIM Thực chiến cho Kỹ sư và Doanh nghiệp Xây dựng",
+      "description": "Comprehensive BIM training tailored for corporate engineering departments, project management boards, and practicing civil/MEP engineers.",
+      "description_vi": "Chương trình đào tạo BIM thực chiến được thiết kế riêng cho doanh nghiệp, ban quản lý dự án và kỹ sư xây dựng, cơ điện, hạ tầng.",
       "image": "/images/profile/training-acv.webp",
-      "eyebrow": "BIM KNOWLEDGE",
-      "eyebrow_vi": "KIẾN THỨC BIM",
+      "eyebrow": "BIM TRAINING",
+      "eyebrow_vi": "ĐÀO TẠO BIM",
+      "category": "Đào tạo BIM",
+      "categorySlug": "dao-tao-bim",
+      "authorName": "BIM4C Specialist Team",
       "highlights": [
-        "In-house corporate training",
-        "Owner and project-management workshops",
-        "Academic and practical student training"
+        "In-house corporate training tailored to actual project templates",
+        "Hands-on workflows with Autodesk Revit, Navisworks, and Dynamo",
+        "ISO 19650 standard practices and project management workshops"
       ],
       "highlights_vi": [
-        "Đào tạo nội bộ doanh nghiệp",
-        "Hội thảo chủ đầu tư và ban quản lý dự án",
-        "Đào tạo học thuật và thực hành cho sinh viên"
+        "Đào tạo theo đơn đặt hàng doanh nghiệp trên chính template dự án thực tế",
+        "Thực hành ứng dụng trực tiếp trên Autodesk Revit, Navisworks và Dynamo",
+        "Đào tạo quy trình quản lý dự án và tiêu chuẩn ISO 19650"
       ],
       "sections": [
         {
-          "title": "Service scope",
-          "body": "BIM training for businesses, owners, project management teams and students in construction, architecture and infrastructure.",
+          "title": "Training Methodology & Practical Curriculum",
+          "body": "BIM4C courses focus on solving real-world project challenges rather than generic software tutorials. Participants work directly on production-grade models, learning standards-compliant modeling, clash detection, and automated scheduling.",
           "unorderedList": [
-            "In-house corporate training",
-            "Owner and project-management workshops",
-            "Academic and practical student training"
+            "Corporate in-house training programs with customized templates",
+            "Executive workshops for project directors and client representatives",
+            "Advanced computational design modules in Dynamo and Python"
           ]
         },
         {
-          "title": "Outputs and coordination",
-          "body": "Content, duration and teaching methods are agreed around the audience, starting skills and intended applications."
+          "title": "Outcomes and Competency Certification",
+          "body": "Engineers graduate with immediately applicable skills, ready to lead BIM workflows on major construction projects."
         }
       ],
       "sections_vi": [
         {
-          "title": "Phạm vi dịch vụ",
-          "body": "Đào tạo BIM cho doanh nghiệp, chủ đầu tư, ban quản lý dự án và sinh viên xây dựng, kiến trúc, hạ tầng.",
+          "title": "Phương pháp Đào tạo & Giáo trình Thực chiến",
+          "body": "Các khóa đào tạo tại BIM4C tập trung giải quyết các bài toán thực tế trên công trường thay vì lý thuyết phần mềm đơn thuần. Học viên được trực tiếp tham gia xử lý các mô hình dự án thực, học cách kiểm soát chất lượng dữ liệu, xử lý va chạm và xuất bản vẽ thi công.",
           "unorderedList": [
-            "Đào tạo nội bộ doanh nghiệp",
-            "Hội thảo chủ đầu tư và ban quản lý dự án",
-            "Đào tạo học thuật và thực hành cho sinh viên"
+            "Chương trình đào tạo nội bộ doanh nghiệp theo quy chuẩn riêng",
+            "Hội thảo chuyên sâu cho Ban Giám đốc và Ban Quản lý Dự án",
+            "Chuyên đề nâng cao về Dynamo và tự động hóa quy trình sản xuất"
           ]
         },
         {
-          "title": "Đầu ra và phối hợp",
-          "body": "Nội dung, thời lượng và phương pháp học được trao đổi theo đối tượng, trình độ đầu vào và mục tiêu ứng dụng."
+          "title": "Đầu ra và Chứng chỉ Năng lực",
+          "body": "Học viên nắm vững tư duy và kỹ năng thực tế, tự tin chủ trì và phối hợp mô hình BIM trên các dự án quy mô lớn."
         }
       ],
-      "seoTitle": "BIM training around team needs",
-      "seoTitle_vi": "Đào tạo BIM theo nhu cầu đội ngũ",
-      "seoDescription": "BIM training for businesses, owners, project management teams and students in construction, architecture and infrastructure.",
-      "seoDescription_vi": "Đào tạo BIM cho doanh nghiệp, chủ đầu tư, ban quản lý dự án và sinh viên xây dựng, kiến trúc, hạ tầng.",
-      "sourcePages": [
-        10,
-        19,
-        20,
-        21
-      ],
-      "authorName": "BIM4C"
-    },
-    {
-      "slug": "du-lieu-so-nang-cao-an-toan-cong-truong",
-      "title": "Construction sequencing with BIM 4D",
-      "title_vi": "Mô phỏng trình tự thi công với BIM 4D",
-      "description": "Connect 3D models with schedules to visualise construction sequences and assess delivery scenarios.",
-      "description_vi": "Kết nối mô hình 3D với tiến độ để trực quan hóa trình tự thi công và đánh giá các phương án triển khai.",
-      "image": "/images/profile/bim-4d.webp",
-      "eyebrow": "BIM KNOWLEDGE",
-      "eyebrow_vi": "KIẾN THỨC BIM",
-      "highlights": [
-        "Primavera/MS Project schedule integration",
-        "Construction methods and installation simulations",
-        "Bottleneck and schedule-risk analysis"
-      ],
-      "highlights_vi": [
-        "Liên kết tiến độ Primavera/MS Project",
-        "Mô phỏng biện pháp và trình tự lắp đặt",
-        "Phân tích điểm nghẽn và rủi ro tiến độ"
-      ],
-      "sections": [
-        {
-          "title": "Service scope",
-          "body": "Connect 3D models with schedules to visualise construction sequences and assess delivery scenarios.",
-          "unorderedList": [
-            "Primavera/MS Project schedule integration",
-            "Construction methods and installation simulations",
-            "Bottleneck and schedule-risk analysis"
-          ]
-        },
-        {
-          "title": "Outputs and coordination",
-          "body": "Schedule-linked models and simulation videos support scenario reviews, site organisation and resource coordination."
-        }
-      ],
-      "sections_vi": [
-        {
-          "title": "Phạm vi dịch vụ",
-          "body": "Kết nối mô hình 3D với tiến độ để trực quan hóa trình tự thi công và đánh giá các phương án triển khai.",
-          "unorderedList": [
-            "Liên kết tiến độ Primavera/MS Project",
-            "Mô phỏng biện pháp và trình tự lắp đặt",
-            "Phân tích điểm nghẽn và rủi ro tiến độ"
-          ]
-        },
-        {
-          "title": "Đầu ra và phối hợp",
-          "body": "Mô hình liên kết tiến độ và video mô phỏng hỗ trợ trao đổi phương án, tổ chức công trường và phối hợp nguồn lực."
-        }
-      ],
-      "seoTitle": "Construction sequencing with BIM 4D",
-      "seoTitle_vi": "Mô phỏng trình tự thi công với BIM 4D",
-      "seoDescription": "Connect 3D models with schedules to visualise construction sequences and assess delivery scenarios.",
-      "seoDescription_vi": "Kết nối mô hình 3D với tiến độ để trực quan hóa trình tự thi công và đánh giá các phương án triển khai.",
-      "sourcePages": [
-        14,
-        15
-      ],
-      "authorName": "BIM4C"
+      "seoTitle": "Đào tạo BIM Thực chiến cho Doanh nghiệp & Kỹ sư | BIM4C",
+      "seoTitle_vi": "Đào tạo BIM Thực chiến cho Doanh nghiệp & Kỹ sư | BIM4C",
+      "seoDescription": "Chương trình đào tạo BIM thực chiến từ cơ bản đến nâng cao cho kỹ sư và doanh nghiệp xây dựng của BIM4C.",
+      "seoDescription_vi": "Chương trình đào tạo BIM thực chiến từ cơ bản đến nâng cao cho kỹ sư và doanh nghiệp xây dựng của BIM4C."
     }
   ],
+
   "contact": {
     "email": "Bim4c.lab@gmail.com",
     "phone": "+84932468099",

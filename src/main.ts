@@ -10,6 +10,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { json, urlencoded } from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import { AppModule } from './app.module';
 import { ApiExceptionFilter } from './common/filters/api-exception.filter';
 
@@ -39,10 +40,12 @@ async function bootstrap(): Promise<void> {
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);
+  app.use(compression());
   app.use(helmet());
   app.use(cookieParser());
   app.use(json({ limit: '100kb' }));
   app.use(urlencoded({ extended: false, limit: '100kb' }));
+
   app.enableCors({
     origin: origins,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],

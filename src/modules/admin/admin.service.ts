@@ -30,6 +30,7 @@ import type {
 } from './admin.dto';
 import { MediaStorageService } from './media-storage.service';
 import { isContentBlock } from '../../common/dto/content-response.dto';
+import { clearPostsCache } from '../posts/posts.service';
 
 type Domain = 'project' | 'service' | 'course' | 'post';
 const delegateName: Record<Domain, string> = {
@@ -152,6 +153,7 @@ export class AdminService {
     this.recentCache = null;
     if (domain) invalidateAdminCache(`list:${domain}`);
     else invalidateAdminCache();
+    if (!domain || domain === 'post') clearPostsCache();
   }
   async create(
     domain: Domain,

@@ -60,11 +60,23 @@ export async function syncCompanyProfile(prisma: PrismaClient) {
       if (existing) await tx.strategicPartner.update({ where: { id: existing.id }, data });
       else await tx.strategicPartner.create({ data });
     }
-    const postCategory = await tx.postCategory.upsert({ where: { slug: 'kien-thuc-bim' }, create: { slug: 'kien-thuc-bim', name: 'BIM Knowledge' }, update: {} });
     for (const [i, x] of profile.articles.entries()) {
-      const data = { ...content(x, i), status: ContentStatus.PUBLISHED, authorName: x.authorName, categoryId: postCategory.id };
+      const catSlug = (x as { categorySlug?: string }).categorySlug || 'kien-thuc-bim';
+      const catName = (x as { category?: string }).category || 'BIM Knowledge';
+      const postCategory = await tx.postCategory.upsert({
+        where: { slug: catSlug },
+        create: { slug: catSlug, name: catName },
+        update: { name: catName },
+      });
+      const data = {
+        ...content(x as unknown as Entry, i),
+        status: ContentStatus.PUBLISHED,
+        authorName: (x as { authorName?: string }).authorName || 'BIM4C Specialist Team',
+        categoryId: postCategory.id,
+      };
       await tx.post.upsert({ where: { slug: x.slug }, create: { slug: x.slug, ...data }, update: data });
     }
+
     const settings = await tx.siteSettings.findUnique({ where: { id: 'default' } });
     // Preserve other settings; replace the known unsupported social examples.
     const links = settings?.socialLinks && typeof settings.socialLinks === 'object' && !Array.isArray(settings.socialLinks)

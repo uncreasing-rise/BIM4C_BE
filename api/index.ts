@@ -10,6 +10,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import { json, urlencoded } from 'express';
 import { AppModule } from '../src/app.module';
 import { ApiExceptionFilter } from '../src/common/filters/api-exception.filter';
@@ -59,10 +60,12 @@ async function bootstrap() {
           .map((origin) => origin.trim())
           .filter(Boolean);
 
+        app.use(compression());
         app.use(helmet());
         app.use(cookieParser());
         app.use(json({ limit: '100kb' }));
         app.use(urlencoded({ extended: false, limit: '100kb' }));
+
 
         // Filter out numeric query parameters added by Vercel's rewrite rule
         app.use((request: Request, response: Response, next: NextFunction) => {
