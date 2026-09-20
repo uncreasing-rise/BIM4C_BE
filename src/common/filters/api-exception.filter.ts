@@ -7,30 +7,26 @@ import {
   Logger,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
+
 interface ValidationBody {
   message?: string | string[];
   code?: string;
   errors?: Record<string, string[]>;
 }
+
 @Catch()
 export class ApiExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(ApiExceptionFilter.name);
+
   catch(exception: unknown, host: ArgumentsHost): void {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
     const request = context.getRequest<Request & { requestId?: string }>();
     const isHttp = exception instanceof HttpException;
-    const status = isHttp
-      ? exception.getStatus()
-      : HttpStatus.INTERNAL_SERVER_ERROR;
+    const status = isHttp ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
     const raw = isHttp ? exception.getResponse() : undefined;
-    const body =
-      typeof raw === 'object' && raw !== null
-        ? (raw as ValidationBody)
-        : undefined;
-    const validationMessages = Array.isArray(body?.message)
-      ? body.message
-      : undefined;
+    const body = typeof raw === 'object' && raw !== null ? (raw as ValidationBody) : undefined;
+    const validationMessages = Array.isArray(body?.message) ? body.message : undefined;
     const message = validationMessages
       ? 'Validation failed'
       : typeof body?.message === 'string'
@@ -38,8 +34,7 @@ export class ApiExceptionFilter implements ExceptionFilter {
         : typeof raw === 'string'
           ? raw
           : 'Internal server error';
-    const code =
-      body?.code ??
+    const code = body?.code ??
       (validationMessages
         ? 'VALIDATION_ERROR'
         : status === 404
@@ -51,31 +46,34 @@ export class ApiExceptionFilter implements ExceptionFilter {
               : status >= 500
                 ? 'INTERNAL_ERROR'
                 : 'REQUEST_ERROR');
-    const errors =
-      body?.errors ??
-      (validationMessages ? { request: validationMessages } : undefined);
+    const errors = body?.errors ?? (validationMessages ? { request: validationMessages } : undefined);
+    const requestId = request.requestId ?? '-';
+    const logMessage = `[${requestId}] ${status} ${code}: ${request.method} ${request.originalUrl} -> ${message}`;
+
     if (status >= 500) {
-      this.logger.error(
-        `[${request.requestId ?? '-'}] 💥 5xx Error: ${request.method} ${request.originalUrl} -> ${message}`,
-        exception instanceof Error ? exception.stack : String(exception),
-      );
-      // Vercel may omit buffered Nest logger details. Preserve the underlying
-      // database/runtime exception in the serverless runtime log.
-      console.error(
-        `[${request.requestId ?? '-'}] 5xx ${request.method} ${request.originalUrl}`,
-        exception,
-      );
+      this.logger.error(logMessage, exception instanceof Error ? exception.stack : String(exception));
+      console.error(JSON.stringify({
+        timestamp: new Date().toISOString(),
+        level: 'error',
+        event: 'api.exception',
+        requestId,
+        method: request.method,
+        path: request.originalUrl,
+        status,
+        code,
+        error: exception instanceof Error
+          ? { name: exception.name, message: exception.message, stack: exception.stack }
+          : exception,
+      }));
     } else {
-      this.logger.warn(
-        `[${request.requestId ?? '-'}] ⚠️ ${status} ${code}: ${request.method} ${request.originalUrl} -> ${message}`,
-      );
+      this.logger.warn(logMessage);
     }
 
     response.status(status).json({
       message,
       code,
       ...(errors ? { errors } : {}),
-      requestId: request.requestId,
+      requestId,
       timestamp: new Date().toISOString(),
       path: request.originalUrl,
     });

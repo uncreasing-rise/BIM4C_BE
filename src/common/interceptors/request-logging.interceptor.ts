@@ -27,9 +27,16 @@ export class RequestLoggingInterceptor implements NestInterceptor {
       tap(() => {
         const durationMs = Date.now() - startedAt;
         const statusCode = response.statusCode;
-        this.logger.log(
-          `[${requestId}] ${method} ${url} -> ${statusCode} (${durationMs}ms)`,
-        );
+        this.logger.log(JSON.stringify({
+          timestamp: new Date().toISOString(),
+          level: 'info',
+          event: 'http.request.completed',
+          requestId,
+          method,
+          path: url,
+          status: statusCode,
+          durationMs,
+        }));
       }),
       catchError((error: unknown) => {
         const durationMs = Date.now() - startedAt;
@@ -38,10 +45,17 @@ export class RequestLoggingInterceptor implements NestInterceptor {
         const errorMessage =
           error instanceof Error ? error.message : String(error);
 
-        this.logger.error(
-          `[${requestId}] ${method} ${url} -> ${statusCode} (${durationMs}ms) - Error: ${errorMessage}`,
-          error instanceof Error ? error.stack : undefined,
-        );
+        this.logger.error(JSON.stringify({
+          timestamp: new Date().toISOString(),
+          level: 'error',
+          event: 'http.request.failed',
+          requestId,
+          method,
+          path: url,
+          status: statusCode,
+          durationMs,
+          error: errorMessage,
+        }), error instanceof Error ? error.stack : undefined);
         return throwError(() => error);
       }),
     );
