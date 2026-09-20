@@ -14,9 +14,16 @@ export class PrismaService
     const url = databaseUrl ? new URL(databaseUrl) : undefined;
     if (url) {
       const isServerless =
-        process.env.VERCEL === '1' || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
-      if (!url.searchParams.has('connection_limit'))
-        url.searchParams.set('connection_limit', isServerless ? '1' : '5');
+        process.env.VERCEL === '1' ||
+        !!process.env.VERCEL_ENV ||
+        !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+      if (isServerless) {
+        // Do not let a copied DATABASE_URL with connection_limit=5 exhaust
+        // Supabase's shared pool across concurrent Vercel instances.
+        url.searchParams.set('connection_limit', '1');
+      } else if (!url.searchParams.has('connection_limit')) {
+        url.searchParams.set('connection_limit', '5');
+      }
       if (!url.searchParams.has('pool_timeout'))
         url.searchParams.set('pool_timeout', '20');
     }
