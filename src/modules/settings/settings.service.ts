@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { AuditAction, Prisma } from '@prisma/client';
+import { AuditAction, Prisma, type SiteSettings } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import { AuditService } from '../audit/audit.service';
 import type { UpdateSettingsDto } from './settings.dto';
 @Injectable()
 export class SettingsService {
-  private publicCache: { data: any; cachedAt: number } | null = null;
-  private settingsCache: { data: any; cachedAt: number } | null = null;
+  private publicCache: { data: Partial<SiteSettings>; cachedAt: number } | null = null;
+  private settingsCache: { data: SiteSettings; cachedAt: number } | null = null;
 
   constructor(
     private readonly prisma: PrismaService,
     private readonly audit: AuditService,
   ) {}
-  async get() {
+  async get(): Promise<SiteSettings> {
     const now = Date.now();
     if (this.settingsCache && now - this.settingsCache.cachedAt < 120_000) {
       return this.settingsCache.data;
@@ -23,7 +23,11 @@ export class SettingsService {
     this.settingsCache = { data: row, cachedAt: now };
     return row;
   }
-  async update(dto: UpdateSettingsDto, actorId: string, requestId?: string) {
+  async update(
+    dto: UpdateSettingsDto,
+    actorId: string,
+    requestId?: string,
+  ): Promise<SiteSettings> {
     this.publicCache = null;
     this.settingsCache = null;
     const data: Prisma.SiteSettingsUpdateInput = {
@@ -51,7 +55,7 @@ export class SettingsService {
     }).catch(() => {});
     return row;
   }
-  async public() {
+  async public(): Promise<Partial<SiteSettings>> {
     const now = Date.now();
     if (this.publicCache && now - this.publicCache.cachedAt < 120_000) {
       return this.publicCache.data;

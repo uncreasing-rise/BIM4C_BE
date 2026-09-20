@@ -19,6 +19,7 @@ import { AuditModule } from './modules/audit/audit.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { RequestLoggingInterceptor } from './common/interceptors/request-logging.interceptor';
 import { AdminMutationInterceptor } from './modules/audit/admin-mutation.interceptor';
 
 @Module({
@@ -55,6 +56,7 @@ import { AdminMutationInterceptor } from './modules/audit/admin-mutation.interce
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },
+    { provide: APP_INTERCEPTOR, useClass: RequestLoggingInterceptor },
     { provide: APP_INTERCEPTOR, useClass: AdminMutationInterceptor },
   ],
 })

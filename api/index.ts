@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
-import cookieParser = require('cookie-parser');
+import cookieParser from 'cookie-parser';
 import { json, urlencoded } from 'express';
 import { AppModule } from '../src/app.module';
 import { ApiExceptionFilter } from '../src/common/filters/api-exception.filter';

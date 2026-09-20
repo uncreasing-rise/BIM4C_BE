@@ -20,6 +20,7 @@ const schema = z
         (value) => /^postgres(?:ql)?:\/\//i.test(value),
         'Must be a PostgreSQL URL',
       ),
+    DIRECT_URL: z.string().url().optional(),
     FRONTEND_URL: z.string().url().default('http://localhost:3000'),
     CORS_ORIGINS: z.string().min(1).optional(),
     RATE_LIMIT_TTL_MS: z.coerce.number().int().positive().default(60000),

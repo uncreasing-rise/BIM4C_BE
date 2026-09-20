@@ -54,20 +54,24 @@ export class ApiExceptionFilter implements ExceptionFilter {
     const errors =
       body?.errors ??
       (validationMessages ? { request: validationMessages } : undefined);
-    if (!isHttp)
+    if (status >= 500) {
       this.logger.error(
-        `${request.method} ${request.originalUrl}`,
+        `[${request.requestId ?? '-'}] 💥 5xx Error: ${request.method} ${request.originalUrl} -> ${message}`,
         exception instanceof Error ? exception.stack : String(exception),
       );
-    response
-      .status(status)
-      .json({
-        message,
-        code,
-        ...(errors ? { errors } : {}),
-        requestId: request.requestId,
-        timestamp: new Date().toISOString(),
-        path: request.originalUrl,
-      });
+    } else {
+      this.logger.warn(
+        `[${request.requestId ?? '-'}] ⚠️ ${status} ${code}: ${request.method} ${request.originalUrl} -> ${message}`,
+      );
+    }
+
+    response.status(status).json({
+      message,
+      code,
+      ...(errors ? { errors } : {}),
+      requestId: request.requestId,
+      timestamp: new Date().toISOString(),
+      path: request.originalUrl,
+    });
   }
 }
