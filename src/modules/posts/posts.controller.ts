@@ -12,15 +12,15 @@ export class PostsController {
   @Get()
   @Header('Cache-Control', 'public, max-age=30, s-maxage=300')
   @ApiOkResponse()
-  findAll(@Query() query: PageQueryDto) {
+  findAll(@Query() query: PageQueryDto & { group?: 'technical' | 'news' }) {
     return this.service.findAll(query);
   }
 
   @Get('categories')
   @Header('Cache-Control', 'public, max-age=60, s-maxage=600')
   @ApiOkResponse()
-  getCategories() {
-    return this.service.getCategories();
+  getCategories(@Query('group') group?: 'technical' | 'news') {
+    return this.service.getCategories(group);
   }
 
   @Get(':slug')

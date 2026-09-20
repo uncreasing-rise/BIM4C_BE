@@ -34,19 +34,22 @@ export function clearPostsCache(): void {
   cache.clear();
 }
 
+const NEWS_SLUGS = ['tin-tuc', 'su-kien', 'tuyen-dung', 'hop-tac', 'news', 'events', 'thong-cao'];
+
 @Injectable()
 export class PostsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll(
-    query: PageQueryDto,
+    query: PageQueryDto & { group?: 'technical' | 'news' },
   ): Promise<PageResponse<PostResponse>> {
     const page = Math.max(1, Number(query.page) || 1);
     const limit = Math.min(100, Math.max(1, Number(query.limit) || 10));
     const sortBy = query.sortBy || 'publishedAt';
     const sortOrder = query.sortOrder || 'desc';
+    const group = query.group;
 
-    const cacheKey = `list:${page}:${limit}:${query.search || ''}:${query.category || ''}:${sortBy}:${sortOrder}`;
+    const cacheKey = `list:${page}:${limit}:${query.search || ''}:${query.category || ''}:${group || 'all'}:${sortBy}:${sortOrder}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
       return hit.data as PageResponse<PostResponse>;
@@ -74,7 +77,24 @@ export class PostsService {
               ],
             },
           }
-        : {}),
+        : group === 'news'
+          ? {
+              category: {
+                slug: { in: NEWS_SLUGS },
+              },
+            }
+          : group === 'technical'
+            ? {
+                OR: [
+                  { categoryId: null },
+                  {
+                    category: {
+                      slug: { notIn: NEWS_SLUGS },
+                    },
+                  },
+                ],
+              }
+            : {}),
     };
     const [rows, total] = await Promise.all([
       this.prisma.post.findMany({
@@ -125,14 +145,21 @@ export class PostsService {
     return result;
   }
 
-  async getCategories(): Promise<PostCategoryResponse[]> {
-    const cacheKey = 'categories:all';
+  async getCategories(group?: 'technical' | 'news'): Promise<PostCategoryResponse[]> {
+    const cacheKey = `categories:${group || 'all'}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
       return hit.data as PostCategoryResponse[];
     }
 
+    const whereCategory: Prisma.PostCategoryWhereInput = group === 'news'
+      ? { slug: { in: NEWS_SLUGS } }
+      : group === 'technical'
+        ? { slug: { notIn: NEWS_SLUGS } }
+        : {};
+
     const categories = await this.prisma.postCategory.findMany({
+      where: whereCategory,
       orderBy: { name: 'asc' },
       include: {
         _count: {
