@@ -18,6 +18,7 @@
   "include": [
     "src/**/*.ts",
     "prisma/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    "api/**/*.ts"
   ]
 }
