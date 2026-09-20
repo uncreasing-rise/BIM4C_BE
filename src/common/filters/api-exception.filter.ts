@@ -59,6 +59,12 @@ export class ApiExceptionFilter implements ExceptionFilter {
         `[${request.requestId ?? '-'}] 💥 5xx Error: ${request.method} ${request.originalUrl} -> ${message}`,
         exception instanceof Error ? exception.stack : String(exception),
       );
+      // Vercel may omit buffered Nest logger details. Preserve the underlying
+      // database/runtime exception in the serverless runtime log.
+      console.error(
+        `[${request.requestId ?? '-'}] 5xx ${request.method} ${request.originalUrl}`,
+        exception,
+      );
     } else {
       this.logger.warn(
         `[${request.requestId ?? '-'}] ⚠️ ${status} ${code}: ${request.method} ${request.originalUrl} -> ${message}`,

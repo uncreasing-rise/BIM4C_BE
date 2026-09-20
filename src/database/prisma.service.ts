@@ -24,6 +24,15 @@ export class PrismaService
       } else if (!url.searchParams.has('connection_limit')) {
         url.searchParams.set('connection_limit', '5');
       }
+      // Supabase's transaction pooler (6543) must not use session-bound
+      // prepared statements. Prisma's pgbouncer mode disables that behavior.
+      if (
+        url.port === '6543' &&
+        url.hostname.endsWith('.pooler.supabase.com') &&
+        !url.searchParams.has('pgbouncer')
+      ) {
+        url.searchParams.set('pgbouncer', 'true');
+      }
       if (!url.searchParams.has('pool_timeout'))
         url.searchParams.set('pool_timeout', '20');
     }
