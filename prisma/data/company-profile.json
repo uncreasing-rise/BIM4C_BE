@@ -598,6 +598,11 @@
     "brochure": {
       "vi": "/documents/bim4c-profile-2026-vi.pdf",
       "en": "/documents/bim4c-profile-2026-en.pdf"
+    },
+    "socials": {
+      "linkedin": "https://www.linkedin.com/company/bim4c",
+      "facebook": "https://www.facebook.com/bim4c",
+      "youtube": "https://www.youtube.com/@bim4c"
     }
   },
   "values": [
