@@ -8,9 +8,9 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { json, urlencoded } from 'express';
-import helmet from 'helmet';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
+const compression = require('compression');
 import { AppModule } from './app.module';
 import { ApiExceptionFilter } from './common/filters/api-exception.filter';
 
