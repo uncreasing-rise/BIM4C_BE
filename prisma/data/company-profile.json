@@ -581,7 +581,6 @@
       "seoDescription_vi": "Chương trình đào tạo BIM thực chiến từ cơ bản đến nâng cao cho kỹ sư và doanh nghiệp xây dựng của BIM4C."
     }
   ],
-
   "contact": {
     "email": "Bim4c.lab@gmail.com",
     "phone": "+84932468099",
@@ -617,144 +616,81 @@
   ],
   "team": [
     {
-      "id": "tran-ngoc-hieu",
       "name": "Trần Ngọc Hiếu",
       "role": {
-        "vi": "Founder – CEO BIM4C",
-        "en": "Founder – CEO BIM4C"
-      },
-      "cert": {
-        "vi": "Tư vấn, chiến lược và đào tạo BIM",
-        "en": "BIM consulting, strategy and training"
+        "vi": "Nhà sáng lập / CEO",
+        "en": "Founder / CEO"
       },
       "spec": {
-        "vi": "Tư vấn chuyển đổi số, xây dựng quy trình BIM và đào tạo đội ngũ trong ngành xây dựng.",
-        "en": "Digital-transformation consulting, BIM workflows and training for construction teams."
-      },
-      "image": "/images/profile/tran-ngoc-hieu.webp",
-      "sourcePages": [
-        22
-      ]
+        "vi": "Tư vấn chiến lược chuyển đổi số, triển khai quy trình BIM và đào tạo chuyên sâu.",
+        "en": "BIM digital transformation strategy, workflow implementation and enterprise training."
+      }
     },
     {
-      "id": "nguyen-vu-long",
       "name": "Nguyễn Vũ Long",
       "role": {
         "vi": "BIM Manager / Đồng sáng lập",
         "en": "BIM Manager / Co-Founder"
       },
-      "cert": {
-        "vi": "Quản lý BIM",
-        "en": "BIM management"
-      },
       "spec": {
-        "vi": "Hơn 8 năm kinh nghiệm theo hồ sơ, với công trình cải tạo, kết cấu thép, bê tông và quy trình BIM.",
-        "en": "Over eight years of experience documented in the profile, covering refurbishment, steel, concrete and BIM workflows."
-      },
-      "image": "/images/profile/nguyen-vu-long.webp",
-      "sourcePages": [
-        24
-      ]
+        "vi": "Hơn 8 năm kinh nghiệm thực chiến trong công trình cải tạo, kết cấu thép, bê tông và quy trình BIM.",
+        "en": "Over 8 years of practical experience in refurbishment, steel structures, concrete and BIM workflows."
+      }
     },
     {
-      "id": "nguyen-tien-cuong",
       "name": "Nguyễn Tiến Cường",
       "role": {
         "vi": "BIM Coordinator / Đồng sáng lập",
         "en": "BIM Coordinator / Co-Founder"
       },
-      "cert": {
-        "vi": "Phối hợp BIM",
-        "en": "BIM coordination"
-      },
       "spec": {
-        "vi": "Hơn 9 năm kinh nghiệm theo hồ sơ trong xây dựng, cải tạo, kết cấu và công cụ BIM.",
-        "en": "Over nine years of experience documented in the profile in construction, refurbishment, structures and BIM tools."
-      },
-      "image": "/images/profile/nguyen-tien-cuong.webp",
-      "sourcePages": [
-        24
-      ]
+        "vi": "Hơn 9 năm kinh nghiệm điều phối BIM, tối ưu thiết kế, kết cấu và tích hợp công cụ số.",
+        "en": "Over 9 years of experience in BIM coordination, design optimization, structures and digital tools."
+      }
     },
     {
-      "id": "nguyen-van-chieu",
       "name": "Nguyễn Văn Chiêu",
       "role": {
         "vi": "BIM Developer / IT Manager",
         "en": "BIM Developer / IT Manager"
       },
-      "cert": {
-        "vi": "Phát triển và tự động hóa BIM",
-        "en": "BIM development and automation"
-      },
       "spec": {
-        "vi": "Hồ sơ ghi nhận hơn 6 năm xây dựng, hơn 3 năm phát triển BIM và hơn 100 add-in phục vụ tự động hóa.",
-        "en": "The profile documents over six years in construction, over three in BIM development and more than 100 automation add-ins."
-      },
-      "image": "/images/profile/nguyen-van-chieu.webp",
-      "sourcePages": [
-        24
-      ]
+        "vi": "Hơn 6 năm kinh nghiệm phát triển phần mềm và công cụ tự động hóa BIM với hơn 100 add-in chuyên dụng.",
+        "en": "Over 6 years in software development and BIM automation with more than 100 dedicated add-ins."
+      }
     },
     {
-      "id": "nguyen-hong-chinh",
       "name": "Nguyễn Hồng Chinh",
       "role": {
-        "vi": "Chủ trì Thiết kế Kết cấu",
+        "vi": "Trưởng nhóm Thiết kế Kết cấu",
         "en": "Structural Design Lead"
       },
-      "cert": {
-        "vi": "Thiết kế kết cấu",
-        "en": "Structural design"
-      },
       "spec": {
-        "vi": "Hơn 14 năm kinh nghiệm theo hồ sơ; kết cấu bê tông cốt thép, thép và tối ưu giải pháp móng, phần thân.",
-        "en": "Over 14 years of experience documented in the profile in reinforced concrete, steel and foundation and superstructure optimisation."
-      },
-      "image": "/images/profile/nguyen-hong-chinh.webp",
-      "sourcePages": [
-        25
-      ]
+        "vi": "Hơn 14 năm kinh nghiệm thiết kế kết cấu bê tông cốt thép, thép tiền chế và tối ưu giải pháp móng - phần thân.",
+        "en": "Over 14 years of experience in reinforced concrete, structural steel, foundation and superstructure design."
+      }
     },
     {
-      "id": "nguyen-ngoc-phuoc",
       "name": "Nguyễn Ngọc Phước",
       "role": {
-        "vi": "Chủ trì Thiết kế Cơ điện & PCCC",
-        "en": "MEP & Fire Safety Design Lead"
-      },
-      "cert": {
-        "vi": "Hệ thống kỹ thuật công trình",
-        "en": "Building services"
+        "vi": "Trưởng nhóm Thiết kế MEP & PCCC",
+        "en": "MEP & Fire Protection Design Lead"
       },
       "spec": {
-        "vi": "Hơn 13 năm kinh nghiệm theo hồ sơ; cấp thoát nước, điện, HVAC và hệ thống phòng cháy chữa cháy.",
-        "en": "Over 13 years of experience documented in the profile in water services, electrical systems, HVAC and fire safety."
-      },
-      "image": "/images/profile/nguyen-ngoc-phuoc.webp",
-      "sourcePages": [
-        25
-      ]
+        "vi": "Hơn 13 năm kinh nghiệm thiết kế và phối hợp hệ thống Cơ Điện & Phòng cháy chữa cháy (MEP & PCCC).",
+        "en": "Over 13 years of experience in MEP engineering, HVAC, electrical, plumbing and fire protection."
+      }
     },
     {
-      "id": "phan-thi-kieu-dieu",
       "name": "Phan Thị Kiều Diệu",
       "role": {
-        "vi": "Chủ trì Dự toán & Quản lý Chi phí",
-        "en": "Estimating & Cost Management Lead"
-      },
-      "cert": {
-        "vi": "Dự toán và quản lý chi phí",
-        "en": "Estimating and cost management"
+        "vi": "Trưởng nhóm Dự toán & Quản lý Chi phí",
+        "en": "Cost Estimation & Management Lead"
       },
       "spec": {
-        "vi": "Hơn 14 năm kinh nghiệm theo hồ sơ trong dự toán, bóc tách khối lượng và kiểm soát ngân sách.",
-        "en": "Over 14 years of experience documented in the profile in estimating, quantity take-off and budget control."
-      },
-      "image": "/images/profile/phan-thi-kieu-dieu.webp",
-      "sourcePages": [
-        25
-      ]
+        "vi": "Hơn 14 năm kinh nghiệm quản lý chi phí, bóc tách khối lượng BIM 5D và kiểm soát ngân sách đầu tư.",
+        "en": "Over 14 years of experience in BIM 5D quantity take-off, cost estimation and project budget control."
+      }
     }
   ],
   "partners": [
@@ -1514,7 +1450,7 @@
         },
         {
           "title": "Stage and scale",
-          "body": "Construction drawing design. Two underpasses, the 303.5 m seven-span Hoa Xuan bridge, Do Xu bridge and riverside roads. The profile lists the overall project schedule as 2026–2029."
+          "body": "Construction drawing design. Two underpasses, the 303.5 m seven-span Hoa Xuan bridge, Do Xu bridge and riverside roads. Overall project schedule: 2026–2029."
         },
         {
           "title": "Featured scope",
@@ -1558,7 +1494,7 @@
       "location_vi": "Đà Nẵng",
       "year": null,
       "status": "profiled",
-      "scale": "Two underpasses, the 303.5 m seven-span Hoa Xuan bridge, Do Xu bridge and riverside roads. The profile lists the overall project schedule as 2026–2029.",
+      "scale": "Two underpasses, the 303.5 m seven-span Hoa Xuan bridge, Do Xu bridge and riverside roads. Overall project schedule: 2026–2029.",
       "scale_vi": "Hai hầm chui, cầu Hòa Xuân dài 303,5 m với 7 nhịp, cầu Đò Xu và đường ven sông. Tiến độ toàn dự án được nêu trong hồ sơ: 2026–2029.",
       "investor": "Da Nang Transport and Agriculture Construction Investment Project Management Board",
       "investor_vi": "Ban QLDA đầu tư xây dựng các công trình Giao thông và Nông nghiệp Đà Nẵng",
@@ -1591,7 +1527,7 @@
         },
         {
           "title": "Stage and scale",
-          "body": "Feasibility study. Approximately 5.36 km of road with a 27.5 m formation and six lanes. Overall project schedule listed in the profile: 2026–2029."
+          "body": "Feasibility study. Approximately 5.36 km of road with a 27.5 m formation and six lanes. Overall project schedule: 2026–2029."
         },
         {
           "title": "Featured scope",
@@ -1635,7 +1571,7 @@
       "location_vi": "Đà Nẵng",
       "year": null,
       "status": "profiled",
-      "scale": "Approximately 5.36 km of road with a 27.5 m formation and six lanes. Overall project schedule listed in the profile: 2026–2029.",
+      "scale": "Approximately 5.36 km of road with a 27.5 m formation and six lanes. Overall project schedule: 2026–2029.",
       "scale_vi": "Chiều dài khoảng 5,36 km; nền đường rộng 27,5 m, 6 làn xe. Tiến độ toàn dự án trong hồ sơ: 2026–2029.",
       "investor": "Da Nang Priority Infrastructure Investment Project Management Unit",
       "investor_vi": "Ban Quản lý các dự án đầu tư cơ sở hạ tầng ưu tiên TP. Đà Nẵng",
@@ -1911,7 +1847,7 @@
         },
         {
           "title": "Stage and scale",
-          "body": "Construction. Three production buildings, one office building, two parking buildings and ancillary works as described in the profile."
+          "body": "Construction. Three production buildings, one office building, two parking buildings and ancillary works."
         }
       ],
       "sections_vi": [
@@ -1938,7 +1874,7 @@
       "location_vi": "Việt Nam",
       "year": null,
       "status": "profiled",
-      "scale": "Three production buildings, one office building, two parking buildings and ancillary works as described in the profile.",
+      "scale": "Three production buildings, one office building, two parking buildings and ancillary works.",
       "scale_vi": "3 nhà xưởng, 1 nhà văn phòng, 2 nhà xe và các công trình phụ trợ theo phần mô tả trong hồ sơ.",
       "investor": "Guoguang Acoustic Co., Ltd.",
       "investor_vi": "Công ty TNHH Âm học Quốc Quang"
@@ -1967,7 +1903,7 @@
         },
         {
           "title": "Stage and scale",
-          "body": "Stadium redevelopment. The scheme described in the profile provides more than 34,000 stadium seats, including a 13,500-seat main stand."
+          "body": "Stadium redevelopment. The scheme provides more than 34,000 stadium seats, including a 13,500-seat main stand."
         }
       ],
       "sections_vi": [
@@ -1994,7 +1930,7 @@
       "location_vi": "London, Vương quốc Anh",
       "year": null,
       "status": "profiled",
-      "scale": "The scheme described in the profile provides more than 34,000 stadium seats, including a 13,500-seat main stand.",
+      "scale": "The scheme provides more than 34,000 stadium seats, including a 13,500-seat main stand.",
       "scale_vi": "Phương án trong hồ sơ mô tả sức chứa sân hơn 34.000 chỗ, khán đài chính 13.500 chỗ."
     },
     {
@@ -2075,7 +2011,7 @@
         },
         {
           "title": "Stage and scale",
-          "body": "Terminal infrastructure. A 92-acre terminal as described in the profile."
+          "body": "Terminal infrastructure. A 92-acre terminal."
         },
         {
           "title": "Featured scope",
@@ -2110,7 +2046,7 @@
       "location_vi": "Vương quốc Anh",
       "year": null,
       "status": "profiled",
-      "scale": "A 92-acre terminal as described in the profile.",
+      "scale": "A 92-acre terminal.",
       "scale_vi": "Bến trung chuyển rộng 92 mẫu Anh theo mô tả hồ sơ.",
       "contractPackage": "Site organisation, pavement, hard landscaping, access roads, curved roads, roundabouts and drainage.",
       "contractPackage_vi": "Tổ chức công trường, mặt đường, cảnh quan cứng, đường tiếp cận, đường cong, vòng xuyến và thoát nước."
