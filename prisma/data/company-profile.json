@@ -160,12 +160,12 @@
     },
     {
       "slug": "tu-dong-hoa-bim-revit-api-dynamo-python",
-      "title": "BIM Automation with Revit API, Dynamo & Python Programming",
+      "title": "BIM Automation with Revit API, Dynamo & Python | BIM4C",
       "title_vi": "Tự động hóa BIM với Revit API, Dynamo và Lập trình Python",
-      "description": "Accelerate BIM production by up to 70% using computational design, custom Revit add-ins, automated sheet generation, and data extraction scripts.",
-      "description_vi": "Tăng tốc độ sản xuất mô hình và hồ sơ bản vẽ lên đến 70% nhờ tự động hóa tính toán với Revit API, script Dynamo chuyên dụng và lập trình Python.",
+      "description": "Learn how BIM4C uses Revit API, Dynamo and Python to automate BIM modelling, documentation, quantity takeoff and QA/QC—reducing repetitive work and accelerating project delivery.",
+      "description_vi": "Khám phá cách BIM4C tự động hóa mô hình Revit, hồ sơ, bóc tách khối lượng và QA/QC bằng Revit API, Dynamo và Python để giảm thao tác lặp lại và tăng tốc triển khai BIM.",
       "image": "/images/profile/bim-2d.webp",
-      "eyebrow": "TECHNOLOGY & AUTOMATION",
+      "eyebrow": "BIM AUTOMATION & DIGITAL DELIVERY",
       "eyebrow_vi": "CÔNG NGHỆ & TỰ ĐỘNG HÓA",
       "category": "Công nghệ & Tự động hóa",
       "categorySlug": "cong-nghe-tu-dong-hoa",
@@ -230,10 +230,10 @@
           "body": "Đối với các giải pháp quy mô lớn cần bảo mật và tốc độ xử lý nhanh nhất, việc phát triển Add-in bằng ngôn ngữ C# .NET giúp doanh nghiệp chuẩn hóa quy trình làm việc và tích hợp sâu với hệ thống ERP quản lý dự án."
         }
       ],
-      "seoTitle": "Tự động hóa BIM với Revit API, Dynamo & Python | BIM4C",
+      "seoTitle": "BIM Automation with Revit API, Dynamo & Python | BIM4C",
       "seoTitle_vi": "Tự động hóa BIM với Revit API, Dynamo & Python | BIM4C",
-      "seoDescription": "Khám phá giải pháp tự động hóa BIM bằng Revit API, Dynamo và Python giúp tiết kiệm 70% thời gian triển khai mô hình và xuất bản vẽ.",
-      "seoDescription_vi": "Khám phá giải pháp tự động hóa BIM bằng Revit API, Dynamo và Python giúp tiết kiệm 70% thời gian triển khai mô hình và xuất bản vẽ."
+      "seoDescription": "Discover BIM4C workflows for Revit API, Dynamo and Python automation—from model production and documentation to quantity takeoff and QA/QC.",
+      "seoDescription_vi": "Khám phá cách BIM4C tự động hóa mô hình Revit, hồ sơ, bóc tách khối lượng và QA/QC bằng Revit API, Dynamo và Python để giảm thao tác lặp lại và tăng tốc triển khai BIM."
     },
     {
       "slug": "phoi-hop-bim-mep-xu-ly-va-cham-clash-detection",
@@ -1063,57 +1063,77 @@
     },
     {
       "slug": "bim-4d",
-      "title": "BIM 4D – Construction Sequencing",
-      "title_vi": "BIM 4D – Mô phỏng tiến độ",
-      "description": "Connect 3D models with schedules to visualise construction sequences and assess delivery scenarios.",
-      "description_vi": "Kết nối mô hình 3D với tiến độ để trực quan hóa trình tự thi công và đánh giá các phương án triển khai.",
+      "title": "BIM 4D – Construction Sequencing & Simulation",
+      "title_vi": "BIM 4D – Mô phỏng & Quản lý tiến độ thi công",
+      "description": "Connect 3D models with Primavera P6 and MS Project schedules to simulate construction sequences, detect time-space clashes, and optimize site logistics.",
+      "description_vi": "Kết nối mô hình 3D với tiến độ Primavera P6 và MS Project để mô phỏng trực quan trình tự thi công, phân tích điểm nghẽn và tối ưu hóa mặt bằng.",
       "image": "/images/profile/bim-4d.webp",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
-        "Primavera/MS Project schedule integration",
-        "Construction methods and installation simulations",
-        "Bottleneck and schedule-risk analysis"
+        "Primavera P6 and MS Project schedule integration",
+        "Dynamic 4D construction sequence & methodology simulation",
+        "Time-space clash detection and site bottleneck analysis",
+        "Planned vs. actual progress tracking and scenario evaluation"
       ],
       "highlights_vi": [
-        "Liên kết tiến độ Primavera/MS Project",
-        "Mô phỏng biện pháp và trình tự lắp đặt",
-        "Phân tích điểm nghẽn và rủi ro tiến độ"
+        "Liên kết mô hình 3D với tiến độ Primavera P6 và MS Project",
+        "Mô phỏng 4D trực quan biện pháp và trình tự thi công chi tiết",
+        "Phân tích xung đột không gian - thời gian và nhận diện điểm nghẽn",
+        "Đánh giá kịch bản tiến độ kế hoạch so với thực tế (Planned vs Actual)"
       ],
       "sections": [
         {
-          "title": "Service scope",
-          "body": "Connect 3D models with schedules to visualise construction sequences and assess delivery scenarios.",
+          "title": "4D Simulation Scope & Methodology",
+          "body": "BIM4C connects 3D geometric components with WBS activity schedules from leading project management platforms (Primavera P6, MS Project, Synchro 4D). This enables multidisciplinary teams to validate construction sequencing, site logistics, and spatial feasibility before physical mobilization.",
           "unorderedList": [
-            "Primavera/MS Project schedule integration",
-            "Construction methods and installation simulations",
-            "Bottleneck and schedule-risk analysis"
+            "WBS code mapping and activity linking to model elements",
+            "Logistics simulation: crane radiuses, temporary scaffolding, and laydown areas",
+            "Critical Path Method (CPM) validation and schedule buffer analysis"
           ]
         },
         {
-          "title": "Outputs and coordination",
-          "body": "Schedule-linked models and simulation videos support scenario reviews, site organisation and resource coordination."
+          "title": "4D Outputs & Collaborative Progress Management",
+          "body": "Visual deliverables empower project owners, general contractors, and supervision consultants to monitor execution status in real time, proactively resolving spatial-temporal clashes and subcontractor trade overlaps.",
+          "unorderedList": [
+            "High-definition 4D sequence simulation animations across critical milestones",
+            "Time-space clash detection and workspace congestion reports",
+            "Visual baseline vs. actual progress comparative analytics"
+          ]
+        },
+        {
+          "title": "Project Value & Practical Impact",
+          "body": "Implementing 4D BIM minimizes site congestion, prevents costly schedule overruns, optimizes heavy equipment utilization, and ensures predictable project handover."
         }
       ],
       "sections_vi": [
         {
-          "title": "Phạm vi dịch vụ",
-          "body": "Kết nối mô hình 3D với tiến độ để trực quan hóa trình tự thi công và đánh giá các phương án triển khai.",
+          "title": "Phạm vi & Kỹ thuật mô phỏng tiến độ 4D",
+          "body": "BIM4C tích hợp cấu kiện hình học 3D với biểu đồ tiến độ công việc WBS từ phần mềm quản lý tiến độ (Primavera P6, Microsoft Project, Synchro). Dữ liệu 4D cho phép rà soát tuần tự lắp dựng kết cấu, hoàn thiện kiến trúc và lắp đặt hệ thống cơ điện (MEP), đảm bảo tính khả thi cao nhất trước khi triển khai trên công trường.",
           "unorderedList": [
-            "Liên kết tiến độ Primavera/MS Project",
-            "Mô phỏng biện pháp và trình tự lắp đặt",
-            "Phân tích điểm nghẽn và rủi ro tiến độ"
+            "Gán mã WBS và liên kết dữ liệu tiến độ vào từng cấu kiện mô hình",
+            "Mô phỏng biện pháp thi công, lắp đặt cẩu tháp, giàn giáo và khu vực lưu bãi",
+            "Phân tích đường găng CPM và kiểm soát dung sai thời gian thi công"
           ]
         },
         {
-          "title": "Đầu ra và phối hợp",
-          "body": "Mô hình liên kết tiến độ và video mô phỏng hỗ trợ trao đổi phương án, tổ chức công trường và phối hợp nguồn lực."
+          "title": "Đầu ra & Quản lý phối hợp tiến độ 4D",
+          "body": "Hệ thống đầu ra trực quan hóa hỗ trợ Ban Quản lý dự án, Tổng thầu và Tư vấn giám sát nắm bắt toàn diện tình trạng dự án theo mốc thời gian thực, phát hiện sớm các rủi ro xung đột mặt bằng và chồng chéo công việc giữa các nhà thầu phụ.",
+          "unorderedList": [
+            "Video mô phỏng 4D độ phân giải cao theo từng giai đoạn thi công then chốt",
+            "Báo cáo phân tích xung đột không gian - thời gian (Time-Space Clash Report)",
+            "Bảng so sánh trực quan tiến độ kế hoạch và tiến độ thực tế (Baseline vs Actual)"
+          ]
+        },
+        {
+          "title": "Giá trị thực tiễn & Hiệu quả dự án",
+          "body": "Ứng dụng BIM 4D giúp chủ đầu tư và nhà thầu giảm thiểu tối đa các xung đột mặt bằng thi công, rút ngắn thời gian xử lý vướng mắc phát sinh, tối ưu hóa kế hoạch huy động máy móc thiết bị và bảo đảm dự án hoàn thành đúng cam kết tiến độ."
         }
       ],
-      "seoTitle": "BIM 4D – Construction Sequencing",
-      "seoTitle_vi": "BIM 4D – Mô phỏng tiến độ",
-      "seoDescription": "Connect 3D models with schedules to visualise construction sequences and assess delivery scenarios.",
-      "seoDescription_vi": "Kết nối mô hình 3D với tiến độ để trực quan hóa trình tự thi công và đánh giá các phương án triển khai.",
+      "seoTitle": "BIM 4D – Construction Sequencing & Simulation",
+      "seoTitle_vi": "BIM 4D – Mô phỏng & Quản lý tiến độ thi công",
+      "seoDescription": "Connect 3D models with Primavera P6 and MS Project schedules to simulate construction sequences, detect time-space clashes, and optimize site logistics.",
+      "seoDescription_vi": "Kết nối mô hình 3D với tiến độ Primavera P6 và MS Project để mô phỏng trực quan trình tự thi công, phân tích điểm nghẽn và tối ưu hóa mặt bằng.",
       "sourcePages": [
         14,
         15

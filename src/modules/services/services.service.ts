@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ContentStatus, Prisma } from '@prisma/client';
 import {
   mapContent,
+  mapContentSummary,
   type ContentResponse,
 } from '../../common/dto/content-response.dto';
 import { PrismaService } from '../../database/prisma.service';
@@ -15,6 +16,8 @@ const CACHE_TTL_MS = 120_000; // 2 minutes
 
 @Injectable()
 export class ServicesService {
+  private readonly logger = new Logger(ServicesService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll(query: PageQueryDto): Promise<PageResponse<ContentResponse>> {
@@ -24,6 +27,7 @@ export class ServicesService {
     const cacheKey = `list:${page}:${limit}:${query.search || ''}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
+      this.logger.debug(JSON.stringify({ event: 'catalog.pagination.cache_hit', resource: 'services', page, limit }));
       return hit.data as PageResponse<ContentResponse>;
     }
 
@@ -41,16 +45,27 @@ export class ServicesService {
           }
         : {}),
     };
+    const queryStartedAt = Date.now();
     const [rows, total] = await Promise.all([
       this.prisma.service.findMany({
         where,
+        select: {
+          id: true, slug: true, title: true, title_vi: true, description: true, description_vi: true,
+          image: true, eyebrow: true, eyebrow_vi: true, meta: true, meta_vi: true,
+          seoTitle: true, seoTitle_vi: true, seoDescription: true, seoDescription_vi: true,
+          seoImage: true, canonicalUrl: true, status: true, publishedAt: true, createdAt: true, updatedAt: true,
+        },
         skip: (page - 1) * limit,
         take: limit,
         orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }],
       }),
       this.prisma.service.count({ where }),
     ]);
-    const result = pageResponse(rows.map(mapContent), total, page, limit);
+    this.logger.log(JSON.stringify({
+      event: 'catalog.pagination.query', resource: 'services', page, limit, total,
+      durationMs: Date.now() - queryStartedAt, searchPresent: Boolean(query.search),
+    }));
+    const result = pageResponse(rows.map(mapContentSummary), total, page, limit);
     cache.set(cacheKey, { data: result, cachedAt: Date.now() });
     return result;
   }

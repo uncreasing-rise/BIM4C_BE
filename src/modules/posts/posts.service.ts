@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ContentStatus, Prisma } from '@prisma/client';
 import {
   mapContent,
+  mapContentSummary,
   type ContentResponse,
 } from '../../common/dto/content-response.dto';
 import {
@@ -38,6 +39,8 @@ const NEWS_SLUGS = ['tin-tuc', 'su-kien', 'tuyen-dung', 'hop-tac', 'news', 'even
 
 @Injectable()
 export class PostsService {
+  private readonly logger = new Logger(PostsService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll(
@@ -52,6 +55,7 @@ export class PostsService {
     const cacheKey = `list:${page}:${limit}:${query.search || ''}:${query.category || ''}:${group || 'all'}:${sortBy}:${sortOrder}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
+      this.logger.debug(JSON.stringify({ event: 'catalog.pagination.cache_hit', resource: 'posts', page, limit }));
       return hit.data as PageResponse<PostResponse>;
     }
 
@@ -96,19 +100,32 @@ export class PostsService {
               }
             : {}),
     };
+    const queryStartedAt = Date.now();
     const [rows, total] = await Promise.all([
       this.prisma.post.findMany({
         where,
-        include: { category: true },
+        select: {
+          id: true, slug: true, title: true, title_vi: true, description: true, description_vi: true,
+          image: true, eyebrow: true, eyebrow_vi: true, meta: true, meta_vi: true,
+          seoTitle: true, seoTitle_vi: true, seoDescription: true, seoDescription_vi: true,
+          seoImage: true, canonicalUrl: true, status: true, publishedAt: true, createdAt: true, updatedAt: true,
+          authorName: true,
+          category: { select: { id: true, name: true, slug: true } },
+        },
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { [sortBy]: sortOrder },
       }),
       this.prisma.post.count({ where }),
     ]);
+    this.logger.log(JSON.stringify({
+      event: 'catalog.pagination.query', resource: 'posts', page, limit,
+      total, durationMs: Date.now() - queryStartedAt, searchPresent: Boolean(query.search),
+      category: query.category || null, group: group || 'all',
+    }));
     const result = pageResponse(
       rows.map((row) => ({
-        ...mapContent(row),
+        ...mapContentSummary(row),
         authorName: row.authorName,
         category: row.category
           ? { id: row.category.id, name: row.category.name, slug: row.category.slug }

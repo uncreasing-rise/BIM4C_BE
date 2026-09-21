@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma, ProjectStatus } from '@prisma/client';
 import {
-  mapContent,
+  mapContentSummary,
+  type ContentSummaryRecord,
   type ContentResponse,
 } from '../../common/dto/content-response.dto';
 import {
@@ -52,15 +53,30 @@ const CACHE_TTL_MS = 120_000; // 2 minutes
 
 @Injectable()
 export class ProjectsService {
+  private readonly logger = new Logger(ProjectsService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   private map(
-    row: Prisma.ProjectGetPayload<{
-      include: { category: true; images: true };
-    }>,
+    row: ContentSummaryRecord & {
+      category: { id: string; name: string; slug: string };
+      location: string;
+      location_vi: string | null;
+      year: number | null;
+      investor: string | null;
+      investor_vi: string | null;
+      expectedCompletion: string | null;
+      expectedCompletion_vi: string | null;
+      scale: string | null;
+      scale_vi: string | null;
+      contractPackage: string | null;
+      contractPackage_vi: string | null;
+      status: ProjectStatus;
+      images: ProjectResponse['gallery'];
+    },
   ): ProjectResponse {
     return {
-      ...mapContent(row),
+      ...mapContentSummary(row),
       category: row.category,
       location: row.location,
       location_vi: row.location_vi,
@@ -131,16 +147,32 @@ export class ProjectsService {
       ...(query.year ? { year: query.year } : {}),
     };
 
+    const queryStartedAt = Date.now();
     const [rows, total] = await Promise.all([
       this.prisma.project.findMany({
         where,
-        include: { category: true, images: { orderBy: { sortOrder: 'asc' } } },
+        select: {
+          id: true, slug: true, title: true, title_vi: true, description: true, description_vi: true,
+          image: true, eyebrow: true, eyebrow_vi: true, meta: true, meta_vi: true,
+          seoTitle: true, seoTitle_vi: true, seoDescription: true, seoDescription_vi: true,
+          seoImage: true, canonicalUrl: true, status: true, publishedAt: true, createdAt: true, updatedAt: true,
+          location: true, location_vi: true, year: true, investor: true, investor_vi: true,
+          expectedCompletion: true, expectedCompletion_vi: true, scale: true, scale_vi: true,
+          contractPackage: true, contractPackage_vi: true,
+          category: { select: { id: true, name: true, slug: true } },
+          images: { orderBy: { sortOrder: 'asc' } },
+        },
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { [sortBy]: sortOrder },
       }),
       this.prisma.project.count({ where }),
     ]);
+    this.logger.log(JSON.stringify({
+      event: 'catalog.pagination.query', resource: 'projects', page, limit, total,
+      durationMs: Date.now() - queryStartedAt, searchPresent: Boolean(query.search),
+      category: query.category || null, status: query.status || null,
+    }));
 
     const result = pageResponse(
       rows.map((row) => this.map(row)),

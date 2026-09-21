@@ -54,6 +54,60 @@ export interface ContentResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ContentSummaryRecord {
+  id: string;
+  slug: string;
+  title: string;
+  title_vi?: string | null;
+  description: string;
+  description_vi?: string | null;
+  image: string;
+  eyebrow: string;
+  eyebrow_vi?: string | null;
+  meta?: string | null;
+  meta_vi?: string | null;
+  seoTitle?: string | null;
+  seoTitle_vi?: string | null;
+  seoDescription?: string | null;
+  seoDescription_vi?: string | null;
+  seoImage?: string | null;
+  canonicalUrl?: string | null;
+  status?: string;
+  publishedAt?: Date | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+/** Maps only fields needed by catalogue cards, avoiding large content JSON columns. */
+export function mapContentSummary(record: ContentSummaryRecord): ContentResponse {
+  return {
+    id: record.id,
+    slug: record.slug,
+    title: record.title,
+    ...(record.title_vi ? { title_vi: record.title_vi } : {}),
+    description: record.description,
+    ...(record.description_vi ? { description_vi: record.description_vi } : {}),
+    image: record.image,
+    eyebrow: record.eyebrow,
+    ...(record.eyebrow_vi ? { eyebrow_vi: record.eyebrow_vi } : {}),
+    meta: record.meta ?? null,
+    ...(record.meta_vi ? { meta_vi: record.meta_vi } : {}),
+    highlights: [],
+    sections: [],
+    seoTitle: record.seoTitle ?? null,
+    ...(record.seoTitle_vi ? { seoTitle_vi: record.seoTitle_vi } : {}),
+    seoDescription: record.seoDescription ?? null,
+    ...(record.seoDescription_vi ? { seoDescription_vi: record.seoDescription_vi } : {}),
+    seoImage: record.seoImage ?? null,
+    canonicalUrl: record.canonicalUrl ?? null,
+    relatedIds: [],
+    status: record.status?.toLowerCase() ?? 'published',
+    publishedAt: record.publishedAt?.toISOString() ?? null,
+    createdAt: record.createdAt?.toISOString() ?? '',
+    updatedAt: record.updatedAt?.toISOString() ?? '',
+  };
+}
 interface ContentRecord extends Omit<
   ContentResponse,
   'highlights' | 'sections' | 'contentBlocks' | 'relatedIds' | 'status' | 'publishedAt' | 'createdAt' | 'updatedAt' | 'seoTitle' | 'seoDescription' | 'seoImage' | 'canonicalUrl' | 'highlights_vi' | 'sections_vi' | 'contentBlocks_vi'
