@@ -8,7 +8,7 @@
       "title_vi": "Quy trình Scan-to-BIM từ Dữ liệu Point Cloud 3D sang Mô hình Hoàn công",
       "description": "Comprehensive guide on laser scanning technology, point cloud processing, and creating millimeter-accurate As-Built Revit models for renovation and heritage conservation.",
       "description_vi": "Hướng dẫn toàn diện về công nghệ quét 3D Laser Scanning, xử lý đám mây điểm Point Cloud và xây dựng mô hình hoàn công As-Built Revit chuẩn xác từng milimet cho công trình cải tạo và di sản.",
-      "image": "/images/profile/bim-3d.webp",
+      "image": "/images/news-project-coordination.webp",
       "eyebrow": "SURVEY & SCAN-TO-BIM",
       "eyebrow_vi": "KHẢO SÁT & SCAN-TO-BIM",
       "category": "Khảo sát & Scan-to-BIM",
@@ -85,7 +85,7 @@
       "title_vi": "Tiêu chuẩn BIM ISO 19650 & Chiến lược Xây dựng Môi trường Dữ liệu Chung (CDE)",
       "description": "How to structure EIR, BEP, and deploy a Common Data Environment compliant with ISO 19650-1 and ISO 19650-2 for large-scale infrastructure and building projects.",
       "description_vi": "Cách thiết lập yêu cầu thông tin EIR, kế hoạch thực thi BEP và vận hành Môi trường dữ liệu chung CDE chuẩn ISO 19650-1 và ISO 19650-2 cho dự án xây dựng.",
-      "image": "/images/profile/hoa-xuan.webp",
+      "image": "/images/news-bim-training.webp",
       "eyebrow": "PROCESSES & STANDARDS",
       "eyebrow_vi": "QUY TRÌNH & TIÊU CHUẨN",
       "category": "Quy trình & Tiêu chuẩn",
@@ -164,7 +164,7 @@
       "title_vi": "Tự động hóa BIM với Revit API, Dynamo và Lập trình Python",
       "description": "Learn how BIM4C uses Revit API, Dynamo and Python to automate BIM modelling, documentation, quantity takeoff and QA/QC—reducing repetitive work and accelerating project delivery.",
       "description_vi": "Khám phá cách BIM4C tự động hóa mô hình Revit, hồ sơ, bóc tách khối lượng và QA/QC bằng Revit API, Dynamo và Python để giảm thao tác lặp lại và tăng tốc triển khai BIM.",
-      "image": "/images/profile/bim-2d.webp",
+      "image": "/images/news-digital-twin.webp",
       "eyebrow": "BIM AUTOMATION & DIGITAL DELIVERY",
       "eyebrow_vi": "CÔNG NGHỆ & TỰ ĐỘNG HÓA",
       "category": "Công nghệ & Tự động hóa",
@@ -241,7 +241,7 @@
       "title_vi": "Phối hợp BIM Cơ Điện MEP & Xử lý Va chạm Clash Detection Chuyên sâu",
       "description": "Master MEP clash detection, multi-trade coordination matrices, opening reservations, and digital issue tracking across Navisworks, Revizto, and Solibri.",
       "description_vi": "Làm chủ quy trình phối hợp cơ điện MEP, lập ma trận ưu tiên xung đột, đặt lỗ mở xuyên dầm sàn Sleeve/Opening và quản lý lỗi va chạm với Navisworks, Revizto và Solibri.",
-      "image": "/images/profile/bim-3d.webp",
+      "image": "/images/news-site-safety.webp",
       "eyebrow": "COORDINATION & CLASH DETECTION",
       "eyebrow_vi": "PHỐI HỢP & XỬ LÝ VA CHẠM",
       "category": "Phối hợp & Xử lý va chạm",
@@ -318,7 +318,7 @@
       "title_vi": "Ứng dụng BIM 4D Tiến độ và BIM 5D Chi phí trong Quản lý Dự án",
       "description": "Integrate 3D models with construction schedules (4D) and bill of quantities (5D) to optimize cash flow, simulate logistics, and reduce budget overruns.",
       "description_vi": "Tích hợp mô hình 3D với tiến độ thi công (4D) và bóc tách khối lượng dự toán (5D) để tối ưu hóa dòng tiền, mô phỏng mặt bằng thi công và kiểm soát ngân sách.",
-      "image": "/images/profile/bim-4d.webp",
+      "image": "/images/news-project-coordination.webp",
       "eyebrow": "PROJECT MANAGEMENT BIM",
       "eyebrow_vi": "QUẢN LÝ DỰ ÁN BIM",
       "category": "Quản lý Dự án BIM",
@@ -395,7 +395,7 @@
       "title_vi": "Dữ liệu Tài sản Số & Digital Twin trong Vận hành Tòa nhà Thông minh (BIM 7D)",
       "description": "Bridge the gap between construction handover and facility operations using COBie data standards, IoT sensor integration, and predictive maintenance twins.",
       "description_vi": "Kết nối dữ liệu từ giai đoạn bàn giao hoàn công sang quản lý vận hành tòa nhà thông qua chuẩn dữ liệu COBie, tích hợp cảm biến IoT và bảo trì dự đoán.",
-      "image": "/images/profile/bim-7d.webp",
+      "image": "/images/news-bim-training.webp",
       "eyebrow": "OPERATIONS & DIGITAL TWIN",
       "eyebrow_vi": "VẬN HÀNH & DIGITAL TWIN",
       "category": "Vận hành & Digital Twin",
@@ -472,7 +472,7 @@
       "title_vi": "Phối hợp BIM Đa bộ môn cho Dự án Nhà cao tầng",
       "description": "Federate models, identify clashes and coordinate issues across architecture, structures, MEP and infrastructure for high-rise buildings.",
       "description_vi": "Tổng hợp mô hình, phát hiện va chạm và phối hợp xử lý các vấn đề giữa kiến trúc, kết cấu, cơ điện và hạ tầng cho công trình nhà cao tầng.",
-      "image": "/images/profile/bim-3d.webp",
+      "image": "/images/news-digital-twin.webp",
       "eyebrow": "BIM KNOWLEDGE",
       "eyebrow_vi": "KIẾN THỨC BIM",
       "category": "Kiến thức BIM",
@@ -529,7 +529,7 @@
       "title_vi": "Đào tạo BIM Thực chiến cho Kỹ sư và Doanh nghiệp Xây dựng",
       "description": "Comprehensive BIM training tailored for corporate engineering departments, project management boards, and practicing civil/MEP engineers.",
       "description_vi": "Chương trình đào tạo BIM thực chiến được thiết kế riêng cho doanh nghiệp, ban quản lý dự án và kỹ sư xây dựng, cơ điện, hạ tầng.",
-      "image": "/images/profile/training-acv.webp",
+      "image": "/images/news-site-safety.webp",
       "eyebrow": "BIM TRAINING",
       "eyebrow_vi": "ĐÀO TẠO BIM",
       "category": "Đào tạo BIM",
@@ -744,27 +744,27 @@
     {
       "name": "ACV",
       "name_en": "ACV",
-      "image": "/images/profile/training-acv.webp"
+      "image": "/images/service-training.jpg"
     },
     {
       "name": "DACINCO",
       "name_en": "DACINCO",
-      "image": "/images/profile/training-dacinco.webp"
+      "image": "/images/news-bim-training.webp"
     },
     {
       "name": "DOTHICO",
       "name_en": "DOTHICO",
-      "image": "/images/profile/training-dothico.webp"
+      "image": "/images/service-consulting.jpg"
     },
     {
       "name": "AVA",
       "name_en": "AVA",
-      "image": "/images/profile/training-ava.webp"
+      "image": "/images/service-training.jpg"
     },
     {
       "name": "Hội Xây dựng TP. Đà Nẵng",
       "name_en": "Da Nang Construction Association",
-      "image": "/images/profile/training-association.webp"
+      "image": "/images/news-bim-training.webp"
     }
   ],
   "services": [
@@ -774,7 +774,7 @@
       "title_vi": "Tư vấn BIM",
       "description": "Assess requirements, develop a strategy and implement BIM around organisational objectives and project stages.",
       "description_vi": "Đánh giá nhu cầu, xây dựng chiến lược và triển khai BIM phù hợp với mục tiêu của tổ chức và từng giai đoạn dự án.",
-      "image": "/images/profile/bim-3d.webp",
+      "image": "/images/service-bim.jpg",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -833,7 +833,7 @@
       "title_vi": "Laser Scan & Scan-to-BIM",
       "description": "Capture existing conditions through laser scanning, surveys and point-cloud processing for design, refurbishment and as-built documentation.",
       "description_vi": "Số hóa hiện trạng công trình bằng quét laser, khảo sát và xử lý đám mây điểm phục vụ thiết kế, cải tạo và hoàn công.",
-      "image": "/images/profile/laser-scan.webp",
+      "image": "/images/service-consulting.jpg",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -891,7 +891,7 @@
       "title_vi": "BIM 3D – Mô hình hóa thông tin",
       "description": "Develop architecture, structural, MEP and infrastructure models from drawings, design information or surveys.",
       "description_vi": "Phát triển mô hình kiến trúc, kết cấu, cơ điện và hạ tầng từ bản vẽ, dữ liệu thiết kế hoặc khảo sát.",
-      "image": "/images/profile/bim-3d.webp",
+      "image": "/images/service-design.jpg",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -950,7 +950,7 @@
       "title_vi": "Phối hợp BIM đa bộ môn",
       "description": "Federate models, identify clashes and coordinate issues across architecture, structures, MEP and infrastructure.",
       "description_vi": "Tổng hợp mô hình, phát hiện va chạm và phối hợp xử lý các vấn đề giữa kiến trúc, kết cấu, cơ điện và hạ tầng.",
-      "image": "/images/profile/bim-3d.webp",
+      "image": "/images/news-project-coordination.webp",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -1008,7 +1008,7 @@
       "title_vi": "BIM 4D – Mô phỏng & Quản lý tiến độ thi công",
       "description": "Connect 3D models with Primavera P6 and MS Project schedules to simulate construction sequences, detect time-space clashes, and optimize site logistics.",
       "description_vi": "Kết nối mô hình 3D với tiến độ Primavera P6 và MS Project để mô phỏng trực quan trình tự thi công, phân tích điểm nghẽn và tối ưu hóa mặt bằng.",
-      "image": "/images/profile/bim-4d.webp",
+      "image": "/images/news-digital-twin.webp",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -1086,7 +1086,7 @@
       "title_vi": "BIM 5D – Quản lý chi phí",
       "description": "Connect quantities, rates and budgets to the model to support estimating and cost-change control.",
       "description_vi": "Liên kết khối lượng, đơn giá và ngân sách với mô hình để hỗ trợ dự toán và kiểm soát thay đổi chi phí.",
-      "image": "/images/profile/bim-5d.webp",
+      "image": "/images/service-training.jpg",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -1143,7 +1143,7 @@
       "title_vi": "BIM 6D – Phát triển bền vững",
       "description": "Use model information to assess energy performance, materials and building sustainability objectives.",
       "description_vi": "Sử dụng thông tin mô hình để phân tích năng lượng, vật liệu và các mục tiêu phát triển bền vững của công trình.",
-      "image": "/images/profile/bim-6d.webp",
+      "image": "/images/service-bim.jpg",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -1200,7 +1200,7 @@
       "title_vi": "BIM 7D – Digital Twin & Dữ liệu tài sản",
       "description": "Prepare building information for handover, operation, maintenance and lifecycle asset management.",
       "description_vi": "Chuẩn bị dữ liệu công trình phục vụ bàn giao, vận hành, bảo trì và quản lý tài sản trong suốt vòng đời.",
-      "image": "/images/profile/bim-7d.webp",
+      "image": "/images/service-consulting.jpg",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -1258,7 +1258,7 @@
       "title_vi": "Thiết kế công trình & Hạ tầng",
       "description": "Planning, landscape, infrastructure, architectural and interior design coordinated with structural and MEP expertise.",
       "description_vi": "Tư vấn quy hoạch, cảnh quan, hạ tầng, kiến trúc và nội thất, phối hợp cùng chuyên môn kết cấu và cơ điện.",
-      "image": "/images/profile/m-beach.webp",
+      "image": "/images/service-design.jpg",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -1316,7 +1316,7 @@
       "title_vi": "Tư vấn xây dựng & Giám sát",
       "description": "Project management, design review and supervision for civil, industrial and infrastructure works within the appointed scope.",
       "description_vi": "Tư vấn quản lý dự án, thẩm tra và giám sát công trình dân dụng, công nghiệp và hạ tầng theo phạm vi được giao.",
-      "image": "/images/profile/hoa-nhon.webp",
+      "image": "/images/news-project-coordination.webp",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -1373,7 +1373,7 @@
       "title_vi": "Đào tạo & Chuyển giao BIM",
       "description": "BIM training for businesses, owners, project management teams and students in construction, architecture and infrastructure.",
       "description_vi": "Đào tạo BIM cho doanh nghiệp, chủ đầu tư, ban quản lý dự án và sinh viên xây dựng, kiến trúc, hạ tầng.",
-      "image": "/images/profile/training-acv.webp",
+      "image": "/images/news-digital-twin.webp",
       "eyebrow": "BIM4C SERVICES",
       "eyebrow_vi": "DỊCH VỤ BIM4C",
       "highlights": [
@@ -1435,7 +1435,7 @@
       "title_vi": "Nút giao Hòa Xuân",
       "description": "Component 02: infrastructure for the Le Thanh Nghi–CMT8–Thang Long interchange and Hoa Xuan bridge approaches.",
       "description_vi": "Dự án thành phần 02: hạ tầng kỹ thuật cụm nút giao Lê Thanh Nghị – CMT8 – Thăng Long – đường dẫn lên cầu Hòa Xuân.",
-      "image": "/images/profile/hoa-xuan.webp",
+      "image": "/images/project-lumi.jpg",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1512,7 +1512,7 @@
       "title_vi": "Đường tránh Nam Hải Vân",
       "description": "Upgrade and widening between Hoa Lien interchange and the coastal-road junction connecting to Lien Chieu port.",
       "description_vi": "Nâng cấp, mở rộng đoạn từ nút giao Hòa Liên đến nút giao đường ven biển nối cảng Liên Chiểu.",
-      "image": "/images/profile/nam-hai-van.webp",
+      "image": "/images/project-elysian.jpg",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1589,7 +1589,7 @@
       "title_vi": "Tuyến cống Trần Nam Trung",
       "description": "Drainage works connecting downstream to the existing culvert on Tran Nam Trung road.",
       "description_vi": "Tuyến cống thoát nước khớp nối hạ lưu tuyến cống hiện trạng trên đường Trần Nam Trung.",
-      "image": "/images/profile/tran-nam-trung.webp",
+      "image": "/images/project-matrix.jpg",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1645,7 +1645,7 @@
       "title_vi": "Trường Tiểu học Nguyễn Văn Trỗi",
       "description": "Nguyen Van Troi Primary School, campus 1 at its new location.",
       "description_vi": "Trường Tiểu học Nguyễn Văn Trỗi, cơ sở 1 tại vị trí mới.",
-      "image": "/images/profile/nguyen-van-troi.webp",
+      "image": "/images/news-site-safety.webp",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1701,7 +1701,7 @@
       "title_vi": "Cụm công nghiệp Hòa Nhơn",
       "description": "Technical and transport infrastructure for Hoa Nhon Industrial Cluster.",
       "description_vi": "Hạ tầng kỹ thuật và giao thông cho Cụm công nghiệp Hòa Nhơn.",
-      "image": "/images/profile/hoa-nhon.webp",
+      "image": "/images/news-project-coordination.webp",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1757,7 +1757,7 @@
       "title_vi": "Khách sạn M-Beach",
       "description": "M-Beach high-rise hotel with information modelling for design.",
       "description_vi": "Khách sạn cao tầng M-Beach với mô hình thông tin phục vụ thiết kế.",
-      "image": "/images/profile/m-beach.webp",
+      "image": "/images/news-digital-twin.webp",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1834,7 +1834,7 @@
       "title_vi": "Nhà xưởng Âm học Quốc Quang",
       "description": "Audio-equipment manufacturing facility in Vietnam for Guoguang Acoustic Co., Ltd.",
       "description_vi": "Nhà xưởng sản xuất thiết bị âm thanh tại Việt Nam của Công ty TNHH Âm học Quốc Quang.",
-      "image": "/images/profile/quoc-quang.webp",
+      "image": "/images/project-lumi.jpg",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1890,7 +1890,7 @@
       "title_vi": "Crystal Palace – Selhurst Park",
       "description": "Selhurst Park main-stand redevelopment featured in the experience portfolio.",
       "description_vi": "Dự án tái phát triển khán đài chính sân Selhurst Park được giới thiệu trong hồ sơ kinh nghiệm.",
-      "image": "/images/profile/crystal-palace.webp",
+      "image": "/images/project-elysian.jpg",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1944,7 +1944,7 @@
       "title_vi": "41 Tower Hill",
       "description": "Refurbishment of 41 Tower Hill, formerly SG House, near Tower Gateway and Tower Hill.",
       "description_vi": "Cải tạo tòa nhà 41 Tower Hill, trước đây là SG House, gần Tower Gateway và Tower Hill.",
-      "image": "/images/profile/tower-hill.webp",
+      "image": "/images/project-matrix.jpg",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -1998,7 +1998,7 @@
       "title_vi": "Purfleet Thames Terminal Truck Park",
       "description": "Truck-park and transport infrastructure at the multimodal Purfleet Thames Terminal.",
       "description_vi": "Hạ tầng bãi xe và giao thông tại bến trung chuyển đa phương thức Purfleet Thames Terminal.",
-      "image": "/images/profile/purfleet.webp",
+      "image": "/images/news-site-safety.webp",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -2062,7 +2062,7 @@
       "title_vi": "Choa Chu Kang Waterworks",
       "description": "Construction sequencing and simulation for Choa Chu Kang Waterworks.",
       "description_vi": "Mô phỏng và tổ chức trình tự thi công tại công trình Choa Chu Kang Waterworks.",
-      "image": "/images/profile/choa-chu-kang.webp",
+      "image": "/images/news-project-coordination.webp",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -2126,7 +2126,7 @@
       "title_vi": "Cavendish III",
       "description": "Construction methods, modelling and coordination information for the Cavendish III project.",
       "description_vi": "Triển khai biện pháp thi công, mô hình và dữ liệu phối hợp cho dự án Cavendish III.",
-      "image": "/images/profile/cavendish.webp",
+      "image": "/images/news-digital-twin.webp",
       "eyebrow": "PROJECT PROFILE",
       "eyebrow_vi": "HỒ SƠ DỰ ÁN",
       "highlights": [
@@ -2192,7 +2192,7 @@
       "title_vi": "Đào tạo BIM cho doanh nghiệp",
       "description": "Build team capabilities in BIM workflows, digital tools and integrated project delivery.",
       "description_vi": "Nâng cao năng lực đội ngũ về quy trình BIM, công cụ số và phương pháp triển khai dự án tích hợp.",
-      "image": "/images/profile/training-dacinco.webp",
+      "image": "/images/service-training.jpg",
       "eyebrow": "Businesses",
       "eyebrow_vi": "Doanh nghiệp",
       "highlights": [
@@ -2257,7 +2257,7 @@
       "title_vi": "BIM cho Chủ đầu tư & Ban QLDA",
       "description": "Workshops on digital planning, risk reduction and data-informed decision-making.",
       "description_vi": "Hội thảo chuyên đề về quy hoạch số, giảm thiểu rủi ro và ra quyết định dựa trên dữ liệu.",
-      "image": "/images/profile/training-acv.webp",
+      "image": "/images/news-bim-training.webp",
       "eyebrow": "Owners & Project Managers",
       "eyebrow_vi": "Chủ đầu tư & Ban QLDA",
       "highlights": [
@@ -2322,7 +2322,7 @@
       "title_vi": "Đào tạo BIM cho sinh viên",
       "description": "Academic knowledge and practical BIM learning for architecture, construction and infrastructure students.",
       "description_vi": "Kiến thức học thuật và thực hành BIM dành cho sinh viên kiến trúc, xây dựng và hạ tầng.",
-      "image": "/images/profile/training-ava.webp",
+      "image": "/images/service-consulting.jpg",
       "eyebrow": "Students",
       "eyebrow_vi": "Sinh viên",
       "highlights": [
