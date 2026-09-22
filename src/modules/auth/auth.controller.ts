@@ -39,13 +39,14 @@ export class AuthController {
       result.token,
       this.cookieOptions(result.maxAge),
     );
-    return { data: result.user };
+    return { data: result.user, token: result.token };
   }
   @Post('logout')
   @HttpCode(204)
   @UseGuards(SessionAuthGuard, CsrfGuard)
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-    const token = req.cookies?.[this.cookieName()] as string | undefined;
+    const bearerToken = req.headers.authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
+    const token = bearerToken ?? (req.cookies?.[this.cookieName()] as string | undefined);
     if (token) {
       const tokenHash = createHash('sha256').update(token).digest('hex');
       invalidateSessionCache(tokenHash);

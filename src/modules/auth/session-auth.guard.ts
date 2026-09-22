@@ -38,9 +38,12 @@ export class SessionAuthGuard implements CanActivate {
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const token = request.cookies?.[
+    const cookieToken = request.cookies?.[
       this.config.get<string>('AUTH_COOKIE_NAME') ?? 'bim4c_admin_session'
     ] as string | undefined;
+    const authorization = request.headers.authorization;
+    const bearerToken = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
+    const token = bearerToken ?? cookieToken;
     if (!token || token.length < 32)
       throw new UnauthorizedException('Authentication required');
 
