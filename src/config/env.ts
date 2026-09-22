@@ -27,6 +27,7 @@ const schema = z
     RATE_LIMIT_MAX: z.coerce.number().int().positive().default(30),
     TEMPORARY_ADMIN_AUTH: environmentBoolean,
     AUTH_COOKIE_NAME: z.string().min(3).default('bim4c_admin_session'),
+    AUTH_COOKIE_DOMAIN: z.string().min(1).optional(),
     AUTH_SESSION_TTL_HOURS: z.coerce.number().int().min(1).max(168).default(8),
     ADMIN_BOOTSTRAP_EMAIL: z.string().email().optional(),
     ADMIN_BOOTSTRAP_PASSWORD: z.string().min(12).optional(),

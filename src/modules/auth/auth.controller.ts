@@ -85,6 +85,7 @@ export class AuthController {
       httpOnly: true,
       secure: this.config.get<string>('NODE_ENV') === 'production',
       sameSite,
+      domain: this.config.get<string>('AUTH_COOKIE_DOMAIN'),
       path: '/',
       maxAge: maxAge * 1000,
     };
