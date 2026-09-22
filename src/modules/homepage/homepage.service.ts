@@ -23,12 +23,18 @@ export class HomepageService {
     if (hit && Date.now() - hit.cachedAt < (admin ? 15_000 : CACHE_TTL_MS)) {
       return hit.data;
     }
-    const data = await this.prisma.heroSlide.findMany({
-      where: admin ? {} : { isActive: true },
-      orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
-    });
-    cache.set(key, { data, cachedAt: Date.now() });
-    return data;
+    try {
+      const data = await this.prisma.heroSlide.findMany({
+        where: admin ? {} : { isActive: true },
+        orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
+      });
+      cache.set(key, { data, cachedAt: Date.now() });
+      return data;
+    } catch (err) {
+      if (hit) return hit.data;
+      if (!admin) return [];
+      throw err;
+    }
   }
 
   async partners(admin = false) {
@@ -37,12 +43,18 @@ export class HomepageService {
     if (hit && Date.now() - hit.cachedAt < (admin ? 15_000 : CACHE_TTL_MS)) {
       return hit.data;
     }
-    const data = await this.prisma.strategicPartner.findMany({
-      where: admin ? {} : { isActive: true },
-      orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
-    });
-    cache.set(key, { data, cachedAt: Date.now() });
-    return data;
+    try {
+      const data = await this.prisma.strategicPartner.findMany({
+        where: admin ? {} : { isActive: true },
+        orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
+      });
+      cache.set(key, { data, cachedAt: Date.now() });
+      return data;
+    } catch (err) {
+      if (hit) return hit.data;
+      if (!admin) return [];
+      throw err;
+    }
   }
 
   async createSlide(data: CreateHeroSlideDto) {

@@ -7,6 +7,7 @@ import { PrismaService } from '../../database/prisma.service';
 import { permissionsFor } from './permissions';
 import type { LoginDto } from './auth.dto';
 import { AuditService } from '../audit/audit.service';
+import { primeSessionCache } from './session-auth.guard';
 
 @Injectable()
 export class AuthService {
@@ -61,10 +62,13 @@ export class AuthService {
       })
       .catch(() => {});
 
+    const publicUser = this.publicUser(user, session.id);
+    primeSessionCache(tokenHash, publicUser);
+
     return {
       token,
       maxAge: ttl * 3600,
-      user: this.publicUser(user, session.id),
+      user: publicUser,
     };
   }
   async logout(sessionId: string, actorId: string, requestId?: string) {

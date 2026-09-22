@@ -23,6 +23,13 @@ export function invalidateSessionCache(tokenHash?: string) {
   else sessionCache.clear();
 }
 
+export function primeSessionCache(
+  tokenHash: string,
+  admin: NonNullable<Request['admin']>,
+) {
+  sessionCache.set(tokenHash, { admin, cachedAt: Date.now() });
+}
+
 @Injectable()
 export class SessionAuthGuard implements CanActivate {
   constructor(
@@ -68,7 +75,7 @@ export class SessionAuthGuard implements CanActivate {
       sessionId: session.id,
     };
     request.admin = adminData;
-    sessionCache.set(tokenHash, { admin: adminData, cachedAt: now });
+    primeSessionCache(tokenHash, adminData);
     return true;
   }
 }

@@ -2,14 +2,15 @@
 import {
   ConflictException,
   Injectable,
+  Logger,
   NotFoundException,
   UnprocessableEntityException,
+  OnModuleInit,
 } from '@nestjs/common';
 import { ContentStatus, Prisma, ProjectStatus } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import { pageResponse } from '../../common/pagination/page-query.dto';
 import type {
-  AdminListQueryDto,
   BulkActionDto,
   CategoryDto,
   CourseSectionDto,
@@ -28,6 +29,7 @@ import type {
   UpdateProjectDto,
   UpdateProjectImageDto,
 } from './admin.dto';
+import { AdminListQueryDto } from './admin.dto';
 import { MediaStorageService } from './media-storage.service';
 import { isContentBlock } from '../../common/dto/content-response.dto';
 import { clearPostsCache } from '../posts/posts.service';
@@ -52,7 +54,9 @@ interface AdminCacheEntry<T> {
   cachedAt: number;
 }
 const adminCache = new Map<string, AdminCacheEntry<unknown>>();
-const ADMIN_CACHE_TTL_MS = 15_000;
+// Keep the warm cache alive through the admin login flow. Mutations invalidate
+// the affected entries immediately, so the longer TTL does not delay updates.
+const ADMIN_CACHE_TTL_MS = 300_000;
 
 export function invalidateAdminCache(pattern?: string) {
   if (pattern) {
@@ -65,7 +69,8 @@ export function invalidateAdminCache(pattern?: string) {
 }
 
 @Injectable()
-export class AdminService {
+export class AdminService implements OnModuleInit {
+  private readonly logger = new Logger(AdminService.name);
   private dashboardCache: { data: unknown; cachedAt: number } | null = null;
   private recentCache: { data: unknown; cachedAt: number } | null = null;
 
@@ -73,6 +78,24 @@ export class AdminService {
     private readonly prisma: PrismaService,
     private readonly storage: MediaStorageService,
   ) {}
+
+  async onModuleInit(): Promise<void> {
+    const projectQuery = new AdminListQueryDto();
+    try {
+      // Warm the shared database connection before warming the heavier list
+      // query. Running both cold queries concurrently can make the pooler
+      // reject one of them and leave the first browser request slow.
+      await this.categories('project');
+      await this.list('project', projectQuery);
+      await this.list('service', projectQuery);
+      this.logger.log('Admin content cache warm-up completed');
+    } catch (error) {
+      // Startup must remain available even when the optional warm-up fails.
+      this.logger.warn(
+        `Admin content cache warm-up skipped: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  }
   private delegate(domain: Domain): any {
     return (this.prisma as any)[delegateName[domain]];
   }
@@ -278,20 +301,29 @@ export class AdminService {
   }
 
   categories(type: 'project' | 'post') {
-    return (this.prisma as any)[`${type}Category`].findMany({
-      orderBy: { name: 'asc' },
-      include: {
-        _count: {
-          select: { [type === 'project' ? 'projects' : 'posts']: true },
-        },
-      },
-    });
+    const cacheKey = `categories:${type}`;
+    const hit = adminCache.get(cacheKey);
+    if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
+      return hit.data;
+    }
+    return (this.prisma as any)[`${type}Category`]
+      .findMany({
+        orderBy: { name: 'asc' },
+        select: { id: true, name: true, slug: true },
+      })
+      .then((data: unknown) => {
+        adminCache.set(cacheKey, { data, cachedAt: Date.now() });
+        return data;
+      });
   }
   async createCategory(type: 'project' | 'post', input: CategoryDto) {
     try {
-      return await (this.prisma as any)[`${type}Category`].create({
+      const created = await (this.prisma as any)[`${type}Category`].create({
         data: input,
       });
+      this.invalidateMutation(type === 'project' ? 'project' : 'post');
+      adminCache.delete(`categories:${type}`);
+      return created;
     } catch (e) {
       this.writeError(e);
     }
@@ -302,10 +334,13 @@ export class AdminService {
     input: UpdateCategoryDto,
   ) {
     try {
-      return await (this.prisma as any)[`${type}Category`].update({
+      const updated = await (this.prisma as any)[`${type}Category`].update({
         where: { id },
         data: input,
       });
+      this.invalidateMutation(type === 'project' ? 'project' : 'post');
+      adminCache.delete(`categories:${type}`);
+      return updated;
     } catch (e) {
       if (
         e instanceof Prisma.PrismaClientKnownRequestError &&
@@ -323,6 +358,8 @@ export class AdminService {
     if (used) throw new ConflictException('Category is in use');
     try {
       await (this.prisma as any)[`${type}Category`].delete({ where: { id } });
+      this.invalidateMutation(type === 'project' ? 'project' : 'post');
+      adminCache.delete(`categories:${type}`);
     } catch (e) {
       if (
         e instanceof Prisma.PrismaClientKnownRequestError &&
