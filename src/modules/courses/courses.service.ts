@@ -13,6 +13,10 @@ interface CacheEntry<T> {
 const cache = new Map<string, CacheEntry<unknown>>();
 const CACHE_TTL_MS = 120_000; // 2 minutes
 
+export function clearCoursesCache(): void {
+  cache.clear();
+}
+
 @Injectable()
 export class CoursesService {
   private readonly logger = new Logger(CoursesService.name);

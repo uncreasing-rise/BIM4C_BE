@@ -51,6 +51,10 @@ interface CacheEntry<T> {
 const cache = new Map<string, CacheEntry<unknown>>();
 const CACHE_TTL_MS = 120_000; // 2 minutes
 
+export function clearProjectsCache(): void {
+  cache.clear();
+}
+
 @Injectable()
 export class ProjectsService {
   private readonly logger = new Logger(ProjectsService.name);

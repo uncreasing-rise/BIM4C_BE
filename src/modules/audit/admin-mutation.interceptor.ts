@@ -12,6 +12,10 @@ import type { Request } from 'express';
 import { concatMap, from, type Observable } from 'rxjs';
 import { ADMIN_RESOURCE } from '../auth/permissions';
 import { AuditService } from './audit.service';
+import { clearCoursesCache } from '../courses/courses.service';
+import { clearProjectsCache } from '../projects/projects.service';
+import { clearServicesCache } from '../services/services.service';
+import { clearPostsCache } from '../posts/posts.service';
 @Injectable()
 export class AdminMutationInterceptor implements NestInterceptor {
   private readonly logger = new Logger(AdminMutationInterceptor.name);
@@ -29,7 +33,7 @@ export class AdminMutationInterceptor implements NestInterceptor {
     if (
       !resource ||
       ['GET', 'HEAD', 'OPTIONS'].includes(request.method) ||
-      ['users', 'settings', 'audit'].includes(resource)
+      ['users', 'audit'].includes(resource)
     )
       return next.handle() as Observable<unknown>;
     return (next.handle() as Observable<unknown>).pipe(
@@ -39,6 +43,7 @@ export class AdminMutationInterceptor implements NestInterceptor {
     );
   }
   private async afterCommit(req: Request, resource: string, result: unknown) {
+    this.clearResourceCache(resource);
     const param = req.params.id,
       resourceId = typeof param === 'string' ? param : this.resultId(result);
     try {
@@ -61,6 +66,24 @@ export class AdminMutationInterceptor implements NestInterceptor {
       this.logger.warn(
         `Revalidation failed for ${resource}: ${e instanceof Error ? e.message : String(e)}`,
       );
+    }
+  }
+  private clearResourceCache(resource: string): void {
+    switch (resource) {
+      case 'services':
+        clearServicesCache();
+        break;
+      case 'projects':
+      case 'project-categories':
+        clearProjectsCache();
+        break;
+      case 'courses':
+        clearCoursesCache();
+        break;
+      case 'posts':
+      case 'post-categories':
+        clearPostsCache();
+        break;
     }
   }
   private action(req: Request): AuditAction {
@@ -96,16 +119,16 @@ export class AdminMutationInterceptor implements NestInterceptor {
             ? 'posts'
             : resource;
     if (
-      ['projects', 'services', 'courses', 'posts', 'homepage'].includes(
+      ['projects', 'services', 'courses', 'posts', 'homepage', 'settings'].includes(
         normalized,
       )
     )
       tags.add(normalized);
     const body = req.body as { slug?: string } | undefined;
-    if (body?.slug) tags.add(`${normalized.replace(/s$/, '')}:${body.slug}`);
+    if (body?.slug) tags.add(`${normalized.replace(/s$/, '')}-${body.slug}`);
     if (result && typeof result === 'object' && 'data' in result) {
       const slug = (result as { data?: { slug?: string } }).data?.slug;
-      if (slug) tags.add(`${normalized.replace(/s$/, '')}:${slug}`);
+      if (slug) tags.add(`${normalized.replace(/s$/, '')}-${slug}`);
     }
     if (!tags.size) return;
     const response = await fetch(url, {

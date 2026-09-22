@@ -10,7 +10,7 @@ export class ServicesController {
   @Get()
   @Header(
     'Cache-Control',
-    'public, max-age=60, s-maxage=600, stale-while-revalidate=60',
+    'public, max-age=0, s-maxage=0, must-revalidate',
   )
   @ApiOkResponse()
   findAll(@Query() query: PageQueryDto) {
@@ -19,7 +19,7 @@ export class ServicesController {
   @Get(':slug')
   @Header(
     'Cache-Control',
-    'public, max-age=60, s-maxage=600, stale-while-revalidate=60',
+    'public, max-age=0, s-maxage=0, must-revalidate',
   )
   @ApiOkResponse()
   @ApiNotFoundResponse()

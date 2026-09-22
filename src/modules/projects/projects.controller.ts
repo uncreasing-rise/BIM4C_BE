@@ -10,7 +10,7 @@ export class ProjectsController {
   @Get()
   @Header(
     'Cache-Control',
-    'public, max-age=30, s-maxage=300, stale-while-revalidate=60',
+    'public, max-age=0, s-maxage=0, must-revalidate',
   )
   @ApiOkResponse()
   findAll(@Query() query: ProjectQueryDto) {
@@ -19,7 +19,7 @@ export class ProjectsController {
   @Get(':slug')
   @Header(
     'Cache-Control',
-    'public, max-age=30, s-maxage=300, stale-while-revalidate=60',
+    'public, max-age=0, s-maxage=0, must-revalidate',
   )
   @ApiOkResponse()
   @ApiNotFoundResponse()

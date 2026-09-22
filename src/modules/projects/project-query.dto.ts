@@ -23,5 +23,18 @@ export class ProjectQueryDto extends PageQueryDto {
   @Min(1900)
   @Max(2200)
   year?: number;
-  @IsOptional() @IsIn(['profiled', 'planned', 'in_progress', 'completed']) status?: string;
+  @IsOptional()
+  @Transform(({ value }: { value: unknown }) => {
+    if (typeof value !== 'string') return value;
+    const normalized = value.trim().toLowerCase();
+    return {
+      'in delivery': 'in_progress',
+      'in progress': 'in_progress',
+      completed: 'completed',
+      planned: 'planned',
+      profiled: 'profiled',
+    }[normalized] ?? normalized;
+  })
+  @IsIn(['profiled', 'planned', 'in_progress', 'completed'])
+  status?: string;
 }
