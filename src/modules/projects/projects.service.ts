@@ -1,6 +1,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma, ProjectStatus } from '@prisma/client';
 import {
+  mapContent,
   mapContentSummary,
   type ContentSummaryRecord,
   type ContentResponse,
@@ -79,8 +80,30 @@ export class ProjectsService {
       images: ProjectResponse['gallery'];
     },
   ): ProjectResponse {
+    return this.mapProjectFields(row, mapContentSummary(row));
+  }
+
+  private mapProjectFields(
+    row: {
+      category: { id: string; name: string; slug: string };
+      location: string;
+      location_vi: string | null;
+      year: number | null;
+      investor: string | null;
+      investor_vi: string | null;
+      expectedCompletion: string | null;
+      expectedCompletion_vi: string | null;
+      scale: string | null;
+      scale_vi: string | null;
+      contractPackage: string | null;
+      contractPackage_vi: string | null;
+      status: ProjectStatus;
+      images: ProjectResponse['gallery'];
+    },
+    base: ContentResponse,
+  ): ProjectResponse {
     return {
-      ...mapContentSummary(row),
+      ...base,
       category: row.category,
       location: row.location,
       location_vi: row.location_vi,
@@ -212,7 +235,7 @@ export class ProjectsService {
     });
     if (!row) throw new NotFoundException('Project not found');
 
-    const result = this.map(row);
+    const result = this.mapProjectFields(row, mapContent(row));
     cache.set(cacheKey, { data: result, cachedAt: Date.now() });
     return result;
   }

@@ -79,6 +79,20 @@ describe('backend contract primitives', () => {
     });
     expect(response.contentBlocks).toEqual([{ id: 'text', type: 'rich-text', content: 'Safe text' }]);
   });
+  it('normalizes legacy content blocks used by existing projects', () => {
+    const response = mapContent({
+      id: 'id', slug: 'legacy-project', title: 'Legacy project', description: 'Description', image: '/image.jpg', eyebrow: 'Project', meta: null,
+      highlights: [], sections: [{ title: 'Scope', body: 'BIM coordination' }],
+      contentBlocks: [
+        { type: 'rich-text', heading: 'Scope', content: 'BIM coordination' },
+        { type: 'image', url: 'https://cdn.example.com/project.jpg', alt: 'Project' },
+      ],
+    });
+    expect(response.contentBlocks).toEqual([
+      { id: 'block-1', type: 'rich-text', heading: 'Scope', content: 'BIM coordination' },
+      { id: 'block-2', type: 'image', image: { url: 'https://cdn.example.com/project.jpg', alt: 'Project' } },
+    ]);
+  });
   it('parses false environment booleans without truthy string coercion', () => {
     const env = validateEnvironment({
       DATABASE_URL: 'postgresql://user:pass@localhost:5432/test',

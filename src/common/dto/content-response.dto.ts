@@ -146,6 +146,38 @@ function isSection(value: unknown): value is ContentSection {
 }
 const stringValue = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0;
 const safeMedia = (value: unknown): value is ContentMedia => typeof value === 'object' && value !== null && 'url' in value && stringValue(value.url) && (/^\/(?!\/)/.test(value.url) || /^https:\/\//i.test(value.url) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//i.test(value.url));
+
+/**
+ * Older CMS records were saved without block ids and used a flat image block
+ * shape. Normalize those records at the API boundary so public clients always
+ * receive the current content-block contract.
+ */
+function normalizeContentBlocks(value: Prisma.JsonValue | null | undefined, prefix: string): ContentBlock[] {
+  if (!Array.isArray(value)) return [];
+  const normalized: unknown[] = [];
+  value.forEach((raw, index) => {
+    if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) return;
+    const block = raw as Record<string, unknown>;
+    const id = stringValue(block.id) ? block.id : `${prefix}-${index + 1}`;
+
+    if (block.type === 'image' && !block.image && typeof block.url === 'string') {
+      normalized.push({
+        id,
+        type: 'image',
+        image: {
+          url: block.url,
+          alt: typeof block.alt === 'string' ? block.alt : '',
+          ...(typeof block.caption === 'string' ? { caption: block.caption } : {}),
+        },
+      });
+      return;
+    }
+
+    normalized.push({ ...block, id });
+  });
+  return normalized.filter(isContentBlock);
+}
+
 export function isContentBlock(value: unknown): value is ContentBlock {
   if (typeof value !== 'object' || value === null || !('id' in value) || !stringValue(value.id) || !('type' in value) || typeof value.type !== 'string') return false;
   switch (value.type) {
@@ -167,9 +199,8 @@ export function mapContent(record: ContentRecord): ContentResponse {
     throw new Error(`Invalid highlights stored for ${record.slug}`);
   if (!Array.isArray(record.sections) || !record.sections.every(isSection))
     throw new Error(`Invalid sections stored for ${record.slug}`);
-  const contentBlocks: ContentBlock[] = Array.isArray(record.contentBlocks)
-    ? (record.contentBlocks as unknown[]).filter(isContentBlock)
-    : [];
+  const contentBlocks = normalizeContentBlocks(record.contentBlocks, 'block');
+  const contentBlocksVi = normalizeContentBlocks(record.contentBlocks_vi, 'block-vi');
   const relatedIds = Array.isArray(record.relatedIds)
     ? record.relatedIds.filter(stringValue)
     : [];
@@ -190,7 +221,7 @@ export function mapContent(record: ContentRecord): ContentResponse {
     sections: record.sections as unknown as ContentSection[],
     ...(Array.isArray(record.sections_vi) ? { sections_vi: record.sections_vi.filter(isSection) as unknown as ContentSection[] } : {}),
     ...(record.contentBlocks == null ? {} : { contentBlocks }),
-    ...(Array.isArray(record.contentBlocks_vi) ? { contentBlocks_vi: record.contentBlocks_vi.filter(isContentBlock) as ContentBlock[] } : {}),
+    ...(record.contentBlocks_vi != null ? { contentBlocks_vi: contentBlocksVi } : {}),
     seoTitle: record.seoTitle ?? null,
     ...(record.seoTitle_vi ? { seoTitle_vi: record.seoTitle_vi } : {}),
     seoDescription: record.seoDescription ?? null,
