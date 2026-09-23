@@ -3,5 +3,6 @@ dist
 .env
 .env.*
 !.env.example
+.google-oauth-token.json
 coverage
 *.log

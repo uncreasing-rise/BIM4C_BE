@@ -224,6 +224,10 @@ export class AdminService implements OnModuleInit {
       throw new UnprocessableEntityException('Invalid related content IDs');
     if ('learningOutcomes' in data && data.learningOutcomes != null && (!Array.isArray(data.learningOutcomes) || !data.learningOutcomes.every((item: unknown) => typeof item === 'string')))
       throw new UnprocessableEntityException('Invalid learning outcomes');
+    for (const field of ['softwareStack', 'softwareStack_vi']) {
+      if (field in data && data[field] != null && (!Array.isArray(data[field]) || !data[field].every((item: unknown) => typeof item === 'string')))
+        throw new UnprocessableEntityException(`Invalid ${field}`);
+    }
     if ('publishedAt' in data)
       data.publishedAt = data.publishedAt ? new Date(data.publishedAt) : null;
     if (data.status === ContentStatus.PUBLISHED && !data.publishedAt)
@@ -233,11 +237,14 @@ export class AdminService implements OnModuleInit {
     return data;
   }
   async remove(domain: Domain, id: string) {
-    await this.detail(domain, id);
-    await this.delegate(domain).update({
-      where: { id },
+    // Deletes are idempotent: a stale browser tab or a repeated request may
+    // send the same DELETE after the row was already soft-deleted. Treat that
+    // as success so the client can finish its optimistic update and refetch.
+    await this.delegate(domain).updateMany({
+      where: { id, deletedAt: null },
       data: { deletedAt: new Date() },
     });
+    this.invalidateMutation(domain);
   }
   async status(domain: Domain, id: string, input: StatusDto) {
     await this.detail(domain, id);

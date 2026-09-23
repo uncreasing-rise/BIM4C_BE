@@ -58,6 +58,7 @@ export class CoursesService {
           seoImage: true, canonicalUrl: true, status: true, publishedAt: true, createdAt: true, updatedAt: true,
           duration: true, duration_vi: true, level: true, level_vi: true, price: true, price_vi: true,
           instructor: true, instructor_vi: true, learningOutcomes: true, learningOutcomes_vi: true,
+          softwareStack: true, softwareStack_vi: true,
         },
         skip: (page - 1) * limit,
         take: limit,
@@ -109,6 +110,8 @@ export class CoursesService {
       instructor_vi: row.instructor_vi,
       learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [],
       learningOutcomes_vi: Array.isArray(row.learningOutcomes_vi) ? row.learningOutcomes_vi : [],
+      softwareStack: Array.isArray(row.softwareStack) ? row.softwareStack : [],
+      softwareStack_vi: Array.isArray(row.softwareStack_vi) ? row.softwareStack_vi : [],
     };
   }
 
@@ -125,6 +128,8 @@ export class CoursesService {
       instructor_vi: row.instructor_vi,
       learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [],
       learningOutcomes_vi: Array.isArray(row.learningOutcomes_vi) ? row.learningOutcomes_vi : [],
+      softwareStack: Array.isArray((row as any).softwareStack) ? (row as any).softwareStack : [],
+      softwareStack_vi: Array.isArray((row as any).softwareStack_vi) ? (row as any).softwareStack_vi : [],
     };
   }
 }

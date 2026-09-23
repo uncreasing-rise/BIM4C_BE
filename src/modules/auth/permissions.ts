@@ -13,6 +13,7 @@ const editorResources = [
   'post-categories',
   'media',
   'homepage',
+  'appointments',
 ];
 const editorPermissions = [
   ...editorResources.flatMap((resource) =>

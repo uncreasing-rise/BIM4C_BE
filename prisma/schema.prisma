@@ -161,6 +161,8 @@ model Course {
   instructor_vi    String?              @db.VarChar(240)
   learningOutcomes Json?                @map("learning_outcomes")
   learningOutcomes_vi Json?
+  softwareStack   Json                  @default("[]") @map("software_stack")
+  softwareStack_vi Json?                @map("software_stack_vi")
   status           ContentStatus        @default(DRAFT)
   sortOrder        Int                  @default(0) @map("sort_order")
   publishedAt      DateTime?            @map("published_at") @db.Timestamptz(3)
@@ -261,6 +263,71 @@ model Contact {
   @@index([createdAt])
   @@index([status, createdAt])
   @@map("contacts")
+}
+
+enum AppointmentStatus {
+  REQUESTED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+model AvailabilityRule {
+  id              String   @id @default(uuid()) @db.Uuid
+  weekday         Int      @map("weekday")
+  startTime       String   @map("start_time") @db.VarChar(5)
+  endTime         String   @map("end_time") @db.VarChar(5)
+  durationMinutes Int      @default(30) @map("duration_minutes")
+  bufferMinutes   Int      @default(10) @map("buffer_minutes")
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([weekday, startTime, endTime])
+  @@index([weekday, isActive])
+  @@map("availability_rules")
+}
+
+model AvailabilityException {
+  id         String   @id @default(uuid()) @db.Uuid
+  date       DateTime @db.Date
+  isAvailable Boolean @default(false) @map("is_available")
+  startTime  String?  @map("start_time") @db.VarChar(5)
+  endTime    String?  @map("end_time") @db.VarChar(5)
+  note       String?  @db.VarChar(240)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([date])
+  @@index([date, isAvailable])
+  @@map("availability_exceptions")
+}
+
+model Appointment {
+  id          String            @id @default(uuid()) @db.Uuid
+  name        String            @db.VarChar(160)
+  email       String            @db.VarChar(320)
+  phone       String?           @db.VarChar(32)
+  company     String?           @db.VarChar(200)
+  topic       String            @db.VarChar(120)
+  message     String?           @db.VarChar(5000)
+  projectSlug String?           @map("project_slug") @db.VarChar(180)
+  startAt     DateTime          @map("start_at") @db.Timestamptz(3)
+  endAt       DateTime          @map("end_at") @db.Timestamptz(3)
+  timezone    String            @default("Asia/Ho_Chi_Minh") @db.VarChar(64)
+  status      AppointmentStatus @default(REQUESTED)
+  consentGiven Boolean?         @map("consent_given")
+  consentAt   DateTime?         @map("consent_at") @db.Timestamptz(3)
+  privacyPolicyVersion String?   @map("privacy_policy_version") @db.VarChar(64)
+  calendarEventId String? @map("calendar_event_id") @db.VarChar(256)
+  meetingUrl String? @map("meeting_url") @db.VarChar(1000)
+  createdAt   DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([startAt, endAt, status])
+  @@index([email, createdAt])
+  @@map("appointments")
 }
 
 model CourseRegistration {

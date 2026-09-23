@@ -40,6 +40,21 @@ const schema = z
     SUPABASE_MEDIA_BUCKET: z.string().min(1).optional(),
     PUBLIC_API_URL: z.string().url().default('http://localhost:8080'),
     MEDIA_STORAGE_PATH: z.string().min(1).default('uploads'),
+    EMAIL_PROVIDER: z.enum(['none', 'resend']).default('none'),
+    RESEND_API_KEY: z.string().min(10).optional(),
+    MAIL_FROM: z.string().min(3).default('BIM4C <no-reply@bim4c.vn>'),
+    APPOINTMENT_ADMIN_EMAIL: z.string().email().optional(),
+    GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string().email().optional(),
+    GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY: z.string().min(100).optional(),
+    GOOGLE_SERVICE_ACCOUNT_KEY_FILE: z.string().min(1).optional(),
+    GOOGLE_CALENDAR_ID: z.string().min(1).optional(),
+    GOOGLE_CALENDAR_TIMEZONE: z.string().min(1).default('Asia/Ho_Chi_Minh'),
+    GOOGLE_OAUTH_CLIENT_FILE: z.string().min(1).optional(),
+    GOOGLE_OAUTH_CLIENT_ID: z.string().min(20).optional(),
+    GOOGLE_OAUTH_CLIENT_SECRET: z.string().min(10).optional(),
+    GOOGLE_OAUTH_REFRESH_TOKEN: z.string().min(20).optional(),
+    GOOGLE_OAUTH_TOKEN_FILE: z.string().min(1).default('.google-oauth-token.json'),
+    GOOGLE_OAUTH_REDIRECT_URI: z.string().url().default('http://localhost:8080/admin/appointments/google/callback'),
   })
   .superRefine((env, context) => {
     if (env.NODE_ENV !== 'production') return;

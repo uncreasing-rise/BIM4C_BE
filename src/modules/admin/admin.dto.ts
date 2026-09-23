@@ -142,6 +142,8 @@ export class CreateCourseDto extends CreateContentDto {
   @IsOptional() @Transform(trim) @IsString() @MaxLength(240) instructor_vi?: string | null;
   @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) learningOutcomes?: string[];
   @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) learningOutcomes_vi?: string[];
+  @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) softwareStack?: string[];
+  @IsOptional() @IsArray() @ArrayMaxSize(50) @IsString({ each: true }) softwareStack_vi?: string[];
 }
 export class UpdateCourseDto extends PartialType(CreateCourseDto) {}
 

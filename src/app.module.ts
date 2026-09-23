@@ -21,6 +21,7 @@ import { UsersModule } from './modules/users/users.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { RequestLoggingInterceptor } from './common/interceptors/request-logging.interceptor';
 import { AdminMutationInterceptor } from './modules/audit/admin-mutation.interceptor';
+import { AppointmentsModule } from './modules/appointments/appointments.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { AdminMutationInterceptor } from './modules/audit/admin-mutation.interce
     HomepageModule,
     AdminModule,
     HealthModule,
+    AppointmentsModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },
