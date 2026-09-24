@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, Logger } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, ConflictException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createHmac, createSign, randomUUID, timingSafeEqual } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -217,7 +217,18 @@ export class AppointmentNotificationsService {
         method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ client_id: oauthClient.client_id, client_secret: oauthClient.client_secret, refresh_token: refreshToken, grant_type: 'refresh_token' }),
       });
-      if (!response.ok) throw new Error(`Google OAuth refresh failed (${response.status})`);
+      if (!response.ok) {
+        // Only expose known error codes, never Google's raw response or credentials.
+        const failure = await response.json().catch(() => null) as { error?: string } | null;
+        const prefix = `Google OAuth refresh failed (${response.status})`;
+        if (failure?.error === 'invalid_client' || failure?.error === 'unauthorized_client') {
+          throw new BadGatewayException(`${prefix}: ${failure.error}. Verify the configured Google OAuth client ID and secret and that the refresh token belongs to this client, then reconnect via /admin/appointments/google/connect.`);
+        }
+        if (failure?.error === 'invalid_grant') {
+          throw new BadGatewayException(`${prefix}: invalid_grant. Reconnect Google Calendar via /admin/appointments/google/connect. If GOOGLE_OAUTH_REFRESH_TOKEN is set, replace that deployment secret; it takes precedence over the token saved by reconnecting.`);
+        }
+        throw new BadGatewayException(`${prefix}. Google could not refresh the access token. Retry later; if the error persists, check the Google OAuth configuration.`);
+      }
       const data = await response.json() as { access_token?: string };
       if (!data.access_token) throw new Error('Google OAuth refresh did not return an access token');
       return data.access_token;
@@ -234,7 +245,7 @@ export class AppointmentNotificationsService {
       method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: `${unsigned}.${signature}` }),
     });
-    if (!response.ok) throw new Error(`Google OAuth failed (${response.status})`);
+    if (!response.ok) throw new BadGatewayException(`Google OAuth failed (${response.status})`);
     const data = await response.json() as { access_token?: string };
     if (!data.access_token) throw new Error('Google OAuth did not return an access token');
     return data.access_token;
@@ -265,7 +276,7 @@ export class AppointmentNotificationsService {
       } catch {
         // Keep the raw response when Google does not return JSON.
       }
-      throw new Error(`Google Calendar event creation failed (${response.status}): ${detail.slice(0, 500)}`);
+      throw new BadGatewayException(`Google Calendar event creation failed (${response.status}): ${detail.slice(0, 500)}`);
     }
     const event = await response.json() as CalendarResult;
     if (this.meetingUrl(event)) return event;
