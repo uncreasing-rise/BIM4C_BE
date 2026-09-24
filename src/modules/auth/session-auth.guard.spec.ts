@@ -4,10 +4,11 @@ import {
   type ExecutionContext,
 } from '@nestjs/common';
 import { PermissionGuard } from './permission.guard';
-import { SessionAuthGuard } from './session-auth.guard';
+import { SessionAuthGuard, invalidateSessionCache } from './session-auth.guard';
 
 const token = 'valid-session-token-with-at-least-thirty-two-characters';
 const request = (cookie?: string) => ({
+  headers: {} as Record<string, string>,
   cookies: cookie ? { bim4c_admin_session: cookie } : {},
   method: 'GET',
   path: '/admin/users',
@@ -24,7 +25,10 @@ describe('session guard security states', () => {
   const prisma = { adminSession: { findUnique: jest.fn() } };
   const guard = new SessionAuthGuard(prisma as never, config as never);
 
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+    invalidateSessionCache();
+  });
 
   it('rejects a missing cookie', async () => {
     await expect(guard.canActivate(context(request()))).rejects.toBeInstanceOf(

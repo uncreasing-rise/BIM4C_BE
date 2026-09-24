@@ -15,8 +15,12 @@ interface CachedSession {
   cachedAt: number;
 }
 
+// Per-instance cache that saves one database round trip per admin request.
+// Kept short because invalidation (logout, disable, role change) only reaches
+// the instance that handled it; other serverless instances converge within TTL.
 const sessionCache = new Map<string, CachedSession>();
-const CACHE_TTL_MS = 30_000; // 30 seconds
+const CACHE_TTL_MS = 10_000;
+const CACHE_MAX_ENTRIES = 500;
 
 export function invalidateSessionCache(tokenHash?: string) {
   if (tokenHash) sessionCache.delete(tokenHash);
@@ -27,6 +31,15 @@ export function primeSessionCache(
   tokenHash: string,
   admin: NonNullable<Request['admin']>,
 ) {
+  if (sessionCache.size >= CACHE_MAX_ENTRIES) {
+    const now = Date.now();
+    for (const [key, entry] of sessionCache)
+      if (now - entry.cachedAt >= CACHE_TTL_MS) sessionCache.delete(key);
+    // Still full: evict the oldest insertion (Map preserves insertion order).
+    const oldest = sessionCache.keys().next();
+    if (sessionCache.size >= CACHE_MAX_ENTRIES && !oldest.done)
+      sessionCache.delete(oldest.value);
+  }
   sessionCache.set(tokenHash, { admin, cachedAt: Date.now() });
 }
 
@@ -41,7 +54,7 @@ export class SessionAuthGuard implements CanActivate {
     const cookieToken = request.cookies?.[
       this.config.get<string>('AUTH_COOKIE_NAME') ?? 'bim4c_admin_session'
     ] as string | undefined;
-    const authorization = request.headers.authorization;
+    const authorization = request.headers?.authorization;
     const bearerToken = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
     const token = bearerToken ?? cookieToken;
     if (!token || token.length < 32)

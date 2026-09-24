@@ -1,4 +1,4 @@
-import { UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { hashSync } from 'bcryptjs';
 import { AuthService } from './auth.service';
 import { permissionsFor } from './permissions';
@@ -57,6 +57,22 @@ describe('production admin auth and RBAC', () => {
     await expect(
       service.login({ email: user.email, password: 'valid-password-123' }, 'r'),
     ).rejects.toBeInstanceOf(UnauthorizedException);
+  });
+  it('rejects an unknown email with the same error as a wrong password', async () => {
+    prisma.adminUser.findUnique.mockResolvedValueOnce(null);
+    await expect(
+      service.login({ email: 'nobody@example.com', password: 'whatever-123' }, 'r'),
+    ).rejects.toThrow('Invalid email or password');
+  });
+  it('answers 400, not 401, when the new password equals the current one', async () => {
+    await expect(
+      service.changePassword(
+        'u1',
+        's1',
+        'valid-password-123',
+        'valid-password-123',
+      ),
+    ).rejects.toBeInstanceOf(BadRequestException);
   });
   it('destroys the server-side session on logout', async () => {
     await service.logout('s1', 'u1', 'r');

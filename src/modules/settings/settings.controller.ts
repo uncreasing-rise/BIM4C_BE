@@ -4,6 +4,7 @@ import type { Request } from 'express';
 import { AdminResource } from '../auth/permissions';
 import { PermissionGuard } from '../auth/permission.guard';
 import { SessionAuthGuard } from '../auth/session-auth.guard';
+import { CsrfGuard } from '../auth/csrf.guard';
 import { UpdateSettingsDto } from './settings.dto';
 import { SettingsService } from './settings.service';
 @ApiTags('Settings')
@@ -14,13 +15,13 @@ export class SettingsController {
     return { data: await this.service.public() };
   }
   @Get('admin/settings')
-  @UseGuards(SessionAuthGuard, PermissionGuard)
+  @UseGuards(SessionAuthGuard, PermissionGuard, CsrfGuard)
   @AdminResource('settings')
   async get() {
     return { data: await this.service.get() };
   }
   @Patch('admin/settings')
-  @UseGuards(SessionAuthGuard, PermissionGuard)
+  @UseGuards(SessionAuthGuard, PermissionGuard, CsrfGuard)
   @AdminResource('settings')
   async update(@Body() dto: UpdateSettingsDto, @Req() req: Request) {
     return {

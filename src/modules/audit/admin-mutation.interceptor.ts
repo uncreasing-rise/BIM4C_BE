@@ -16,6 +16,8 @@ import { clearCoursesCache } from '../courses/courses.service';
 import { clearProjectsCache } from '../projects/projects.service';
 import { clearServicesCache } from '../services/services.service';
 import { clearPostsCache } from '../posts/posts.service';
+const REVALIDATION_TIMEOUT_MS = 5_000;
+
 @Injectable()
 export class AdminMutationInterceptor implements NestInterceptor {
   private readonly logger = new Logger(AdminMutationInterceptor.name);
@@ -138,6 +140,8 @@ export class AdminMutationInterceptor implements NestInterceptor {
         'X-Revalidation-Secret': secret,
       },
       body: JSON.stringify({ tags: [...tags] }),
+      // Runs inside the admin request; never let a slow frontend stall a save.
+      signal: AbortSignal.timeout(REVALIDATION_TIMEOUT_MS),
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
   }

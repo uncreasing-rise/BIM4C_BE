@@ -19,7 +19,6 @@ import { AuditModule } from './modules/audit/audit.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { SettingsModule } from './modules/settings/settings.module';
-import { RequestLoggingInterceptor } from './common/interceptors/request-logging.interceptor';
 import { AdminMutationInterceptor } from './modules/audit/admin-mutation.interceptor';
 import { AppointmentsModule } from './modules/appointments/appointments.module';
 
@@ -28,6 +27,9 @@ import { AppointmentsModule } from './modules/appointments/appointments.module';
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
+      // Tests must never pick up a developer's .env (it may point at real
+      // databases, mail providers or revalidation endpoints).
+      ignoreEnvFile: process.env.NODE_ENV === 'test',
       validate: validateEnvironment,
     }),
     ThrottlerModule.forRootAsync({
@@ -58,7 +60,6 @@ import { AppointmentsModule } from './modules/appointments/appointments.module';
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },
-    { provide: APP_INTERCEPTOR, useClass: RequestLoggingInterceptor },
     { provide: APP_INTERCEPTOR, useClass: AdminMutationInterceptor },
   ],
 })

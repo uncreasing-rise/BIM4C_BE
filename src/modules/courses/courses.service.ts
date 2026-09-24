@@ -128,8 +128,8 @@ export class CoursesService {
       instructor_vi: row.instructor_vi,
       learningOutcomes: Array.isArray(row.learningOutcomes) ? row.learningOutcomes : [],
       learningOutcomes_vi: Array.isArray(row.learningOutcomes_vi) ? row.learningOutcomes_vi : [],
-      softwareStack: Array.isArray((row as any).softwareStack) ? (row as any).softwareStack : [],
-      softwareStack_vi: Array.isArray((row as any).softwareStack_vi) ? (row as any).softwareStack_vi : [],
+      softwareStack: Array.isArray(row.softwareStack) ? row.softwareStack : [],
+      softwareStack_vi: Array.isArray(row.softwareStack_vi) ? row.softwareStack_vi : [],
     };
   }
 }

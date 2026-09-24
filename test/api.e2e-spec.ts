@@ -1,15 +1,9 @@
-import {
-  UnprocessableEntityException,
-  ValidationPipe,
-  type INestApplication,
-  type ValidationError,
-} from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { ContentStatus, ProjectStatus } from '@prisma/client';
 import request = require('supertest');
-import cookieParser = require('cookie-parser');
 import { AppModule } from '../src/app.module';
-import { ApiExceptionFilter } from '../src/common/filters/api-exception.filter';
+import { configureApp } from '../src/configure-app';
 import { PrismaService } from '../src/database/prisma.service';
 
 const courseId = '11111111-1111-4111-8111-111111111111';
@@ -247,26 +241,8 @@ describe('P0 API contract (HTTP)', () => {
       .useValue(prisma)
       .compile();
     app = module.createNestApplication();
-    app.use(cookieParser());
-    app.useGlobalPipes(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        exceptionFactory: (errors: ValidationError[]) =>
-          new UnprocessableEntityException({
-            message: 'Validation failed',
-            code: 'VALIDATION_ERROR',
-            errors: Object.fromEntries(
-              errors.map((error) => [
-                error.property,
-                Object.values(error.constraints ?? {}),
-              ]),
-            ),
-          }),
-      }),
-    );
-    app.useGlobalFilters(new ApiExceptionFilter());
+    // Exercise the exact production pipeline (helmet, CORS, validation, filter).
+    configureApp(app);
     await app.init();
   });
   afterAll(async () => app?.close());
@@ -448,6 +424,48 @@ describe('P0 API contract (HTTP)', () => {
       .set(sessionCookie)
       .send({ isActive: false })
       .expect(200);
+  });
+  it('neutralizes spreadsheet formulas in CSV exports', async () => {
+    prisma.contact.findMany.mockResolvedValueOnce([
+      {
+        id: courseId,
+        name: '=HYPERLINK("https://evil.example","x")',
+        email: 'a@example.com',
+        phone: null,
+        company: '@SUM(1)',
+        message: 'hello',
+        status: 'NEW',
+        createdAt: new Date('2026-01-01T00:00:00Z'),
+      },
+    ]);
+    const response = await request(app.getHttpServer())
+      .get('/admin/contacts/export')
+      .set(sessionCookie)
+      .expect(200);
+    expect(response.text).toContain(`"'=HYPERLINK(`);
+    expect(response.text).toContain(`"'@SUM(1)"`);
+  });
+  it('applies the shared security pipeline', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/health')
+      .expect(200);
+    expect(response.headers['x-content-type-options']).toBe('nosniff');
+    expect(response.headers['x-request-id']).toBeTruthy();
+  });
+  it('rejects appointment bookings without consent', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/appointments')
+      .send({
+        name: 'Nguyen Van A',
+        email: 'a@example.com',
+        topic: 'BIM',
+        startAt: '2030-01-07T02:00:00.000Z',
+        endAt: '2030-01-07T02:30:00.000Z',
+        consent: false,
+        privacyPolicyVersion: '2026-08-20',
+      })
+      .expect(422);
+    expect(response.body.errors).toHaveProperty('consent');
   });
   it('covers homepage slide and partner CRUD with admin authorization', async () => {
     await request(app.getHttpServer())

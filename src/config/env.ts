@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { isValidTimeZone } from '../modules/appointments/availability';
 
 const environmentBoolean = z
   .preprocess(
@@ -28,6 +29,7 @@ const schema = z
     TEMPORARY_ADMIN_AUTH: environmentBoolean,
     AUTH_COOKIE_NAME: z.string().min(3).default('bim4c_admin_session'),
     AUTH_COOKIE_DOMAIN: z.string().min(1).optional(),
+    AUTH_COOKIE_SAME_SITE: z.enum(['lax', 'strict', 'none']).default('lax'),
     AUTH_SESSION_TTL_HOURS: z.coerce.number().int().min(1).max(168).default(8),
     ADMIN_BOOTSTRAP_EMAIL: z.string().email().optional(),
     ADMIN_BOOTSTRAP_PASSWORD: z.string().min(12).optional(),
@@ -49,6 +51,11 @@ const schema = z
     GOOGLE_SERVICE_ACCOUNT_KEY_FILE: z.string().min(1).optional(),
     GOOGLE_CALENDAR_ID: z.string().min(1).optional(),
     GOOGLE_CALENDAR_TIMEZONE: z.string().min(1).default('Asia/Ho_Chi_Minh'),
+    APPOINTMENT_TIMEZONE: z
+      .string()
+      .refine(isValidTimeZone, 'Must be an IANA timezone')
+      .default('Asia/Ho_Chi_Minh'),
+    OAUTH_STATE_SECRET: z.string().min(32).optional(),
     GOOGLE_OAUTH_CLIENT_FILE: z.string().min(1).optional(),
     GOOGLE_OAUTH_CLIENT_ID: z.string().min(20).optional(),
     GOOGLE_OAUTH_CLIENT_SECRET: z.string().min(10).optional(),
@@ -57,6 +64,12 @@ const schema = z
     GOOGLE_OAUTH_REDIRECT_URI: z.string().url().default('http://localhost:8080/admin/appointments/google/callback'),
   })
   .superRefine((env, context) => {
+    if (env.AUTH_COOKIE_SAME_SITE === 'none' && env.NODE_ENV !== 'production')
+      context.addIssue({
+        code: 'custom',
+        path: ['AUTH_COOKIE_SAME_SITE'],
+        message: 'SameSite=None requires Secure cookies (production only)',
+      });
     if (env.NODE_ENV !== 'production') return;
     const issue = (path: string, message: string) =>
       context.addIssue({ code: 'custom', path: [path], message });

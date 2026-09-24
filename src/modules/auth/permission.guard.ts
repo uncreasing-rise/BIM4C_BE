@@ -27,8 +27,7 @@ export class PermissionGuard implements CanActivate {
   private action(request: Request): string {
     if (request.method === 'GET') return 'read';
     if (request.method === 'DELETE') return 'delete';
-    if (request.method === 'PATCH')
-      return request.path.endsWith('/status') ? 'update' : 'update';
+    if (request.method === 'PATCH') return 'update';
     if (request.path.endsWith('/bulk'))
       return String((request.body as { action?: string }).action ?? 'update');
     return 'create';

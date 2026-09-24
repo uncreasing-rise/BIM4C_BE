@@ -13,6 +13,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import type { Request } from 'express';
 import { SessionAuthGuard } from '../auth/session-auth.guard';
+import { CsrfGuard } from '../auth/csrf.guard';
 import { PermissionGuard } from '../auth/permission.guard';
 import { AdminResource } from '../auth/permissions';
 import {
@@ -25,7 +26,7 @@ import {
 import { UsersService } from './users.service';
 @ApiTags('Admin Users')
 @Controller('admin/users')
-@UseGuards(SessionAuthGuard, PermissionGuard)
+@UseGuards(SessionAuthGuard, PermissionGuard, CsrfGuard)
 @AdminResource('users')
 export class UsersController {
   constructor(private readonly service: UsersService) {}

@@ -1,131 +1,60 @@
 import 'reflect-metadata';
-import express, { Request, Response, NextFunction } from 'express';
+import express, {
+  type NextFunction,
+  type Request,
+  type Response,
+} from 'express';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import {
-  UnprocessableEntityException,
-  ValidationPipe,
-  type ValidationError,
-} from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import helmet from 'helmet';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
-import { json, urlencoded } from 'express';
 import { AppModule } from '../src/app.module';
-import { ApiExceptionFilter } from '../src/common/filters/api-exception.filter';
+import { configureApp } from '../src/configure-app';
+
+type ExpressApp = ReturnType<typeof express>;
 
 const expressApp = express();
-let isInitialized = false;
-let initializationPromise: Promise<typeof expressApp> | undefined;
+let initializationPromise: Promise<ExpressApp> | undefined;
 
-function validationException(
-  errors: ValidationError[],
-): UnprocessableEntityException {
-  const fields = Object.fromEntries(
-    errors.map((error) => [
-      error.property,
-      Object.values(error.constraints ?? {}),
-    ]),
-  );
-  return new UnprocessableEntityException({
-    message: 'Validation failed',
-    code: 'VALIDATION_ERROR',
-    errors: fields,
+// Vercel can invoke the same cold-started function concurrently. Keep a single
+// in-flight bootstrap promise so concurrent requests do not create multiple
+// Nest applications (and multiple Prisma pools).
+function bootstrap(): Promise<ExpressApp> {
+  initializationPromise ??= (async () => {
+    const app = await NestFactory.create(
+      AppModule,
+      new ExpressAdapter(expressApp),
+      { bufferLogs: true },
+    );
+    // Drop numeric query parameters that Vercel's catch-all rewrite appends.
+    app.use((request: Request, _response: Response, next: NextFunction) => {
+      for (const key of Object.keys(request.query ?? {}))
+        if (/^\d+$/.test(key)) delete (request.query as Record<string, unknown>)[key];
+      next();
+    });
+    configureApp(app);
+    await app.init();
+    return expressApp;
+  })().catch((error: unknown) => {
+    // Allow a later invocation to retry if initialization failed.
+    initializationPromise = undefined;
+    throw error;
   });
+  return initializationPromise;
 }
 
-async function bootstrap() {
-  if (!isInitialized) {
-    // Vercel can invoke the same cold-started function concurrently. Keep a
-    // single in-flight bootstrap promise so concurrent requests do not create
-    // multiple Nest applications (and multiple Prisma pools).
-    if (!initializationPromise) {
-      initializationPromise = (async () => {
-        const app = await NestFactory.create(
-          AppModule,
-          new ExpressAdapter(expressApp),
-          {
-            bodyParser: false,
-            bufferLogs: true,
-          },
-        );
-
-        const config = app.get(ConfigService);
-        const origins = (
-          config.get<string>('CORS_ORIGINS') ??
-          config.getOrThrow<string>('FRONTEND_URL')
-        )
-          .split(',')
-          .map((origin) => origin.trim())
-          .filter(Boolean);
-
-        app.use(compression());
-        app.use(helmet());
-        app.use(cookieParser());
-        app.use(json({ limit: '100kb' }));
-        app.use(urlencoded({ extended: false, limit: '100kb' }));
-
-
-        // Filter out numeric query parameters added by Vercel's rewrite rule
-        app.use((request: Request, response: Response, next: NextFunction) => {
-          if (request.query) {
-            for (const key of Object.keys(request.query)) {
-              if (/^\d+$/.test(key)) {
-                delete request.query[key];
-              }
-            }
-          }
-          next();
-        });
-
-        app.enableCors({
-          origin: origins,
-          methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-          allowedHeaders: ['Authorization', 'Content-Type', 'X-Request-ID'],
-          exposedHeaders: ['X-Request-ID'],
-          credentials: true,
-          maxAge: 86400,
-        });
-
-        app.useGlobalPipes(
-          new ValidationPipe({
-            transform: true,
-            whitelist: true,
-            forbidNonWhitelisted: true,
-            stopAtFirstError: false,
-            exceptionFactory: validationException,
-          }),
-        );
-
-        app.useGlobalFilters(new ApiExceptionFilter());
-
-        await app.init();
-        isInitialized = true;
-        return expressApp;
-      })().catch((error) => {
-        // Allow a later invocation to retry if initialization failed.
-        initializationPromise = undefined;
-        throw error;
-      });
-    }
-  }
-  return initializationPromise ?? expressApp;
-}
-
-export default async function handler(req: any, res: any) {
+export default async function handler(req: Request, res: Response) {
   try {
     const server = await bootstrap();
-    return server(req, res);
-  } catch (err: any) {
-    console.error('Vercel Serverless Bootstrap Error:', err);
-    res.setHeader('Content-Type', 'application/json');
-    return res.status(500).send(
-      JSON.stringify({
-        error: 'SERVERLESS_BOOTSTRAP_ERROR',
-        message: err?.message || String(err),
-        stack: process.env.NODE_ENV === 'production' ? undefined : err?.stack,
-      }),
+    server(req, res);
+  } catch (error) {
+    Logger.error(
+      'Serverless bootstrap failed',
+      error instanceof Error ? error.stack : String(error),
+      'Bootstrap',
     );
+    res.status(500).json({
+      message: 'Service temporarily unavailable',
+      code: 'SERVERLESS_BOOTSTRAP_ERROR',
+    });
   }
 }

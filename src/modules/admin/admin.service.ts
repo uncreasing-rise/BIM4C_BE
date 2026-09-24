@@ -33,6 +33,7 @@ import { AdminListQueryDto } from './admin.dto';
 import { MediaStorageService } from './media-storage.service';
 import { isContentBlock } from '../../common/dto/content-response.dto';
 import { clearPostsCache } from '../posts/posts.service';
+import { toCsv } from '../../common/utils/csv';
 
 type Domain = 'project' | 'service' | 'course' | 'post';
 const delegateName: Record<Domain, string> = {
@@ -247,7 +248,7 @@ export class AdminService implements OnModuleInit {
     this.invalidateMutation(domain);
   }
   async status(domain: Domain, id: string, input: StatusDto) {
-    await this.detail(domain, id);
+    const current = await this.detail(domain, id);
     const value = input.status.toUpperCase();
     const allowed =
       domain === 'project'
@@ -255,17 +256,19 @@ export class AdminService implements OnModuleInit {
         : Object.values(ContentStatus);
     if (!allowed.includes(value as never))
       throw new UnprocessableEntityException('Invalid status');
-    return this.delegate(domain).update({
+    const isPublic =
+      value === 'PUBLISHED' ||
+      (domain === 'project' && !['DRAFT', 'ARCHIVED'].includes(value));
+    const updated = await this.delegate(domain).update({
       where: { id },
       data: {
         status: value,
-        publishedAt:
-          value === 'PUBLISHED' ||
-          (domain === 'project' && !['DRAFT', 'ARCHIVED'].includes(value))
-            ? new Date()
-            : null,
+        // Re-publishing keeps the original publication date.
+        publishedAt: isPublic ? (current.publishedAt ?? new Date()) : null,
       },
     });
+    this.invalidateMutation(domain);
+    return updated;
   }
   async bulk(domain: Domain, input: BulkActionDto) {
     const delegate = this.delegate(domain);
@@ -275,23 +278,34 @@ export class AdminService implements OnModuleInit {
     });
     if (existing.length !== input.ids.length)
       throw new NotFoundException('One or more records do not exist');
-    const project = domain === 'project';
-    const data =
-      input.action === 'delete'
-        ? { deletedAt: new Date() }
-        : input.action === 'archive'
-          ? { status: 'ARCHIVED' }
-          : input.action === 'unpublish'
-            ? { status: 'DRAFT', publishedAt: null }
-            : {
-                status: project ? 'PROFILED' : 'PUBLISHED',
-                publishedAt: new Date(),
-              };
-    const result = await delegate.updateMany({
-      where: { id: { in: input.ids } },
-      data,
-    });
-    return { success: true, affected: result.count };
+    let affected: number;
+    if (input.action === 'publish') {
+      const status = domain === 'project' ? 'PROFILED' : 'PUBLISHED';
+      // Two statements so rows published before keep their original date.
+      const [dated, undated] = await this.prisma.$transaction([
+        delegate.updateMany({
+          where: { id: { in: input.ids }, publishedAt: { not: null } },
+          data: { status },
+        }),
+        delegate.updateMany({
+          where: { id: { in: input.ids }, publishedAt: null },
+          data: { status, publishedAt: new Date() },
+        }),
+      ]);
+      affected = dated.count + undated.count;
+    } else {
+      const data =
+        input.action === 'delete'
+          ? { deletedAt: new Date() }
+          : input.action === 'archive'
+            ? { status: 'ARCHIVED' }
+            : { status: 'DRAFT', publishedAt: null };
+      affected = (
+        await delegate.updateMany({ where: { id: { in: input.ids } }, data })
+      ).count;
+    }
+    this.invalidateMutation(domain);
+    return { success: true, affected };
   }
   private writeError(error: unknown): never {
     if (
@@ -386,7 +400,11 @@ export class AdminService implements OnModuleInit {
   }
   async addImage(projectId: string, input: ProjectImageDto) {
     await this.detail('project', projectId);
-    return this.prisma.projectImage.create({ data: { ...input, projectId } });
+    const created = await this.prisma.projectImage.create({
+      data: { ...input, projectId },
+    });
+    this.invalidateMutation('project');
+    return created;
   }
   async updateImage(
     projectId: string,
@@ -397,7 +415,12 @@ export class AdminService implements OnModuleInit {
       where: { id, projectId },
     });
     if (!row) throw new NotFoundException('Image not found');
-    return this.prisma.projectImage.update({ where: { id }, data: input });
+    const updated = await this.prisma.projectImage.update({
+      where: { id },
+      data: input,
+    });
+    this.invalidateMutation('project');
+    return updated;
   }
   async deleteImage(projectId: string, id: string) {
     const row = await this.prisma.projectImage.findFirst({
@@ -405,6 +428,7 @@ export class AdminService implements OnModuleInit {
     });
     if (!row) throw new NotFoundException('Image not found');
     await this.prisma.projectImage.delete({ where: { id } });
+    this.invalidateMutation('project');
   }
   async curriculum(courseId: string) {
     await this.detail('course', courseId);
@@ -415,7 +439,11 @@ export class AdminService implements OnModuleInit {
   }
   async addSection(courseId: string, input: CourseSectionDto) {
     await this.detail('course', courseId);
-    return this.prisma.courseSection.create({ data: { ...input, courseId } });
+    const created = await this.prisma.courseSection.create({
+      data: { ...input, courseId },
+    });
+    this.invalidateMutation('course');
+    return created;
   }
   async updateSection(
     courseId: string,
@@ -426,7 +454,12 @@ export class AdminService implements OnModuleInit {
       where: { id, courseId },
     });
     if (!row) throw new NotFoundException('Section not found');
-    return this.prisma.courseSection.update({ where: { id }, data: input });
+    const updated = await this.prisma.courseSection.update({
+      where: { id },
+      data: input,
+    });
+    this.invalidateMutation('course');
+    return updated;
   }
   async deleteSection(courseId: string, id: string) {
     const row = await this.prisma.courseSection.findFirst({
@@ -434,6 +467,7 @@ export class AdminService implements OnModuleInit {
     });
     if (!row) throw new NotFoundException('Section not found');
     await this.prisma.courseSection.delete({ where: { id } });
+    this.invalidateMutation('course');
   }
 
   private dateWhere(query: AdminListQueryDto): any {
@@ -603,24 +637,6 @@ export class AdminService implements OnModuleInit {
     invalidateAdminCache('subscriptions');
     this.dashboardCache = null;
   }
-  private csv(rows: unknown[][]) {
-    const cell = (value: unknown) => {
-      const text =
-        value === null || value === undefined
-          ? ''
-          : typeof value === 'string'
-            ? value
-            : typeof value === 'number' ||
-                typeof value === 'boolean' ||
-                typeof value === 'bigint'
-              ? value.toString()
-              : typeof value === 'object'
-                ? JSON.stringify(value)
-                : '';
-      return `"${text.replaceAll('"', '""')}"`;
-    };
-    return `\uFEFF${rows.map((row) => row.map(cell).join(',')).join('\r\n')}\r\n`;
-  }
   async exportContacts(query: AdminListQueryDto) {
     const where: Prisma.ContactWhereInput = {
       ...this.dateWhere(query),
@@ -639,7 +655,7 @@ export class AdminService implements OnModuleInit {
       where,
       orderBy: { createdAt: query.sortOrder },
     });
-    return this.csv([
+    return toCsv([
       ['Name', 'Email', 'Phone', 'Company', 'Message', 'Status', 'Created At'],
       ...rows.map((x) => [
         x.name,
@@ -672,7 +688,7 @@ export class AdminService implements OnModuleInit {
       include: { course: { select: { title: true } } },
       orderBy: { createdAt: query.sortOrder },
     });
-    return this.csv([
+    return toCsv([
       ['Course', 'Name', 'Email', 'Phone', 'Status', 'Created At'],
       ...rows.map((x) => [
         x.course.title,
@@ -696,7 +712,7 @@ export class AdminService implements OnModuleInit {
       where,
       orderBy: { createdAt: query.sortOrder },
     });
-    return this.csv([
+    return toCsv([
       ['Email', 'Active', 'Subscribed At', 'Unsubscribed At'],
       ...rows.map((x) => [
         x.email,
@@ -861,8 +877,16 @@ export class AdminService implements OnModuleInit {
   }
   async deleteMedia(id: string) {
     const row = await this.mediaDetail(id);
-    await this.storage.remove(row.storageKey);
+    // Delete the record first: if storage removal then fails we are left with
+    // an unreferenced file rather than a record that points at nothing.
     await this.prisma.media.delete({ where: { id } });
     invalidateAdminCache('media');
+    try {
+      await this.storage.remove(row.storageKey);
+    } catch (error) {
+      this.logger.warn(
+        `Media ${id} deleted but storage object ${row.storageKey} was not removed: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
   }
 }

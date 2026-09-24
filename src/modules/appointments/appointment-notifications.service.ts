@@ -1,6 +1,6 @@
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { createSign, randomUUID } from 'node:crypto';
+import { createHmac, createSign, randomUUID, timingSafeEqual } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import type { Appointment } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
@@ -8,6 +8,11 @@ import { PrismaService } from '../../database/prisma.service';
 type CalendarResult = { id: string; htmlLink?: string; hangoutLink?: string; conferenceData?: { entryPoints?: { entryPointType?: string; uri?: string }[] } };
 
 const encode = (value: string) => Buffer.from(value).toString('base64url');
+const OUTBOUND_TIMEOUT_MS = 10_000;
+const OAUTH_STATE_TTL_MS = 10 * 60_000;
+/** Google and Resend calls run inside admin requests; never let them hang. */
+const timedFetch = (url: string, init: RequestInit = {}) =>
+  fetch(url, { ...init, signal: AbortSignal.timeout(OUTBOUND_TIMEOUT_MS) });
 const escapeHtml = (value: string | null | undefined) => String(value ?? '')
   .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
   .replaceAll('"', '&quot;').replaceAll("'", '&#039;');
@@ -39,7 +44,7 @@ export class AppointmentNotificationsService {
   async confirm(appointment: Appointment): Promise<Appointment> {
     let calendar: CalendarResult | null = null;
     if (appointment.calendarEventId) {
-      await this.sendEmail({ to: appointment.email, subject: 'Lịch tư vấn BIM4C đã được xác nhận', html: this.customerConfirmedEmail(appointment) });
+      await this.trySendEmail({ to: appointment.email, subject: 'Lịch tư vấn BIM4C đã được xác nhận', html: this.customerConfirmedEmail(appointment) });
       return appointment;
     }
     if (this.googleConfigured()) {
@@ -50,15 +55,15 @@ export class AppointmentNotificationsService {
         data: { calendarEventId: calendar.id, meetingUrl },
       }).then(async (updated) => {
         await Promise.all([
-          this.sendEmail({ to: updated.email, subject: 'Lịch tư vấn BIM4C đã được xác nhận', html: this.customerConfirmedEmail(updated) }),
-          this.sendEmail({ to: this.config.get<string>('APPOINTMENT_ADMIN_EMAIL'), subject: `Đã xác nhận lịch: ${updated.topic}`, html: this.adminConfirmedEmail(updated) }),
+          this.trySendEmail({ to: updated.email, subject: 'Lịch tư vấn BIM4C đã được xác nhận', html: this.customerConfirmedEmail(updated) }),
+          this.trySendEmail({ to: this.config.get<string>('APPOINTMENT_ADMIN_EMAIL'), subject: `Đã xác nhận lịch: ${updated.topic}`, html: this.adminConfirmedEmail(updated) }),
         ]);
         return updated;
       });
     }
 
     this.logger.warn('Google Calendar is not configured; appointment confirmed without a Meet link');
-    await this.sendEmail({ to: appointment.email, subject: 'Lịch tư vấn BIM4C đã được xác nhận', html: this.customerConfirmedEmail(appointment) });
+    await this.trySendEmail({ to: appointment.email, subject: 'Lịch tư vấn BIM4C đã được xác nhận', html: this.customerConfirmedEmail(appointment) });
     return appointment;
   }
 
@@ -67,7 +72,7 @@ export class AppointmentNotificationsService {
       try {
         const token = await this.googleAccessToken();
         const calendarId = encodeURIComponent(this.config.getOrThrow<string>('GOOGLE_CALENDAR_ID'));
-        await fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${encodeURIComponent(appointment.calendarEventId)}?sendUpdates=all`, {
+        await timedFetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${encodeURIComponent(appointment.calendarEventId)}?sendUpdates=all`, {
           method: 'DELETE', headers: { Authorization: `Bearer ${token}` },
         });
       } catch (error) {
@@ -77,7 +82,42 @@ export class AppointmentNotificationsService {
     await this.sendEmail({ to: appointment.email, subject: 'Lịch tư vấn BIM4C đã được hủy', html: this.customerCancelledEmail(appointment) });
   }
 
-  googleAuthorizationUrl(): string {
+  /**
+   * Signed OAuth `state` bound to the admin session that started the flow, so a
+   * callback cannot be replayed from another browser (OAuth login CSRF). It is
+   * stateless on purpose: serverless instances share no memory.
+   */
+  private oauthState(sessionId: string, expiresAt: number): string {
+    const secret =
+      this.config.get<string>('OAUTH_STATE_SECRET') ??
+      this.config.get<string>('REVALIDATION_SECRET');
+    if (!secret)
+      throw new ConflictException(
+        'OAUTH_STATE_SECRET must be configured to connect Google Calendar',
+      );
+    const signature = createHmac('sha256', secret)
+      .update(`${sessionId}.${expiresAt}`)
+      .digest('base64url');
+    return `${expiresAt}.${signature}`;
+  }
+
+  private verifyOauthState(state: string | undefined, sessionId: string) {
+    const [expires, signature] = (state ?? '').split('.');
+    const expiresAt = Number(expires);
+    if (!signature || !Number.isFinite(expiresAt) || expiresAt < Date.now())
+      throw new BadRequestException('Invalid or expired OAuth state');
+    const expected = Buffer.from(
+      this.oauthState(sessionId, expiresAt).split('.')[1],
+    );
+    const received = Buffer.from(signature);
+    if (
+      expected.length !== received.length ||
+      !timingSafeEqual(expected, received)
+    )
+      throw new BadRequestException('Invalid or expired OAuth state');
+  }
+
+  googleAuthorizationUrl(sessionId: string): string {
     const client = this.oauthClient();
     if (!client) throw new ConflictException('Google OAuth client is not configured');
     const params = new URLSearchParams({
@@ -86,22 +126,36 @@ export class AppointmentNotificationsService {
       response_type: 'code',
       access_type: 'offline',
       prompt: 'consent',
+      state: this.oauthState(sessionId, Date.now() + OAUTH_STATE_TTL_MS),
       scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/meetings.space.created',
     });
     return `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
   }
 
-  async completeGoogleAuthorization(code: string): Promise<void> {
+  async completeGoogleAuthorization(
+    code: string | undefined,
+    state: string | undefined,
+    sessionId: string,
+  ): Promise<void> {
+    this.verifyOauthState(state, sessionId);
+    if (!code) throw new BadRequestException('Missing authorization code');
     const client = this.oauthClient();
     if (!client) throw new ConflictException('Google OAuth client is not configured');
-    const response = await fetch('https://oauth2.googleapis.com/token', {
+    const response = await timedFetch('https://oauth2.googleapis.com/token', {
       method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ code, client_id: client.client_id, client_secret: client.client_secret, redirect_uri: this.config.getOrThrow<string>('GOOGLE_OAUTH_REDIRECT_URI'), grant_type: 'authorization_code' }),
     });
     if (!response.ok) throw new ConflictException(`Google OAuth token exchange failed (${response.status})`);
     const token = await response.json() as { refresh_token?: string };
     if (!token.refresh_token) throw new ConflictException('Google OAuth did not return a refresh token');
-    writeFileSync(this.config.getOrThrow<string>('GOOGLE_OAUTH_TOKEN_FILE'), JSON.stringify({ refresh_token: token.refresh_token }, null, 2), { mode: 0o600 });
+    try {
+      writeFileSync(this.config.getOrThrow<string>('GOOGLE_OAUTH_TOKEN_FILE'), JSON.stringify({ refresh_token: token.refresh_token }, null, 2), { mode: 0o600 });
+    } catch (error) {
+      // Serverless filesystems are read-only; the token must then be stored as
+      // the GOOGLE_OAUTH_REFRESH_TOKEN secret instead. Never log its value.
+      this.logger.error(`Could not persist Google refresh token: ${error instanceof Error ? error.message : String(error)}`);
+      throw new ConflictException('Google authorized, but the refresh token could not be stored. Set GOOGLE_OAUTH_REFRESH_TOKEN in the deployment secrets.');
+    }
   }
 
   private googleConfigured() {
@@ -159,7 +213,7 @@ export class AppointmentNotificationsService {
     const oauthClient = this.oauthClient();
     const refreshToken = this.oauthRefreshToken();
     if (oauthClient && refreshToken) {
-      const response = await fetch('https://oauth2.googleapis.com/token', {
+      const response = await timedFetch('https://oauth2.googleapis.com/token', {
         method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ client_id: oauthClient.client_id, client_secret: oauthClient.client_secret, refresh_token: refreshToken, grant_type: 'refresh_token' }),
       });
@@ -176,7 +230,7 @@ export class AppointmentNotificationsService {
     const payload = encode(JSON.stringify({ iss: email, scope: 'https://www.googleapis.com/auth/calendar', aud: 'https://oauth2.googleapis.com/token', iat: now, exp: now + 3600 }));
     const unsigned = `${header}.${payload}`;
     const signature = createSign('RSA-SHA256').update(unsigned).sign(privateKey, 'base64url');
-    const response = await fetch('https://oauth2.googleapis.com/token', {
+    const response = await timedFetch('https://oauth2.googleapis.com/token', {
       method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: `${unsigned}.${signature}` }),
     });
@@ -189,7 +243,7 @@ export class AppointmentNotificationsService {
   private async createCalendarEvent(appointment: Appointment): Promise<CalendarResult> {
     const token = await this.googleAccessToken();
     const calendarId = encodeURIComponent(this.config.getOrThrow<string>('GOOGLE_CALENDAR_ID'));
-    const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?conferenceDataVersion=1&sendUpdates=all`, {
+    const response = await timedFetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?conferenceDataVersion=1&sendUpdates=all`, {
       method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         summary: `BIM4C consultation: ${appointment.topic}`,
@@ -220,7 +274,7 @@ export class AppointmentNotificationsService {
     // the confirmation email contains the actual Meet URL instead of a pending request.
     for (let attempt = 0; attempt < 6; attempt += 1) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      const refreshed = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${encodeURIComponent(event.id)}`, {
+      const refreshed = await timedFetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${encodeURIComponent(event.id)}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!refreshed.ok) continue;
@@ -228,7 +282,7 @@ export class AppointmentNotificationsService {
       if (this.meetingUrl(current)) return current;
     }
     try {
-      await fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${encodeURIComponent(event.id)}?sendUpdates=all`, {
+      await timedFetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${encodeURIComponent(event.id)}?sendUpdates=all`, {
         method: 'DELETE', headers: { Authorization: `Bearer ${token}` },
       });
     } catch (error) {
@@ -241,12 +295,21 @@ export class AppointmentNotificationsService {
     return event.hangoutLink || event.conferenceData?.entryPoints?.find((entry) => entry.entryPointType === 'video')?.uri || null;
   }
 
+  /** Email that must not block the calling workflow (e.g. a confirmation). */
+  private async trySendEmail(input: { to?: string; subject: string; html: string }) {
+    try {
+      await this.sendEmail(input);
+    } catch (error) {
+      this.logger.error(`Email "${input.subject}" failed: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
   private async sendEmail(input: { to?: string; subject: string; html: string }) {
     if (!input.to || this.config.get('EMAIL_PROVIDER') !== 'resend' || !this.config.get('RESEND_API_KEY')) {
       this.logger.warn(`Email skipped for ${input.subject}: email provider is not configured`);
       return;
     }
-    const response = await fetch('https://api.resend.com/emails', {
+    const response = await timedFetch('https://api.resend.com/emails', {
       method: 'POST', headers: { Authorization: `Bearer ${this.config.getOrThrow<string>('RESEND_API_KEY')}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: this.config.getOrThrow<string>('MAIL_FROM'), to: [input.to], subject: input.subject, html: input.html }),
     });

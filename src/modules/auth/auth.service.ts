@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuditAction } from '@prisma/client';
 import { compare, hash } from 'bcryptjs';
@@ -8,6 +12,11 @@ import { permissionsFor } from './permissions';
 import type { LoginDto } from './auth.dto';
 import { AuditService } from '../audit/audit.service';
 import { primeSessionCache } from './session-auth.guard';
+
+// Compared against when the email is unknown so a failed login takes the same
+// time whether or not the account exists (prevents account enumeration).
+const DUMMY_PASSWORD_HASH =
+  '$2b$12$dVX.sXlFsphzxdQlG6l2feVJSFFcrEoGup1F06n4bCwPzeCZ16.wO';
 
 @Injectable()
 export class AuthService {
@@ -21,11 +30,11 @@ export class AuthService {
       where: { email: input.email },
       include: { roles: true },
     });
-    if (
-      !user ||
-      user.status !== 'ACTIVE' ||
-      !(await compare(input.password, user.passwordHash))
-    )
+    const passwordMatches = await compare(
+      input.password,
+      user?.passwordHash ?? DUMMY_PASSWORD_HASH,
+    );
+    if (!user || user.status !== 'ACTIVE' || !passwordMatches)
       throw new UnauthorizedException('Invalid email or password');
 
     const token = randomBytes(48).toString('base64url');
@@ -98,7 +107,7 @@ export class AuthService {
     if (!user || !(await compare(currentPassword, user.passwordHash)))
       throw new UnauthorizedException('Current password is incorrect');
     if (await compare(newPassword, user.passwordHash))
-      throw new UnauthorizedException('New password must be different');
+      throw new BadRequestException('New password must be different');
     await this.prisma.$transaction([
       this.prisma.adminUser.update({
         where: { id: userId },

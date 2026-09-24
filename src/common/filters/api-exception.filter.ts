@@ -51,20 +51,21 @@ export class ApiExceptionFilter implements ExceptionFilter {
     const logMessage = `[${requestId}] ${status} ${code}: ${request.method} ${request.originalUrl} -> ${message}`;
 
     if (status >= 500) {
-      this.logger.error(logMessage, exception instanceof Error ? exception.stack : String(exception));
-      console.error(JSON.stringify({
-        timestamp: new Date().toISOString(),
-        level: 'error',
-        event: 'api.exception',
-        requestId,
-        method: request.method,
-        path: request.originalUrl,
-        status,
-        code,
-        error: exception instanceof Error
-          ? { name: exception.name, message: exception.message, stack: exception.stack }
-          : exception,
-      }));
+      this.logger.error(
+        JSON.stringify({
+          event: 'api.exception',
+          requestId,
+          method: request.method,
+          path: request.originalUrl,
+          status,
+          code,
+          error:
+            exception instanceof Error
+              ? { name: exception.name, message: exception.message }
+              : String(exception),
+        }),
+        exception instanceof Error ? exception.stack : undefined,
+      );
     } else {
       this.logger.warn(logMessage);
     }
