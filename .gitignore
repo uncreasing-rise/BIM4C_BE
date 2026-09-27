@@ -6,3 +6,7 @@ dist
 .google-oauth-token.json
 coverage
 *.log
+
+.google-oauth-client.json
+
+.google-oauth-token-*.json

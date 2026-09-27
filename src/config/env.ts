@@ -61,7 +61,7 @@ const schema = z
     GOOGLE_OAUTH_CLIENT_SECRET: z.string().min(10).optional(),
     GOOGLE_OAUTH_REFRESH_TOKEN: z.string().min(20).optional(),
     GOOGLE_OAUTH_TOKEN_FILE: z.string().min(1).default('.google-oauth-token.json'),
-    GOOGLE_OAUTH_REDIRECT_URI: z.string().url().default('http://localhost:8080/admin/appointments/google/callback'),
+    GOOGLE_OAUTH_REDIRECT_URI: z.string().url().default('https://api.bim4c.vn/admin/appointments/google/callback'),
   })
   .superRefine((env, context) => {
     if (env.AUTH_COOKIE_SAME_SITE === 'none' && env.NODE_ENV !== 'production')
