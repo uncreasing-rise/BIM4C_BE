@@ -1,9 +1,7 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
-  HttpCode,
   Param,
   ParseUUIDPipe,
   Patch,
@@ -24,9 +22,7 @@ import { AppointmentNotificationsService } from './appointment-notifications.ser
 import {
   AppointmentListQueryDto,
   AppointmentStatusDto,
-  AvailabilityExceptionDto,
   AvailabilityQueryDto,
-  AvailabilityRuleDto,
   CreateAppointmentDto,
 } from './appointments.dto';
 
@@ -80,29 +76,5 @@ export class AdminAppointmentsController {
     @Body() input: AppointmentStatusDto,
   ) {
     return { data: await this.service.updateStatus(id, input) };
-  }
-  @Get('availability/rules') async rules() {
-    return { data: await this.service.rules() };
-  }
-  @Post('availability/rules') async saveRule(@Body() input: AvailabilityRuleDto) {
-    return { data: await this.service.saveRule(input) };
-  }
-  @Delete('availability/rules/:id') @HttpCode(204) deleteRule(
-    @Param('id', ParseUUIDPipe) id: string,
-  ) {
-    return this.service.deleteRule(id);
-  }
-  @Get('availability/exceptions') async exceptions() {
-    return { data: await this.service.exceptions() };
-  }
-  @Post('availability/exceptions') async saveException(
-    @Body() input: AvailabilityExceptionDto,
-  ) {
-    return { data: await this.service.saveException(input) };
-  }
-  @Delete('availability/exceptions/:id') @HttpCode(204) deleteException(
-    @Param('id', ParseUUIDPipe) id: string,
-  ) {
-    return this.service.deleteException(id);
   }
 }

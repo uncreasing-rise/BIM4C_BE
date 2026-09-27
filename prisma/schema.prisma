@@ -305,6 +305,7 @@ model AvailabilityException {
 }
 
 model Appointment {
+  locale      String            @default("vi") @db.VarChar(2)
   id          String            @id @default(uuid()) @db.Uuid
   name        String            @db.VarChar(160)
   email       String            @db.VarChar(320)

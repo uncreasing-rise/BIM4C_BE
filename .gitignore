@@ -10,3 +10,4 @@ coverage
 .google-oauth-client.json
 
 .google-oauth-token-*.json
+.email-previews/

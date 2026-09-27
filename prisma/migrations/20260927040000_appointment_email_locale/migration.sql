@@ -1,0 +1,1 @@
+ALTER TABLE "appointments" ADD COLUMN "locale" VARCHAR(2) NOT NULL DEFAULT 'vi';

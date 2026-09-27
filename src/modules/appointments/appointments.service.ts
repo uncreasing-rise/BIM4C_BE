@@ -11,12 +11,9 @@ import { AppointmentStatus, Prisma } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import type {
   AppointmentStatusDto,
-  AvailabilityExceptionDto,
-  AvailabilityRuleDto,
   CreateAppointmentDto,
 } from './appointments.dto';
 import { AppointmentNotificationsService } from './appointment-notifications.service';
-import { generateSlots, timeToMinutes } from './availability';
 
 const ACTIVE_STATUSES: AppointmentStatus[] = [
   AppointmentStatus.REQUESTED,
@@ -62,36 +59,44 @@ export class AppointmentsService {
     return this.slots(from, to);
   }
 
-  private async slots(from: Date, to: Date, client: Prisma.TransactionClient = this.prisma) {
-    const [rules, exceptions, booked] = await Promise.all([
-      client.availabilityRule.findMany({ where: { isActive: true } }),
-      // Widen by a day so exceptions on the business-timezone edge days load.
-      client.availabilityException.findMany({
-        where: {
-          date: {
-            gte: new Date(from.getTime() - DAY_MS),
-            lte: new Date(to.getTime() + DAY_MS),
-          },
-        },
-      }),
-      client.appointment.findMany({
-        where: {
-          startAt: { lt: to },
-          endAt: { gt: from },
-          status: { in: ACTIVE_STATUSES },
-        },
-        select: { startAt: true, endAt: true },
-      }),
-    ]);
-    return generateSlots({
-      rules,
-      exceptions,
-      booked,
-      from,
-      to,
-      now: new Date(),
-      timeZone: this.timeZone,
+  private async slots(
+    from: Date,
+    to: Date,
+    client: Prisma.TransactionClient = this.prisma,
+  ) {
+    const booked = await client.appointment.findMany({
+      where: {
+        startAt: { lt: to },
+        endAt: { gt: from },
+        status: { in: ACTIVE_STATUSES },
+      },
+      select: { startAt: true, endAt: true },
     });
+    const duration = 30 * 60_000;
+    const horizon = Date.now() + MAX_BOOKING_HORIZON_DAYS * DAY_MS;
+    const slots = [];
+    for (
+      let start =
+        Math.ceil(Math.max(from.getTime(), Date.now() + 1) / duration) *
+        duration;
+      start + duration <= Math.min(to.getTime(), horizon);
+      start += duration
+    ) {
+      const end = start + duration;
+      if (
+        !booked.some(
+          (item) =>
+            item.startAt.getTime() < end && item.endAt.getTime() > start,
+        )
+      ) {
+        slots.push({
+          startAt: new Date(start).toISOString(),
+          endAt: new Date(end).toISOString(),
+          timezone: this.timeZone,
+        });
+      }
+    }
+    return slots;
   }
 
   async create(input: CreateAppointmentDto) {
@@ -101,7 +106,9 @@ export class AppointmentsService {
     if (
       !Number.isFinite(startAt.getTime()) ||
       !Number.isFinite(endAt.getTime()) ||
-      endAt <= startAt ||
+      ![30, 45, 60, 90, 120].includes(
+        (endAt.getTime() - startAt.getTime()) / 60_000,
+      ) ||
       startAt.getTime() <= now ||
       startAt.getTime() > now + MAX_BOOKING_HORIZON_DAYS * DAY_MS
     )
@@ -111,19 +118,17 @@ export class AppointmentsService {
     try {
       row = await this.prisma.$transaction(
         async (tx) => {
-          // The requested range must be exactly one currently offered slot;
-          // otherwise a client could book arbitrary (e.g. multi-day) blocks.
-          const offered = await this.slots(
-            new Date(startAt.getTime() - 1),
-            new Date(endAt.getTime() + 1),
-            tx,
-          );
-          const matches = offered.some(
-            (slot) =>
-              slot.startAt === startAt.toISOString() &&
-              slot.endAt === endAt.toISOString(),
-          );
-          if (!matches)
+          // Customers propose their own time; no admin availability rule is required.
+          // Serializable isolation also protects concurrent overlapping requests.
+          const overlapping = await tx.appointment.findFirst({
+            where: {
+              startAt: { lt: endAt },
+              endAt: { gt: startAt },
+              status: { in: ACTIVE_STATUSES },
+            },
+            select: { id: true },
+          });
+          if (overlapping)
             throw new ConflictException(
               'This appointment slot is no longer available',
             );
@@ -139,6 +144,7 @@ export class AppointmentsService {
               startAt,
               endAt,
               timezone: input.timezone,
+              locale: input.locale ?? 'vi',
               consentGiven: input.consent,
               consentAt: new Date(),
               privacyPolicyVersion: input.privacyPolicyVersion,
@@ -160,7 +166,7 @@ export class AppointmentsService {
     }
 
     // Notify only after the transaction has committed.
-    void this.notifications
+    const notification = await this.notifications
       .notifyRequested(row)
       .catch((error: unknown) =>
         this.logger.error(
@@ -171,60 +177,14 @@ export class AppointmentsService {
     return {
       success: true,
       message:
-        'Your consultation has been requested. We will confirm it shortly.',
+        input.locale === 'en'
+          ? 'Your preferred time has been submitted for review.'
+          : 'Đã nhận thời gian tư vấn bạn đề xuất. BIM4C sẽ xem xét và xác nhận.',
+      notification,
       data: row,
     };
   }
 
-  async rules() {
-    return this.prisma.availabilityRule.findMany({
-      orderBy: [{ weekday: 'asc' }, { startTime: 'asc' }],
-    });
-  }
-  async exceptions() {
-    return this.prisma.availabilityException.findMany({
-      orderBy: { date: 'asc' },
-    });
-  }
-  async saveRule(input: AvailabilityRuleDto) {
-    if (timeToMinutes(input.endTime) <= timeToMinutes(input.startTime))
-      throw new UnprocessableEntityException('endTime must be after startTime');
-    return this.prisma.availabilityRule.upsert({
-      where: {
-        weekday_startTime_endTime: {
-          weekday: input.weekday,
-          startTime: input.startTime,
-          endTime: input.endTime,
-        },
-      },
-      create: input,
-      update: input,
-    });
-  }
-  async deleteRule(id: string) {
-    await this.prisma.availabilityRule.deleteMany({ where: { id } });
-  }
-  async saveException(input: AvailabilityExceptionDto) {
-    if (input.isAvailable) {
-      if (!input.startTime || !input.endTime)
-        throw new UnprocessableEntityException(
-          'startTime and endTime are required when the day is available',
-        );
-      if (timeToMinutes(input.endTime) <= timeToMinutes(input.startTime))
-        throw new UnprocessableEntityException(
-          'endTime must be after startTime',
-        );
-    }
-    const date = new Date(`${input.date.slice(0, 10)}T00:00:00.000Z`);
-    return this.prisma.availabilityException.upsert({
-      where: { date },
-      create: { ...input, date },
-      update: { ...input, date },
-    });
-  }
-  async deleteException(id: string) {
-    await this.prisma.availabilityException.deleteMany({ where: { id } });
-  }
   async list(status?: AppointmentStatus) {
     return this.prisma.appointment.findMany({
       where: status ? { status } : undefined,
@@ -244,7 +204,7 @@ export class AppointmentsService {
 
     if (input.status === 'CONFIRMED') {
       const withCalendar = await this.notifications.confirm(current);
-      return this.prisma.appointment.update({
+      const updated = await this.prisma.appointment.update({
         where: { id },
         data: {
           status: input.status,
@@ -252,20 +212,25 @@ export class AppointmentsService {
           calendarEventId: withCalendar.calendarEventId,
         },
       });
+      const notification = await this.notifications.notify(
+        updated,
+        'confirmed',
+      );
+      return { ...updated, notification };
     }
     const updated = await this.prisma.appointment.update({
       where: { id },
       data: { status: input.status },
     });
-    if (input.status === 'CANCELLED')
-      void this.notifications
-        .cancel(updated)
-        .catch((error: unknown) =>
-          this.logger.error(
-            'Appointment cancellation notification failed',
-            error instanceof Error ? error.stack : String(error),
-          ),
-        );
-    return updated;
+    const notification =
+      input.status === 'CANCELLED'
+        ? await this.notifications.cancel(updated)
+        : input.status === 'COMPLETED' || input.status === 'NO_SHOW'
+          ? await this.notifications.notify(
+              updated,
+              input.status === 'COMPLETED' ? 'completed' : 'no_show',
+            )
+          : undefined;
+    return { ...updated, notification };
   }
 }

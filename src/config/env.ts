@@ -46,6 +46,8 @@ const schema = z
     RESEND_API_KEY: z.string().min(10).optional(),
     MAIL_FROM: z.string().min(3).default('BIM4C <no-reply@bim4c.vn>'),
     APPOINTMENT_ADMIN_EMAIL: z.string().email().optional(),
+    NOTIFICATION_ADMIN_EMAIL: z.string().email().optional(),
+    MAIL_REPLY_TO: z.string().email().optional(),
     GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string().email().optional(),
     GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY: z.string().min(100).optional(),
     GOOGLE_SERVICE_ACCOUNT_KEY_FILE: z.string().min(1).optional(),
@@ -60,8 +62,14 @@ const schema = z
     GOOGLE_OAUTH_CLIENT_ID: z.string().min(20).optional(),
     GOOGLE_OAUTH_CLIENT_SECRET: z.string().min(10).optional(),
     GOOGLE_OAUTH_REFRESH_TOKEN: z.string().min(20).optional(),
-    GOOGLE_OAUTH_TOKEN_FILE: z.string().min(1).default('.google-oauth-token.json'),
-    GOOGLE_OAUTH_REDIRECT_URI: z.string().url().default('https://api.bim4c.vn/admin/appointments/google/callback'),
+    GOOGLE_OAUTH_TOKEN_FILE: z
+      .string()
+      .min(1)
+      .default('.google-oauth-token.json'),
+    GOOGLE_OAUTH_REDIRECT_URI: z
+      .string()
+      .url()
+      .default('https://api.bim4c.vn/admin/appointments/google/callback'),
   })
   .superRefine((env, context) => {
     if (env.AUTH_COOKIE_SAME_SITE === 'none' && env.NODE_ENV !== 'production')

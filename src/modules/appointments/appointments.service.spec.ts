@@ -22,12 +22,14 @@ function setup() {
     availabilityRule: { findMany: jest.fn().mockResolvedValue([rule]) },
     availabilityException: { findMany: jest.fn().mockResolvedValue([]) },
     appointment: {
+      findFirst: jest.fn().mockResolvedValue(null),
       findMany: jest.fn().mockResolvedValue([]),
       findUnique: jest.fn(),
       update: jest.fn(),
-      create: jest
-        .fn()
-        .mockImplementation(({ data }: { data: object }) => ({ id: 'a1', ...data })),
+      create: jest.fn().mockImplementation(({ data }: { data: object }) => ({
+        id: 'a1',
+        ...data,
+      })),
     },
   };
   const prisma = {
@@ -40,6 +42,7 @@ function setup() {
     notifyRequested: jest.fn().mockResolvedValue(undefined),
     confirm: jest.fn(),
     cancel: jest.fn().mockResolvedValue(undefined),
+    notify: jest.fn().mockResolvedValue({ customer: 'sent', admin: 'sent' }),
   };
   const config = { get: jest.fn(() => 'Asia/Ho_Chi_Minh') };
   const service = new AppointmentsService(
@@ -63,7 +66,9 @@ const booking = (startAt: string, endAt: string) =>
   }) as never;
 
 describe('AppointmentsService', () => {
-  beforeAll(() => jest.useFakeTimers({ now: new Date('2026-10-01T00:00:00Z') }));
+  beforeAll(() =>
+    jest.useFakeTimers({ now: new Date('2026-10-01T00:00:00Z') }),
+  );
   afterAll(() => jest.useRealTimers());
 
   it('rejects availability ranges that are inverted or too long', async () => {
@@ -84,26 +89,26 @@ describe('AppointmentsService', () => {
     expect(notifications.notifyRequested).toHaveBeenCalledTimes(1);
   });
 
-  it('refuses a range that is not exactly an offered slot', async () => {
+  it('refuses unsupported durations before touching the database', async () => {
     const { service, client } = setup();
     // A three-hour block starting at a valid slot start.
     await expect(
       service.create(booking(slotStart, '2026-10-05T05:00:00.000Z')),
-    ).rejects.toBeInstanceOf(ConflictException);
-    // Outside business hours (03:00 Vietnam time).
-    await expect(
-      service.create(booking('2026-10-04T20:00:00.000Z', '2026-10-04T20:30:00.000Z')),
-    ).rejects.toBeInstanceOf(ConflictException);
+    ).rejects.toBeInstanceOf(UnprocessableEntityException);
     expect(client.appointment.create).not.toHaveBeenCalled();
   });
 
   it('rejects past and far-future bookings before touching the database', async () => {
     const { service, prisma } = setup();
     await expect(
-      service.create(booking('2026-09-01T02:00:00.000Z', '2026-09-01T02:30:00.000Z')),
+      service.create(
+        booking('2026-09-01T02:00:00.000Z', '2026-09-01T02:30:00.000Z'),
+      ),
     ).rejects.toBeInstanceOf(UnprocessableEntityException);
     await expect(
-      service.create(booking('2027-10-04T02:00:00.000Z', '2027-10-04T02:30:00.000Z')),
+      service.create(
+        booking('2027-10-04T02:00:00.000Z', '2027-10-04T02:30:00.000Z'),
+      ),
     ).rejects.toBeInstanceOf(UnprocessableEntityException);
     expect(prisma.$transaction).not.toHaveBeenCalled();
   });
@@ -134,10 +139,60 @@ describe('AppointmentsService', () => {
     expect(client.appointment.update).not.toHaveBeenCalled();
   });
 
-  it('rejects rules whose end is not after their start', async () => {
-    const { service } = setup();
+  it('accepts customer-selected times outside old availability rules', async () => {
+    const { service, client } = setup();
+    await service.create(
+      booking('2026-10-04T20:13:00.000Z', '2026-10-04T20:58:00.000Z'),
+    );
+    expect(client.appointment.create).toHaveBeenCalledTimes(1);
+    expect(client.availabilityRule.findMany).not.toHaveBeenCalled();
+    expect(client.availabilityException.findMany).not.toHaveBeenCalled();
+  });
+
+  it('rejects overlapping active bookings without sending notifications', async () => {
+    const { service, client, notifications } = setup();
+    client.appointment.findFirst.mockResolvedValue({ id: 'existing' });
     await expect(
-      service.saveRule({ ...rule, startTime: '10:00', endTime: '09:00' }),
-    ).rejects.toBeInstanceOf(UnprocessableEntityException);
+      service.create(booking(slotStart, slotEnd)),
+    ).rejects.toBeInstanceOf(ConflictException);
+    expect(client.appointment.findFirst).toHaveBeenCalledWith({
+      where: {
+        startAt: { lt: new Date(slotEnd) },
+        endAt: { gt: new Date(slotStart) },
+        status: { in: ['REQUESTED', 'CONFIRMED'] },
+      },
+      select: { id: true },
+    });
+    expect(client.appointment.create).not.toHaveBeenCalled();
+    expect(notifications.notifyRequested).not.toHaveBeenCalled();
+  });
+
+  it('persists the requested email language and sends confirmations only after status is saved', async () => {
+    const { service, client, notifications } = setup();
+    const input = { ...(booking(slotStart, slotEnd) as object), locale: 'en' };
+    await service.create(input as never);
+    const creation = client.appointment.create.mock.calls[0] as [{ data: object }];
+    expect(creation[0].data).toHaveProperty('locale', 'en');
+    client.appointment.findUnique.mockResolvedValue({
+      id: 'a1',
+      status: 'REQUESTED',
+    });
+    notifications.confirm.mockResolvedValue({
+      meetingUrl: 'https://meet.google.com/test',
+      calendarEventId: 'event',
+    });
+    client.appointment.update.mockResolvedValue({
+      id: 'a1',
+      status: 'CONFIRMED',
+      locale: 'en',
+    });
+    await service.updateStatus('a1', { status: 'CONFIRMED' });
+    expect(notifications.notify).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'CONFIRMED', locale: 'en' }),
+      'confirmed',
+    );
+    expect(client.appointment.update.mock.invocationCallOrder[0]).toBeLessThan(
+      notifications.notify.mock.invocationCallOrder[0],
+    );
   });
 });

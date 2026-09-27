@@ -1,3 +1,4 @@
+import { EmailLocaleDto } from '../email/email-locale.dto';
 import { Transform } from 'class-transformer';
 import {
   IsEmail,
@@ -10,7 +11,7 @@ import {
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { normalizeEmail, normalizeText } from '../../common/utils/input';
-export class CreateContactDto {
+export class CreateContactDto extends EmailLocaleDto {
   @ApiProperty({ example: 'Nguyen Van A' })
   @Transform(({ value }) => normalizeText(value))
   @IsString()
@@ -41,5 +42,10 @@ export class CreateContactDto {
   @MaxLength(5000)
   message!: string;
   @ApiProperty({ example: true }) @IsBoolean() @Equals(true) consent!: boolean;
-  @ApiProperty({ example: '20.08.2026' }) @Transform(({ value }) => normalizeText(value)) @IsString() @MinLength(1) @MaxLength(64) privacyPolicyVersion!: string;
+  @ApiProperty({ example: '20.08.2026' })
+  @Transform(({ value }) => normalizeText(value))
+  @IsString()
+  @MinLength(1)
+  @MaxLength(64)
+  privacyPolicyVersion!: string;
 }
