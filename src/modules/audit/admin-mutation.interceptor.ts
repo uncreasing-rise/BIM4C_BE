@@ -121,9 +121,15 @@ export class AdminMutationInterceptor implements NestInterceptor {
             ? 'posts'
             : resource;
     if (
-      ['projects', 'services', 'courses', 'posts', 'homepage', 'settings'].includes(
-        normalized,
-      )
+      [
+        'projects',
+        'services',
+        'courses',
+        'posts',
+        'homepage',
+        'settings',
+        'page-content',
+      ].includes(normalized)
     )
       tags.add(normalized);
     const body = req.body as { slug?: string } | undefined;

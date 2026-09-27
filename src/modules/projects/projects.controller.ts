@@ -8,19 +8,19 @@ import { SlugPipe } from '../../common/pipes/slug.pipe';
 export class ProjectsController {
   constructor(private readonly service: ProjectsService) {}
   @Get()
-  @Header(
-    'Cache-Control',
-    'public, max-age=0, s-maxage=0, must-revalidate',
-  )
+  @Header('Cache-Control', 'public, max-age=0, s-maxage=0, must-revalidate')
   @ApiOkResponse()
   findAll(@Query() query: ProjectQueryDto) {
     return this.service.findAll(query);
   }
+  @Get('filters')
+  @Header('Cache-Control', 'public, max-age=0, s-maxage=0, must-revalidate')
+  @ApiOkResponse()
+  filters() {
+    return this.service.filters();
+  }
   @Get(':slug')
-  @Header(
-    'Cache-Control',
-    'public, max-age=0, s-maxage=0, must-revalidate',
-  )
+  @Header('Cache-Control', 'public, max-age=0, s-maxage=0, must-revalidate')
   @ApiOkResponse()
   @ApiNotFoundResponse()
   findOne(@Param('slug', SlugPipe) slug: string) {

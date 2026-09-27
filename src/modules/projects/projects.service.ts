@@ -45,6 +45,13 @@ const statusMap: Record<string, ProjectStatus> = {
 
 const publicStatus = (status: ProjectStatus): string => status.toLowerCase();
 
+export interface ProjectFilters {
+  categories: { slug: string; name: string }[];
+  locations: { value: string; label_vi: string | null }[];
+  years: number[];
+  statuses: string[];
+}
+
 interface CacheEntry<T> {
   data: T;
   cachedAt: number;
@@ -58,9 +65,54 @@ export function clearProjectsCache(): void {
 
 @Injectable()
 export class ProjectsService {
-  private readonly logger = new Logger(ProjectsService.name);
-
   constructor(private readonly prisma: PrismaService) {}
+
+  /** Filter options derived from published projects, so the catalogue never offers an empty choice. */
+  async filters(): Promise<ProjectFilters> {
+    const hit = cache.get('filters');
+    if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
+      return hit.data as ProjectFilters;
+    }
+    const visible: Prisma.ProjectWhereInput = {
+      deletedAt: null,
+      status: { in: Object.values(statusMap) },
+    };
+    const [categories, rows] = await Promise.all([
+      this.prisma.projectCategory.findMany({
+        where: { projects: { some: visible } },
+        orderBy: { name: 'asc' },
+        select: { slug: true, name: true },
+      }),
+      this.prisma.project.findMany({
+        where: visible,
+        select: { location: true, location_vi: true, year: true, status: true },
+      }),
+    ]);
+    const locations = new Map<string, string | null>();
+    for (const row of rows) {
+      const value = row.location.trim();
+      if (value && !locations.has(value)) {
+        locations.set(value, row.location_vi?.trim() || null);
+      }
+    }
+    const present = new Set(rows.map((row) => row.status));
+    const data: ProjectFilters = {
+      categories,
+      locations: [...locations]
+        .map(([value, label_vi]) => ({ value, label_vi }))
+        .sort((a, b) => a.value.localeCompare(b.value)),
+      years: [
+        ...new Set(rows.flatMap((row) => (row.year ? [row.year] : []))),
+      ].sort((a, b) => b - a),
+      statuses: Object.entries(statusMap)
+        .filter(([, status]) => present.has(status))
+        .map(([key]) => key),
+    };
+    cache.set('filters', { data, cachedAt: Date.now() });
+    return data;
+  }
+
+  private readonly logger = new Logger(ProjectsService.name);
 
   private map(
     row: ContentSummaryRecord & {
@@ -154,7 +206,9 @@ export class ProjectsService {
               { title: { contains: query.search, mode: 'insensitive' } },
               { title_vi: { contains: query.search, mode: 'insensitive' } },
               { description: { contains: query.search, mode: 'insensitive' } },
-              { description_vi: { contains: query.search, mode: 'insensitive' } },
+              {
+                description_vi: { contains: query.search, mode: 'insensitive' },
+              },
             ],
           }
         : {}),
@@ -164,8 +218,15 @@ export class ProjectsService {
             AND: [
               {
                 OR: [
-                  { location: { contains: query.location, mode: 'insensitive' } },
-                  { location_vi: { contains: query.location, mode: 'insensitive' } },
+                  {
+                    location: { contains: query.location, mode: 'insensitive' },
+                  },
+                  {
+                    location_vi: {
+                      contains: query.location,
+                      mode: 'insensitive',
+                    },
+                  },
                 ],
               },
             ],
@@ -179,13 +240,38 @@ export class ProjectsService {
       this.prisma.project.findMany({
         where,
         select: {
-          id: true, slug: true, title: true, title_vi: true, description: true, description_vi: true,
-          image: true, eyebrow: true, eyebrow_vi: true, meta: true, meta_vi: true,
-          seoTitle: true, seoTitle_vi: true, seoDescription: true, seoDescription_vi: true,
-          seoImage: true, canonicalUrl: true, status: true, publishedAt: true, createdAt: true, updatedAt: true,
-          location: true, location_vi: true, year: true, investor: true, investor_vi: true,
-          expectedCompletion: true, expectedCompletion_vi: true, scale: true, scale_vi: true,
-          contractPackage: true, contractPackage_vi: true,
+          id: true,
+          slug: true,
+          title: true,
+          title_vi: true,
+          description: true,
+          description_vi: true,
+          image: true,
+          eyebrow: true,
+          eyebrow_vi: true,
+          meta: true,
+          meta_vi: true,
+          seoTitle: true,
+          seoTitle_vi: true,
+          seoDescription: true,
+          seoDescription_vi: true,
+          seoImage: true,
+          canonicalUrl: true,
+          status: true,
+          publishedAt: true,
+          createdAt: true,
+          updatedAt: true,
+          location: true,
+          location_vi: true,
+          year: true,
+          investor: true,
+          investor_vi: true,
+          expectedCompletion: true,
+          expectedCompletion_vi: true,
+          scale: true,
+          scale_vi: true,
+          contractPackage: true,
+          contractPackage_vi: true,
           category: { select: { id: true, name: true, slug: true } },
           images: { orderBy: { sortOrder: 'asc' } },
         },
@@ -195,11 +281,19 @@ export class ProjectsService {
       }),
       this.prisma.project.count({ where }),
     ]);
-    this.logger.log(JSON.stringify({
-      event: 'catalog.pagination.query', resource: 'projects', page, limit, total,
-      durationMs: Date.now() - queryStartedAt, searchPresent: Boolean(query.search),
-      category: query.category || null, status: query.status || null,
-    }));
+    this.logger.log(
+      JSON.stringify({
+        event: 'catalog.pagination.query',
+        resource: 'projects',
+        page,
+        limit,
+        total,
+        durationMs: Date.now() - queryStartedAt,
+        searchPresent: Boolean(query.search),
+        category: query.category || null,
+        status: query.status || null,
+      }),
+    );
 
     const result = pageResponse(
       rows.map((row) => this.map(row)),

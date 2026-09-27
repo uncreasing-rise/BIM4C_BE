@@ -5,7 +5,10 @@ import { AuditService } from '../audit/audit.service';
 import type { UpdateSettingsDto } from './settings.dto';
 @Injectable()
 export class SettingsService {
-  private publicCache: { data: Partial<SiteSettings>; cachedAt: number } | null = null;
+  private publicCache: {
+    data: Partial<SiteSettings>;
+    cachedAt: number;
+  } | null = null;
   private settingsCache: { data: SiteSettings; cachedAt: number } | null = null;
 
   constructor(
@@ -46,21 +49,27 @@ export class SettingsService {
       where: { id: 'default' },
       data,
     });
-    void this.audit.record({
-      actorId,
-      action: AuditAction.SETTINGS_UPDATE,
-      resource: 'settings',
-      resourceId: 'default',
-      requestId,
-    }).catch(() => {});
+    void this.audit
+      .record({
+        actorId,
+        action: AuditAction.SETTINGS_UPDATE,
+        resource: 'settings',
+        resourceId: 'default',
+        requestId,
+      })
+      .catch(() => {});
     return row;
   }
-  async public(): Promise<Partial<SiteSettings>> {
+  /** Null when the settings row was deleted, so public pages hide contact data instead of failing. */
+  async public(): Promise<Partial<SiteSettings> | null> {
     const now = Date.now();
     if (this.publicCache && now - this.publicCache.cachedAt < 120_000) {
       return this.publicCache.data;
     }
-    const x = await this.get();
+    const x = await this.prisma.siteSettings.findUnique({
+      where: { id: 'default' },
+    });
+    if (!x) return null;
     const data = {
       companyName: x.companyName,
       email: x.email,

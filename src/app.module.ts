@@ -19,6 +19,7 @@ import { AuditModule } from './modules/audit/audit.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { PageContentModule } from './modules/page-content/page-content.module';
 import { AdminMutationInterceptor } from './modules/audit/admin-mutation.interceptor';
 import { AppointmentsModule } from './modules/appointments/appointments.module';
 
@@ -46,6 +47,7 @@ import { AppointmentsModule } from './modules/appointments/appointments.module';
     AuthModule,
     UsersModule,
     SettingsModule,
+    PageContentModule,
     ServicesModule,
     ProjectsModule,
     CoursesModule,

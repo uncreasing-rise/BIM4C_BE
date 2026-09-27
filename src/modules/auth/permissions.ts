@@ -13,6 +13,7 @@ const editorResources = [
   'post-categories',
   'media',
   'homepage',
+  'page-content',
   'appointments',
 ];
 const editorPermissions = [

@@ -23,4 +23,3 @@ export class UpdateSettingsDto {
   @MaxLength(1000)
   defaultOgImage?: string | null;
 }
-

@@ -538,3 +538,13 @@ enum AuditAction {
   MEDIA_UPLOAD
   MEDIA_DELETE
 }
+
+/// Editable bilingual page copy (hero, about, FAQs, office info...), one row per block.
+model PageContent {
+  key       String   @id @db.VarChar(80)
+  vi        Json
+  en        Json
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("page_contents")
+}

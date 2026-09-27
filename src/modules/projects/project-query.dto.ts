@@ -27,13 +27,15 @@ export class ProjectQueryDto extends PageQueryDto {
   @Transform(({ value }: { value: unknown }) => {
     if (typeof value !== 'string') return value;
     const normalized = value.trim().toLowerCase();
-    return {
-      'in delivery': 'in_progress',
-      'in progress': 'in_progress',
-      completed: 'completed',
-      planned: 'planned',
-      profiled: 'profiled',
-    }[normalized] ?? normalized;
+    return (
+      {
+        'in delivery': 'in_progress',
+        'in progress': 'in_progress',
+        completed: 'completed',
+        planned: 'planned',
+        profiled: 'profiled',
+      }[normalized] ?? normalized
+    );
   })
   @IsIn(['profiled', 'planned', 'in_progress', 'completed'])
   status?: string;
