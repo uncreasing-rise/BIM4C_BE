@@ -1,6 +1,6 @@
 import { Controller, Get, Header, Param, Query } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { PageQueryDto } from '../../common/pagination/page-query.dto';
+import { PostQueryDto } from './post-query.dto';
 import { PostsService } from './posts.service';
 import { SlugPipe } from '../../common/pipes/slug.pipe';
 
@@ -12,15 +12,17 @@ export class PostsController {
   @Get()
   @Header('Cache-Control', 'public, max-age=0, s-maxage=0, must-revalidate')
   @ApiOkResponse()
-  findAll(@Query() query: PageQueryDto & { group?: 'technical' | 'news' }) {
+  findAll(@Query() query: PostQueryDto) {
     return this.service.findAll(query);
   }
 
   @Get('categories')
   @Header('Cache-Control', 'public, max-age=0, s-maxage=0, must-revalidate')
   @ApiOkResponse()
-  getCategories(@Query('group') group?: 'technical' | 'news') {
-    return this.service.getCategories(group);
+  getCategories(@Query('group') group?: string) {
+    return this.service.getCategories(
+      group === 'technical' || group === 'news' ? group : undefined,
+    );
   }
 
   @Get(':slug')

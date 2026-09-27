@@ -7,9 +7,10 @@ import {
 } from '../../common/dto/content-response.dto';
 import {
   pageResponse,
+  stableOrderBy,
   type PageResponse,
-  type PageQueryDto,
 } from '../../common/pagination/page-query.dto';
+import type { PostQueryDto } from './post-query.dto';
 import { PrismaService } from '../../database/prisma.service';
 
 export interface PostResponse extends ContentResponse {
@@ -35,7 +36,7 @@ export function clearPostsCache(): void {
   cache.clear();
 }
 
-const NEWS_SLUGS = ['tin-tuc', 'su-kien', 'tuyen-dung', 'hop-tac', 'news', 'events', 'thong-cao'];
+export const NEWS_SLUGS = ['tin-tuc', 'su-kien', 'tuyen-dung', 'hop-tac', 'news', 'events', 'thong-cao'];
 
 @Injectable()
 export class PostsService {
@@ -43,62 +44,61 @@ export class PostsService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(
-    query: PageQueryDto & { group?: 'technical' | 'news' },
-  ): Promise<PageResponse<PostResponse>> {
+  async findAll(query: PostQueryDto): Promise<PageResponse<PostResponse>> {
     const page = Math.max(1, Number(query.page) || 1);
     const limit = Math.min(100, Math.max(1, Number(query.limit) || 10));
-    const sortBy = query.sortBy || 'publishedAt';
-    const sortOrder = query.sortOrder || 'desc';
+    const search = query.search?.trim() || undefined;
+    const category = query.category?.trim() || undefined;
     const group = query.group;
+    const orderBy = stableOrderBy(query.sortBy, query.sortOrder, [
+      { publishedAt: { sort: 'desc', nulls: 'last' } },
+    ]);
 
-    const cacheKey = `list:${page}:${limit}:${query.search || ''}:${query.category || ''}:${group || 'all'}:${sortBy}:${sortOrder}`;
+    const cacheKey = `list:${page}:${limit}:${search?.toLowerCase() || ''}:${category?.toLowerCase() || ''}:${group || 'all'}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
       this.logger.debug(JSON.stringify({ event: 'catalog.pagination.cache_hit', resource: 'posts', page, limit }));
       return hit.data as PageResponse<PostResponse>;
     }
 
+    // Each filter is its own AND clause: search and the "technical" group both
+    // need an OR, and spreading them into one object let the later one win.
+    const filters: Prisma.PostWhereInput[] = [];
+    if (search) {
+      filters.push({
+        OR: [
+          { title: { contains: search, mode: 'insensitive' } },
+          { title_vi: { contains: search, mode: 'insensitive' } },
+          { description: { contains: search, mode: 'insensitive' } },
+          { description_vi: { contains: search, mode: 'insensitive' } },
+        ],
+      });
+    }
+    if (category) {
+      // Exact match only: a partial name match would mix several categories.
+      filters.push({
+        category: {
+          OR: [
+            { slug: { equals: category, mode: 'insensitive' } },
+            { name: { equals: category, mode: 'insensitive' } },
+          ],
+        },
+      });
+    }
+    if (group === 'news') {
+      filters.push({ category: { slug: { in: NEWS_SLUGS } } });
+    } else if (group === 'technical') {
+      filters.push({
+        OR: [
+          { categoryId: null },
+          { category: { slug: { notIn: NEWS_SLUGS } } },
+        ],
+      });
+    }
     const where: Prisma.PostWhereInput = {
       status: ContentStatus.PUBLISHED,
       deletedAt: null,
-      ...(query.search
-        ? {
-            OR: [
-              { title: { contains: query.search, mode: 'insensitive' } },
-              { title_vi: { contains: query.search, mode: 'insensitive' } },
-              { description: { contains: query.search, mode: 'insensitive' } },
-              { description_vi: { contains: query.search, mode: 'insensitive' } },
-            ],
-          }
-        : {}),
-      ...(query.category
-        ? {
-            category: {
-              OR: [
-                { slug: { equals: query.category, mode: 'insensitive' } },
-                { name: { contains: query.category, mode: 'insensitive' } },
-              ],
-            },
-          }
-        : group === 'news'
-          ? {
-              category: {
-                slug: { in: NEWS_SLUGS },
-              },
-            }
-          : group === 'technical'
-            ? {
-                OR: [
-                  { categoryId: null },
-                  {
-                    category: {
-                      slug: { notIn: NEWS_SLUGS },
-                    },
-                  },
-                ],
-              }
-            : {}),
+      ...(filters.length ? { AND: filters } : {}),
     };
     const queryStartedAt = Date.now();
     const [rows, total] = await Promise.all([
@@ -114,14 +114,14 @@ export class PostsService {
         },
         skip: (page - 1) * limit,
         take: limit,
-        orderBy: { [sortBy]: sortOrder },
+        orderBy,
       }),
       this.prisma.post.count({ where }),
     ]);
     this.logger.log(JSON.stringify({
       event: 'catalog.pagination.query', resource: 'posts', page, limit,
-      total, durationMs: Date.now() - queryStartedAt, searchPresent: Boolean(query.search),
-      category: query.category || null, group: group || 'all',
+      total, durationMs: Date.now() - queryStartedAt, searchPresent: Boolean(search),
+      category: category || null, group: group || 'all',
     }));
     const result = pageResponse(
       rows.map((row) => ({

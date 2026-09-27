@@ -7,7 +7,9 @@ import {
   type ContentResponse,
 } from '../../common/dto/content-response.dto';
 import {
+  CURATED_ORDER,
   pageResponse,
+  stableOrderBy,
   type PageResponse,
 } from '../../common/pagination/page-query.dto';
 import { PrismaService } from '../../database/prisma.service';
@@ -178,10 +180,13 @@ export class ProjectsService {
   ): Promise<PageResponse<ProjectResponse>> {
     const page = Math.max(1, Number(query.page) || 1);
     const limit = Math.min(100, Math.max(1, Number(query.limit) || 10));
-    const sortBy = query.sortBy || 'publishedAt';
-    const sortOrder = query.sortOrder || 'desc';
+    const orderBy = stableOrderBy(
+      query.sortBy,
+      query.sortOrder,
+      CURATED_ORDER,
+    ) as Prisma.ProjectOrderByWithRelationInput[];
 
-    const cacheKey = `list:${page}:${limit}:${query.search || ''}:${query.category || ''}:${query.status || ''}:${query.location || ''}:${query.year || ''}:${sortBy}:${sortOrder}`;
+    const cacheKey = `list:${page}:${limit}:${query.search?.toLowerCase() || ''}:${query.category || ''}:${query.status || ''}:${query.location?.toLowerCase() || ''}:${query.year || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
       return hit.data as PageResponse<ProjectResponse>;
@@ -277,7 +282,7 @@ export class ProjectsService {
         },
         skip: (page - 1) * limit,
         take: limit,
-        orderBy: { [sortBy]: sortOrder },
+        orderBy,
       }),
       this.prisma.project.count({ where }),
     ]);

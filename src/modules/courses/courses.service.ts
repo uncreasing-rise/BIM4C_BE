@@ -5,7 +5,13 @@ import {
   mapContentSummary,
 } from '../../common/dto/content-response.dto';
 import { PrismaService } from '../../database/prisma.service';
-import { pageResponse, type PageQueryDto, type PageResponse } from '../../common/pagination/page-query.dto';
+import {
+  CURATED_ORDER,
+  pageResponse,
+  stableOrderBy,
+  type PageQueryDto,
+  type PageResponse,
+} from '../../common/pagination/page-query.dto';
 interface CacheEntry<T> {
   data: T;
   cachedAt: number;
@@ -62,7 +68,11 @@ export class CoursesService {
         },
         skip: (page - 1) * limit,
         take: limit,
-        orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }],
+        orderBy: stableOrderBy(
+          query.sortBy,
+          query.sortOrder,
+          CURATED_ORDER,
+        ),
       }),
       this.prisma.course.count({ where }),
     ]);

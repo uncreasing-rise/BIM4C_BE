@@ -6,7 +6,13 @@ import {
   type ContentResponse,
 } from '../../common/dto/content-response.dto';
 import { PrismaService } from '../../database/prisma.service';
-import { pageResponse, type PageQueryDto, type PageResponse } from '../../common/pagination/page-query.dto';
+import {
+  CURATED_ORDER,
+  pageResponse,
+  stableOrderBy,
+  type PageQueryDto,
+  type PageResponse,
+} from '../../common/pagination/page-query.dto';
 interface CacheEntry<T> {
   data: T;
   cachedAt: number;
@@ -28,7 +34,7 @@ export class ServicesService {
     const page = Math.max(1, Number(query.page) || 1);
     const limit = Math.min(100, Math.max(1, Number(query.limit) || 10));
 
-    const cacheKey = `list:${page}:${limit}:${query.search || ''}`;
+    const cacheKey = `list:${page}:${limit}:${query.search?.toLowerCase() || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = cache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < CACHE_TTL_MS) {
       this.logger.debug(JSON.stringify({ event: 'catalog.pagination.cache_hit', resource: 'services', page, limit }));
@@ -61,7 +67,11 @@ export class ServicesService {
         },
         skip: (page - 1) * limit,
         take: limit,
-        orderBy: [{ sortOrder: 'asc' }, { publishedAt: 'desc' }],
+        orderBy: stableOrderBy(
+          query.sortBy,
+          query.sortOrder,
+          CURATED_ORDER,
+        ),
       }),
       this.prisma.service.count({ where }),
     ]);
