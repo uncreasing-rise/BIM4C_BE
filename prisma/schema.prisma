@@ -20,51 +20,51 @@ model ProjectCategory {
 }
 
 model Project {
-  id                 String          @id @default(uuid()) @db.Uuid
-  slug               String          @unique @db.VarChar(180)
-  title              String          @db.VarChar(240)
-  title_vi           String?         @db.VarChar(240)
-  description        String          @db.VarChar(1000)
-  description_vi     String?         @db.VarChar(1000)
-  image              String          @db.VarChar(500)
-  eyebrow            String          @db.VarChar(160)
-  eyebrow_vi         String?         @db.VarChar(160)
-  meta               String?         @db.VarChar(240)
-  meta_vi            String?         @db.VarChar(240)
-  highlights         Json
-  highlights_vi      Json?
-  sections           Json
-  sections_vi        Json?
-  contentBlocks      Json?           @map("content_blocks")
-  contentBlocks_vi   Json?           @map("content_blocks_vi")
-  seoTitle           String?         @map("seo_title") @db.VarChar(240)
-  seoTitle_vi        String?         @db.VarChar(240)
-  seoDescription     String?         @map("seo_description") @db.VarChar(1000)
-  seoDescription_vi  String?         @db.VarChar(1000)
-  seoImage           String?         @map("seo_image") @db.VarChar(500)
-  canonicalUrl       String?         @map("canonical_url") @db.VarChar(1000)
-  relatedIds         Json?           @map("related_ids")
-  location           String          @db.VarChar(180)
-  location_vi        String?         @db.VarChar(180)
-  year               Int?
-  investor           String?         @db.VarChar(1000)
-  investor_vi        String?         @db.VarChar(1000)
-  expectedCompletion String?         @map("expected_completion") @db.VarChar(180)
-  expectedCompletion_vi String?      @db.VarChar(180)
-  scale              String?         @db.VarChar(2000)
-  scale_vi           String?         @db.VarChar(2000)
-  contractPackage    String?         @map("contract_package") @db.VarChar(500)
-  contractPackage_vi String?         @db.VarChar(500)
-  status             ProjectStatus   @default(DRAFT)
-  isFeatured         Boolean         @default(false) @map("is_featured")
-  sortOrder          Int             @default(0) @map("sort_order")
-  categoryId         String          @map("category_id") @db.Uuid
-  publishedAt        DateTime?       @map("published_at") @db.Timestamptz(3)
-  createdAt          DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt          DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
-  deletedAt          DateTime?       @map("deleted_at") @db.Timestamptz(3)
-  images             ProjectImage[]
-  category           ProjectCategory @relation(fields: [categoryId], references: [id])
+  id                    String          @id @default(uuid()) @db.Uuid
+  slug                  String          @unique @db.VarChar(180)
+  title                 String          @db.VarChar(240)
+  title_vi              String?         @db.VarChar(240)
+  description           String          @db.VarChar(1000)
+  description_vi        String?         @db.VarChar(1000)
+  image                 String          @db.VarChar(500)
+  eyebrow               String          @db.VarChar(160)
+  eyebrow_vi            String?         @db.VarChar(160)
+  meta                  String?         @db.VarChar(240)
+  meta_vi               String?         @db.VarChar(240)
+  highlights            Json
+  highlights_vi         Json?
+  sections              Json
+  sections_vi           Json?
+  contentBlocks         Json?           @map("content_blocks")
+  contentBlocks_vi      Json?           @map("content_blocks_vi")
+  seoTitle              String?         @map("seo_title") @db.VarChar(240)
+  seoTitle_vi           String?         @db.VarChar(240)
+  seoDescription        String?         @map("seo_description") @db.VarChar(1000)
+  seoDescription_vi     String?         @db.VarChar(1000)
+  seoImage              String?         @map("seo_image") @db.VarChar(500)
+  canonicalUrl          String?         @map("canonical_url") @db.VarChar(1000)
+  relatedIds            Json?           @map("related_ids")
+  location              String          @db.VarChar(180)
+  location_vi           String?         @db.VarChar(180)
+  year                  Int?
+  investor              String?         @db.VarChar(1000)
+  investor_vi           String?         @db.VarChar(1000)
+  expectedCompletion    String?         @map("expected_completion") @db.VarChar(180)
+  expectedCompletion_vi String?         @db.VarChar(180)
+  scale                 String?         @db.VarChar(2000)
+  scale_vi              String?         @db.VarChar(2000)
+  contractPackage       String?         @map("contract_package") @db.VarChar(500)
+  contractPackage_vi    String?         @db.VarChar(500)
+  status                ProjectStatus   @default(DRAFT)
+  isFeatured            Boolean         @default(false) @map("is_featured")
+  sortOrder             Int             @default(0) @map("sort_order")
+  categoryId            String          @map("category_id") @db.Uuid
+  publishedAt           DateTime?       @map("published_at") @db.Timestamptz(3)
+  createdAt             DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt             DateTime?       @map("deleted_at") @db.Timestamptz(3)
+  images                ProjectImage[]
+  category              ProjectCategory @relation(fields: [categoryId], references: [id])
 
   @@index([status, publishedAt])
   @@index([categoryId])
@@ -89,36 +89,36 @@ model ProjectImage {
 }
 
 model Service {
-  id             String        @id @default(uuid()) @db.Uuid
-  slug           String        @unique @db.VarChar(180)
-  title          String        @db.VarChar(240)
-  title_vi       String?       @db.VarChar(240)
-  description    String        @db.VarChar(1000)
-  description_vi String?       @db.VarChar(1000)
-  image          String        @db.VarChar(500)
-  eyebrow        String        @db.VarChar(160)
-  eyebrow_vi     String?       @db.VarChar(160)
-  meta           String?       @db.VarChar(240)
-  meta_vi        String?       @db.VarChar(240)
-  highlights     Json
-  highlights_vi  Json?
-  sections       Json
-  sections_vi    Json?
-  contentBlocks  Json?         @map("content_blocks")
-  contentBlocks_vi Json?       @map("content_blocks_vi")
-  seoTitle       String?       @map("seo_title") @db.VarChar(240)
-  seoTitle_vi    String?       @db.VarChar(240)
-  seoDescription String?       @map("seo_description") @db.VarChar(1000)
-  seoDescription_vi String?    @db.VarChar(1000)
-  seoImage       String?       @map("seo_image") @db.VarChar(500)
-  canonicalUrl   String?       @map("canonical_url") @db.VarChar(1000)
-  relatedIds     Json?         @map("related_ids")
-  status         ContentStatus @default(DRAFT)
-  sortOrder      Int           @default(0) @map("sort_order")
-  publishedAt    DateTime?     @map("published_at") @db.Timestamptz(3)
-  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
-  deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz(3)
+  id                String        @id @default(uuid()) @db.Uuid
+  slug              String        @unique @db.VarChar(180)
+  title             String        @db.VarChar(240)
+  title_vi          String?       @db.VarChar(240)
+  description       String        @db.VarChar(1000)
+  description_vi    String?       @db.VarChar(1000)
+  image             String        @db.VarChar(500)
+  eyebrow           String        @db.VarChar(160)
+  eyebrow_vi        String?       @db.VarChar(160)
+  meta              String?       @db.VarChar(240)
+  meta_vi           String?       @db.VarChar(240)
+  highlights        Json
+  highlights_vi     Json?
+  sections          Json
+  sections_vi       Json?
+  contentBlocks     Json?         @map("content_blocks")
+  contentBlocks_vi  Json?         @map("content_blocks_vi")
+  seoTitle          String?       @map("seo_title") @db.VarChar(240)
+  seoTitle_vi       String?       @db.VarChar(240)
+  seoDescription    String?       @map("seo_description") @db.VarChar(1000)
+  seoDescription_vi String?       @db.VarChar(1000)
+  seoImage          String?       @map("seo_image") @db.VarChar(500)
+  canonicalUrl      String?       @map("canonical_url") @db.VarChar(1000)
+  relatedIds        Json?         @map("related_ids")
+  status            ContentStatus @default(DRAFT)
+  sortOrder         Int           @default(0) @map("sort_order")
+  publishedAt       DateTime?     @map("published_at") @db.Timestamptz(3)
+  createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt         DateTime?     @map("deleted_at") @db.Timestamptz(3)
 
   @@index([status, publishedAt])
   @@index([deletedAt, status, sortOrder, publishedAt])
@@ -127,50 +127,50 @@ model Service {
 }
 
 model Course {
-  id               String               @id @default(uuid()) @db.Uuid
-  slug             String               @unique @db.VarChar(180)
-  title            String               @db.VarChar(240)
-  title_vi         String?              @db.VarChar(240)
-  description      String               @db.VarChar(1000)
-  description_vi   String?              @db.VarChar(1000)
-  image            String               @db.VarChar(500)
-  eyebrow          String               @db.VarChar(160)
-  eyebrow_vi       String?              @db.VarChar(160)
-  meta             String?              @db.VarChar(240)
-  meta_vi          String?              @db.VarChar(240)
-  highlights       Json
-  highlights_vi    Json?
-  sections         Json
-  sections_vi      Json?
-  contentBlocks    Json?                @map("content_blocks")
-  contentBlocks_vi Json?                @map("content_blocks_vi")
-  seoTitle         String?              @map("seo_title") @db.VarChar(240)
-  seoTitle_vi      String?              @db.VarChar(240)
-  seoDescription   String?              @map("seo_description") @db.VarChar(1000)
-  seoDescription_vi String?             @db.VarChar(1000)
-  seoImage         String?              @map("seo_image") @db.VarChar(500)
-  canonicalUrl     String?              @map("canonical_url") @db.VarChar(1000)
-  relatedIds       Json?                @map("related_ids")
-  duration         String?              @db.VarChar(160)
-  duration_vi      String?              @db.VarChar(160)
-  level            String?              @db.VarChar(160)
-  level_vi         String?              @db.VarChar(160)
-  price            String?              @db.VarChar(160)
-  price_vi         String?              @db.VarChar(160)
-  instructor       String?              @db.VarChar(240)
-  instructor_vi    String?              @db.VarChar(240)
-  learningOutcomes Json?                @map("learning_outcomes")
+  id                  String               @id @default(uuid()) @db.Uuid
+  slug                String               @unique @db.VarChar(180)
+  title               String               @db.VarChar(240)
+  title_vi            String?              @db.VarChar(240)
+  description         String               @db.VarChar(1000)
+  description_vi      String?              @db.VarChar(1000)
+  image               String               @db.VarChar(500)
+  eyebrow             String               @db.VarChar(160)
+  eyebrow_vi          String?              @db.VarChar(160)
+  meta                String?              @db.VarChar(240)
+  meta_vi             String?              @db.VarChar(240)
+  highlights          Json
+  highlights_vi       Json?
+  sections            Json
+  sections_vi         Json?
+  contentBlocks       Json?                @map("content_blocks")
+  contentBlocks_vi    Json?                @map("content_blocks_vi")
+  seoTitle            String?              @map("seo_title") @db.VarChar(240)
+  seoTitle_vi         String?              @db.VarChar(240)
+  seoDescription      String?              @map("seo_description") @db.VarChar(1000)
+  seoDescription_vi   String?              @db.VarChar(1000)
+  seoImage            String?              @map("seo_image") @db.VarChar(500)
+  canonicalUrl        String?              @map("canonical_url") @db.VarChar(1000)
+  relatedIds          Json?                @map("related_ids")
+  duration            String?              @db.VarChar(160)
+  duration_vi         String?              @db.VarChar(160)
+  level               String?              @db.VarChar(160)
+  level_vi            String?              @db.VarChar(160)
+  price               String?              @db.VarChar(160)
+  price_vi            String?              @db.VarChar(160)
+  instructor          String?              @db.VarChar(240)
+  instructor_vi       String?              @db.VarChar(240)
+  learningOutcomes    Json?                @map("learning_outcomes")
   learningOutcomes_vi Json?
-  softwareStack   Json                  @default("[]") @map("software_stack")
-  softwareStack_vi Json?                @map("software_stack_vi")
-  status           ContentStatus        @default(DRAFT)
-  sortOrder        Int                  @default(0) @map("sort_order")
-  publishedAt      DateTime?            @map("published_at") @db.Timestamptz(3)
-  createdAt        DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt        DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
-  deletedAt        DateTime?            @map("deleted_at") @db.Timestamptz(3)
-  registrations    CourseRegistration[]
-  curriculum       CourseSection[]
+  softwareStack       Json                 @default("[]") @map("software_stack")
+  softwareStack_vi    Json?                @map("software_stack_vi")
+  status              ContentStatus        @default(DRAFT)
+  sortOrder           Int                  @default(0) @map("sort_order")
+  publishedAt         DateTime?            @map("published_at") @db.Timestamptz(3)
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt           DateTime?            @map("deleted_at") @db.Timestamptz(3)
+  registrations       CourseRegistration[]
+  curriculum          CourseSection[]
 
   @@index([status, publishedAt])
   @@index([deletedAt, status, sortOrder, publishedAt])
@@ -202,39 +202,39 @@ model PostCategory {
 }
 
 model Post {
-  id             String        @id @default(uuid()) @db.Uuid
-  slug           String        @unique @db.VarChar(180)
-  title          String        @db.VarChar(240)
-  title_vi       String?       @db.VarChar(240)
-  description    String        @db.VarChar(1000)
-  description_vi String?       @db.VarChar(1000)
-  image          String        @db.VarChar(500)
-  eyebrow        String        @db.VarChar(160)
-  eyebrow_vi     String?       @db.VarChar(160)
-  meta           String?       @db.VarChar(240)
-  meta_vi        String?       @db.VarChar(240)
-  highlights     Json
-  highlights_vi  Json?
-  sections       Json
-  sections_vi    Json?
-  contentBlocks  Json?         @map("content_blocks")
-  contentBlocks_vi Json?       @map("content_blocks_vi")
-  seoTitle       String?       @map("seo_title") @db.VarChar(240)
-  seoTitle_vi    String?       @db.VarChar(240)
-  seoDescription String?       @map("seo_description") @db.VarChar(1000)
-  seoDescription_vi String?    @db.VarChar(1000)
-  seoImage       String?       @map("seo_image") @db.VarChar(500)
-  canonicalUrl   String?       @map("canonical_url") @db.VarChar(1000)
-  relatedIds     Json?         @map("related_ids")
-  authorName     String?       @map("author_name") @db.VarChar(160)
-  status         ContentStatus @default(DRAFT)
-  sortOrder      Int           @default(0) @map("sort_order")
-  categoryId     String?       @map("category_id") @db.Uuid
-  publishedAt    DateTime?     @map("published_at") @db.Timestamptz(3)
-  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
-  deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz(3)
-  category       PostCategory? @relation(fields: [categoryId], references: [id])
+  id                String        @id @default(uuid()) @db.Uuid
+  slug              String        @unique @db.VarChar(180)
+  title             String        @db.VarChar(240)
+  title_vi          String?       @db.VarChar(240)
+  description       String        @db.VarChar(1000)
+  description_vi    String?       @db.VarChar(1000)
+  image             String        @db.VarChar(500)
+  eyebrow           String        @db.VarChar(160)
+  eyebrow_vi        String?       @db.VarChar(160)
+  meta              String?       @db.VarChar(240)
+  meta_vi           String?       @db.VarChar(240)
+  highlights        Json
+  highlights_vi     Json?
+  sections          Json
+  sections_vi       Json?
+  contentBlocks     Json?         @map("content_blocks")
+  contentBlocks_vi  Json?         @map("content_blocks_vi")
+  seoTitle          String?       @map("seo_title") @db.VarChar(240)
+  seoTitle_vi       String?       @db.VarChar(240)
+  seoDescription    String?       @map("seo_description") @db.VarChar(1000)
+  seoDescription_vi String?       @db.VarChar(1000)
+  seoImage          String?       @map("seo_image") @db.VarChar(500)
+  canonicalUrl      String?       @map("canonical_url") @db.VarChar(1000)
+  relatedIds        Json?         @map("related_ids")
+  authorName        String?       @map("author_name") @db.VarChar(160)
+  status            ContentStatus @default(DRAFT)
+  sortOrder         Int           @default(0) @map("sort_order")
+  categoryId        String?       @map("category_id") @db.Uuid
+  publishedAt       DateTime?     @map("published_at") @db.Timestamptz(3)
+  createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  deletedAt         DateTime?     @map("deleted_at") @db.Timestamptz(3)
+  category          PostCategory? @relation(fields: [categoryId], references: [id])
 
   @@index([status, publishedAt])
   @@index([categoryId])
@@ -245,19 +245,21 @@ model Post {
 }
 
 model Contact {
-  id        String           @id @default(uuid()) @db.Uuid
-  name      String           @db.VarChar(160)
-  email     String           @db.VarChar(320)
-  phone     String?          @db.VarChar(32)
-  company   String?          @db.VarChar(200)
-  message   String           @db.VarChar(5000)
-  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
-  status    SubmissionStatus @default(NEW)
-  updatedAt DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
-  consentGiven Boolean?      @map("consent_given")
-  consentAt DateTime?        @map("consent_at") @db.Timestamptz(3)
-  privacyPolicyVersion String? @map("privacy_policy_version") @db.VarChar(64)
-  consentSource String?      @map("consent_source") @db.VarChar(64)
+  id                   String           @id @default(uuid()) @db.Uuid
+  name                 String           @db.VarChar(160)
+  email                String           @db.VarChar(320)
+  phone                String?          @db.VarChar(32)
+  company              String?          @db.VarChar(200)
+  message              String           @db.VarChar(5000)
+  createdAt            DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  status               SubmissionStatus @default(NEW)
+  updatedAt            DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  consentGiven         Boolean?         @map("consent_given")
+  consentAt            DateTime?        @map("consent_at") @db.Timestamptz(3)
+  privacyPolicyVersion String?          @map("privacy_policy_version") @db.VarChar(64)
+  consentSource        String?          @map("consent_source") @db.VarChar(64)
+  /// How the lead found the site (source, landing page, pages viewed).
+  attribution          Json?
 
   @@index([email])
   @@index([createdAt])
@@ -290,14 +292,14 @@ model AvailabilityRule {
 }
 
 model AvailabilityException {
-  id         String   @id @default(uuid()) @db.Uuid
-  date       DateTime @db.Date
-  isAvailable Boolean @default(false) @map("is_available")
-  startTime  String?  @map("start_time") @db.VarChar(5)
-  endTime    String?  @map("end_time") @db.VarChar(5)
-  note       String?  @db.VarChar(240)
-  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id          String   @id @default(uuid()) @db.Uuid
+  date        DateTime @db.Date
+  isAvailable Boolean  @default(false) @map("is_available")
+  startTime   String?  @map("start_time") @db.VarChar(5)
+  endTime     String?  @map("end_time") @db.VarChar(5)
+  note        String?  @db.VarChar(240)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@unique([date])
   @@index([date, isAvailable])
@@ -305,26 +307,28 @@ model AvailabilityException {
 }
 
 model Appointment {
-  locale      String            @default("vi") @db.VarChar(2)
-  id          String            @id @default(uuid()) @db.Uuid
-  name        String            @db.VarChar(160)
-  email       String            @db.VarChar(320)
-  phone       String?           @db.VarChar(32)
-  company     String?           @db.VarChar(200)
-  topic       String            @db.VarChar(120)
-  message     String?           @db.VarChar(5000)
-  projectSlug String?           @map("project_slug") @db.VarChar(180)
-  startAt     DateTime          @map("start_at") @db.Timestamptz(3)
-  endAt       DateTime          @map("end_at") @db.Timestamptz(3)
-  timezone    String            @default("Asia/Ho_Chi_Minh") @db.VarChar(64)
-  status      AppointmentStatus @default(REQUESTED)
-  consentGiven Boolean?         @map("consent_given")
-  consentAt   DateTime?         @map("consent_at") @db.Timestamptz(3)
-  privacyPolicyVersion String?   @map("privacy_policy_version") @db.VarChar(64)
-  calendarEventId String? @map("calendar_event_id") @db.VarChar(256)
-  meetingUrl String? @map("meeting_url") @db.VarChar(1000)
-  createdAt   DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt   DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  locale               String            @default("vi") @db.VarChar(2)
+  id                   String            @id @default(uuid()) @db.Uuid
+  name                 String            @db.VarChar(160)
+  email                String            @db.VarChar(320)
+  phone                String?           @db.VarChar(32)
+  company              String?           @db.VarChar(200)
+  topic                String            @db.VarChar(120)
+  message              String?           @db.VarChar(5000)
+  projectSlug          String?           @map("project_slug") @db.VarChar(180)
+  startAt              DateTime          @map("start_at") @db.Timestamptz(3)
+  endAt                DateTime          @map("end_at") @db.Timestamptz(3)
+  timezone             String            @default("Asia/Ho_Chi_Minh") @db.VarChar(64)
+  status               AppointmentStatus @default(REQUESTED)
+  consentGiven         Boolean?          @map("consent_given")
+  consentAt            DateTime?         @map("consent_at") @db.Timestamptz(3)
+  privacyPolicyVersion String?           @map("privacy_policy_version") @db.VarChar(64)
+  calendarEventId      String?           @map("calendar_event_id") @db.VarChar(256)
+  meetingUrl           String?           @map("meeting_url") @db.VarChar(1000)
+  createdAt            DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt            DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  /// How the lead found the site (source, landing page, pages viewed).
+  attribution          Json?
 
   @@index([startAt, endAt, status])
   @@index([email, createdAt])
@@ -332,19 +336,21 @@ model Appointment {
 }
 
 model CourseRegistration {
-  id        String           @id @default(uuid()) @db.Uuid
-  courseId  String           @map("course_id") @db.Uuid
-  name      String           @db.VarChar(160)
-  email     String           @db.VarChar(320)
-  phone     String           @db.VarChar(32)
-  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
-  status    SubmissionStatus @default(NEW)
-  updatedAt DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
-  course    Course           @relation(fields: [courseId], references: [id])
-  consentGiven Boolean?      @map("consent_given")
-  consentAt DateTime?        @map("consent_at") @db.Timestamptz(3)
-  privacyPolicyVersion String? @map("privacy_policy_version") @db.VarChar(64)
-  consentSource String?      @map("consent_source") @db.VarChar(64)
+  id                   String           @id @default(uuid()) @db.Uuid
+  courseId             String           @map("course_id") @db.Uuid
+  name                 String           @db.VarChar(160)
+  email                String           @db.VarChar(320)
+  phone                String           @db.VarChar(32)
+  createdAt            DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  status               SubmissionStatus @default(NEW)
+  updatedAt            DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  course               Course           @relation(fields: [courseId], references: [id])
+  consentGiven         Boolean?         @map("consent_given")
+  consentAt            DateTime?        @map("consent_at") @db.Timestamptz(3)
+  privacyPolicyVersion String?          @map("privacy_policy_version") @db.VarChar(64)
+  consentSource        String?          @map("consent_source") @db.VarChar(64)
+  /// How the lead found the site (source, landing page, pages viewed).
+  attribution          Json?
 
   @@index([courseId])
   @@index([email])
@@ -354,16 +360,18 @@ model CourseRegistration {
 }
 
 model NewsletterSubscription {
-  id             String    @id @default(uuid()) @db.Uuid
-  email          String    @unique @db.VarChar(320)
-  consent        Boolean
-  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
-  isActive       Boolean   @default(true) @map("is_active")
-  unsubscribedAt DateTime? @map("unsubscribed_at") @db.Timestamptz(3)
-  consentAt DateTime? @map("consent_at") @db.Timestamptz(3)
-  privacyPolicyVersion String? @map("privacy_policy_version") @db.VarChar(64)
-  consentSource String? @map("consent_source") @db.VarChar(64)
+  id                   String    @id @default(uuid()) @db.Uuid
+  email                String    @unique @db.VarChar(320)
+  consent              Boolean
+  createdAt            DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt            DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  isActive             Boolean   @default(true) @map("is_active")
+  unsubscribedAt       DateTime? @map("unsubscribed_at") @db.Timestamptz(3)
+  consentAt            DateTime? @map("consent_at") @db.Timestamptz(3)
+  privacyPolicyVersion String?   @map("privacy_policy_version") @db.VarChar(64)
+  consentSource        String?   @map("consent_source") @db.VarChar(64)
+  /// How the lead found the site (source, landing page, pages viewed).
+  attribution          Json?
 
   @@index([createdAt])
   @@index([isActive, createdAt])
@@ -547,4 +555,36 @@ model PageContent {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@map("page_contents")
+}
+
+/// First-party, cookieless page analytics. visitorId is a hash that changes
+/// daily (no IP or lasting identifier is stored); sessionId lives in the tab.
+model AnalyticsEvent {
+  id          BigInt   @id @default(autoincrement())
+  type        String   @db.VarChar(24)
+  path        String   @db.VarChar(500)
+  locale      String?  @db.VarChar(5)
+  target      String?  @db.VarChar(500)
+  label       String?  @db.VarChar(200)
+  contentType String?  @map("content_type") @db.VarChar(24)
+  contentSlug String?  @map("content_slug") @db.VarChar(200)
+  source      String   @db.VarChar(100)
+  medium      String   @db.VarChar(100)
+  campaign    String?  @db.VarChar(200)
+  referrer    String?  @db.VarChar(255)
+  device      String   @db.VarChar(10)
+  browser     String   @db.VarChar(30)
+  os          String   @db.VarChar(30)
+  country     String?  @db.VarChar(2)
+  visitorId   String   @map("visitor_id") @db.Char(16)
+  sessionId   String   @map("session_id") @db.VarChar(40)
+  durationMs  Int?     @map("duration_ms")
+  scrollDepth Int?     @map("scroll_depth")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([createdAt])
+  @@index([type, createdAt])
+  @@index([path, createdAt])
+  @@index([sessionId])
+  @@map("analytics_events")
 }

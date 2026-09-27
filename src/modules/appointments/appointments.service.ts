@@ -1,3 +1,4 @@
+import { leadAttribution } from '../analytics/analytics.utils';
 import {
   BadRequestException,
   ConflictException,
@@ -148,6 +149,7 @@ export class AppointmentsService {
               consentGiven: input.consent,
               consentAt: new Date(),
               privacyPolicyVersion: input.privacyPolicyVersion,
+              attribution: leadAttribution(input.attribution),
             },
           });
         },

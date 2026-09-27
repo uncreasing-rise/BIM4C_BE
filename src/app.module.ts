@@ -22,6 +22,7 @@ import { SettingsModule } from './modules/settings/settings.module';
 import { PageContentModule } from './modules/page-content/page-content.module';
 import { AdminMutationInterceptor } from './modules/audit/admin-mutation.interceptor';
 import { AppointmentsModule } from './modules/appointments/appointments.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { AppointmentsModule } from './modules/appointments/appointments.module';
     AdminModule,
     HealthModule,
     AppointmentsModule,
+    AnalyticsModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: ThrottlerGuard },

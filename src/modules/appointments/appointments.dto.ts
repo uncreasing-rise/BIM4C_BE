@@ -1,4 +1,4 @@
-import { EmailLocaleDto } from '../email/email-locale.dto';
+import { PublicFormDto } from '../analytics/analytics.dto';
 import { AppointmentStatus } from '@prisma/client';
 import { Transform } from 'class-transformer';
 import {
@@ -24,7 +24,7 @@ import { TIME_OF_DAY } from './availability';
 const text = ({ value }: { value: unknown }) => normalizeText(value);
 const HH_MM = { message: '$property must use 24-hour HH:MM format' };
 
-export class CreateAppointmentDto extends EmailLocaleDto {
+export class CreateAppointmentDto extends PublicFormDto {
   @Transform(text) @IsString() @MinLength(2) @MaxLength(160) name!: string;
   @Transform(({ value }) => normalizeEmail(value))
   @IsEmail()

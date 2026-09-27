@@ -1,4 +1,4 @@
-import { EmailLocaleDto } from '../email/email-locale.dto';
+import { PublicFormDto } from '../analytics/analytics.dto';
 import { Transform } from 'class-transformer';
 import {
   Equals,
@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { normalizeEmail, normalizeText } from '../../common/utils/input';
-export class CreateNewsletterSubscriptionDto extends EmailLocaleDto {
+export class CreateNewsletterSubscriptionDto extends PublicFormDto {
   @ApiProperty({ example: 'a@example.com' })
   @Transform(({ value }) => normalizeEmail(value))
   @IsEmail()

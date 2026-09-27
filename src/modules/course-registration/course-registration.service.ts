@@ -1,3 +1,4 @@
+import { leadAttribution } from '../analytics/analytics.utils';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ContentStatus } from '@prisma/client';
 import type { MutationResponse } from '../contact/contact.service';
@@ -24,6 +25,7 @@ export class CourseRegistrationService {
     const row = await this.prisma.courseRegistration.create({
       data: {
         ...data,
+        attribution: leadAttribution(data.attribution),
         consentGiven: consent,
         consentAt: new Date(),
         privacyPolicyVersion,

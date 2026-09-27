@@ -23,6 +23,7 @@ const editorPermissions = [
     ),
   ),
   'dashboard.read',
+  'analytics.read',
   'contacts.read',
   'contacts.update',
   'course-registrations.read',

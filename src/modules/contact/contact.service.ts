@@ -1,3 +1,4 @@
+import { leadAttribution } from '../analytics/analytics.utils';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import type { CreateContactDto } from './create-contact.dto';
@@ -19,6 +20,7 @@ export class ContactService {
     const row = await this.prisma.contact.create({
       data: {
         ...data,
+        attribution: leadAttribution(data.attribution),
         consentGiven: consent,
         consentAt: new Date(),
         privacyPolicyVersion,

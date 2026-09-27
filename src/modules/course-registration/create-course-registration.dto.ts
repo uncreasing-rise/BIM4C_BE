@@ -1,4 +1,4 @@
-import { EmailLocaleDto } from '../email/email-locale.dto';
+import { PublicFormDto } from '../analytics/analytics.dto';
 import { Transform } from 'class-transformer';
 import {
   IsEmail,
@@ -12,7 +12,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { normalizeEmail, normalizeText } from '../../common/utils/input';
-export class CreateCourseRegistrationDto extends EmailLocaleDto {
+export class CreateCourseRegistrationDto extends PublicFormDto {
   @ApiProperty({ format: 'uuid' }) @IsUUID() courseId!: string;
   @ApiProperty({ example: 'Nguyen Van A' })
   @Transform(({ value }) => normalizeText(value))

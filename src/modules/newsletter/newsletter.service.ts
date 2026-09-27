@@ -1,3 +1,4 @@
+import { leadAttribution } from '../analytics/analytics.utils';
 import { Injectable } from '@nestjs/common';
 import type { MutationResponse } from '../contact/contact.service';
 import { PrismaService } from '../../database/prisma.service';
@@ -22,6 +23,7 @@ export class NewsletterService {
       where: { email: input.email },
       create: {
         ...data,
+        attribution: leadAttribution(data.attribution),
         consentAt: new Date(),
         consentSource: 'website',
         isActive: true,
