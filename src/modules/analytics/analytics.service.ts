@@ -224,23 +224,32 @@ export class AnalyticsService {
                count(DISTINCT visitor_id) AS visitors
         FROM analytics_events WHERE ${w} AND type = 'pageview'
         GROUP BY 1 ORDER BY 1`),
+      // Time on page: a page view may report its time in parts (each time the
+      // tab is hidden), so parts are added up per visit before averaging.
       q(Prisma.sql`
-        SELECT path,
-               count(*) FILTER (WHERE type = 'pageview') AS views,
-               count(DISTINCT visitor_id) FILTER (WHERE type = 'pageview') AS visitors,
-               avg(duration_ms) FILTER (WHERE type = 'engagement') AS avg_ms,
-               avg(scroll_depth) FILTER (WHERE type = 'engagement') AS scroll
-        FROM analytics_events WHERE ${w} AND type IN ('pageview', 'engagement')
-        GROUP BY path HAVING count(*) FILTER (WHERE type = 'pageview') > 0
-        ORDER BY views DESC LIMIT 50`),
+        WITH views AS (
+          SELECT path, count(*) AS views, count(DISTINCT visitor_id) AS visitors
+          FROM analytics_events WHERE ${w} AND type = 'pageview' GROUP BY path),
+        reads AS (
+          SELECT path, avg(ms) AS avg_ms, avg(scroll) AS scroll FROM (
+            SELECT session_id, path, sum(duration_ms) AS ms, max(scroll_depth) AS scroll
+            FROM analytics_events WHERE ${w} AND type = 'engagement' GROUP BY 1, 2) parts
+          GROUP BY path)
+        SELECT v.path, v.views, v.visitors, r.avg_ms, r.scroll
+        FROM views v LEFT JOIN reads r USING (path)
+        ORDER BY v.views DESC LIMIT 50`),
       q(Prisma.sql`
-        SELECT content_type, content_slug,
-               count(*) FILTER (WHERE type = 'pageview') AS views,
-               count(DISTINCT visitor_id) FILTER (WHERE type = 'pageview') AS visitors,
-               avg(duration_ms) FILTER (WHERE type = 'engagement') AS avg_ms
-        FROM analytics_events WHERE ${w} AND content_type IS NOT NULL AND type IN ('pageview', 'engagement')
-        GROUP BY 1, 2 HAVING count(*) FILTER (WHERE type = 'pageview') > 0
-        ORDER BY views DESC LIMIT 40`),
+        WITH views AS (
+          SELECT content_type, content_slug, count(*) AS views, count(DISTINCT visitor_id) AS visitors
+          FROM analytics_events WHERE ${w} AND type = 'pageview' AND content_type IS NOT NULL GROUP BY 1, 2),
+        reads AS (
+          SELECT content_type, content_slug, avg(ms) AS avg_ms FROM (
+            SELECT session_id, content_type, content_slug, sum(duration_ms) AS ms
+            FROM analytics_events WHERE ${w} AND type = 'engagement' AND content_type IS NOT NULL GROUP BY 1, 2, 3) parts
+          GROUP BY 1, 2)
+        SELECT v.content_type, v.content_slug, v.views, v.visitors, r.avg_ms
+        FROM views v LEFT JOIN reads r USING (content_type, content_slug)
+        ORDER BY v.views DESC LIMIT 40`),
       q(Prisma.sql`
         SELECT s.source, s.medium, count(*) AS sessions, count(c.session_id) AS conversions
         FROM (${firstOfSession}) s LEFT JOIN (${converted}) c USING (session_id)
