@@ -188,8 +188,10 @@ export class AppointmentsService {
   async list(status?: AppointmentStatus) {
     return this.prisma.appointment.findMany({
       where: status ? { status } : undefined,
-      orderBy: { startAt: 'asc' },
-      take: 200,
+      // Newest first so the cap drops the oldest history, never new requests;
+      // the admin screen re-sorts on the client.
+      orderBy: [{ startAt: 'desc' }, { id: 'asc' }],
+      take: 500,
     });
   }
 

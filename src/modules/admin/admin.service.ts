@@ -9,7 +9,10 @@ import {
 } from '@nestjs/common';
 import { ContentStatus, Prisma, ProjectStatus } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
-import { pageResponse } from '../../common/pagination/page-query.dto';
+import {
+  pageResponse,
+  stableOrderBy,
+} from '../../common/pagination/page-query.dto';
 import type {
   BulkActionDto,
   CategoryDto,
@@ -32,7 +35,7 @@ import type {
 import { AdminListQueryDto } from './admin.dto';
 import { MediaStorageService } from './media-storage.service';
 import { isContentBlock } from '../../common/dto/content-response.dto';
-import { clearPostsCache } from '../posts/posts.service';
+import { clearPostsCache, NEWS_SLUGS } from '../posts/posts.service';
 import { toCsv } from '../../common/utils/csv';
 
 type Domain = 'project' | 'service' | 'course' | 'post';
@@ -42,13 +45,37 @@ const delegateName: Record<Domain, string> = {
   course: 'course',
   post: 'post',
 };
-const allowedSort = new Set([
-  'createdAt',
-  'updatedAt',
-  'publishedAt',
-  'title',
-  'sortOrder',
-]);
+/** Columns each admin list may be sorted by; anything else uses the default. */
+const SORTABLE = {
+  content: [
+    'createdAt',
+    'updatedAt',
+    'publishedAt',
+    'title',
+    'slug',
+    'status',
+    'sortOrder',
+  ],
+  contact: ['createdAt', 'name', 'email', 'company', 'status'],
+  registration: ['createdAt', 'name', 'email', 'status'],
+  subscription: ['createdAt', 'email', 'isActive'],
+  media: ['createdAt', 'filename', 'size'],
+} as const;
+
+function sortFor(
+  query: AdminListQueryDto,
+  allowed: readonly string[],
+  fallback: string,
+) {
+  const field =
+    query.sortBy && allowed.includes(query.sortBy) ? query.sortBy : fallback;
+  return stableOrderBy(field, query.sortOrder, []);
+}
+
+const contains = (value: string) => ({
+  contains: value,
+  mode: Prisma.QueryMode.insensitive,
+});
 
 interface AdminCacheEntry<T> {
   data: T;
@@ -102,11 +129,26 @@ export class AdminService implements OnModuleInit {
   }
   private where(domain: Domain, query: AdminListQueryDto): any {
     const where: any = { deletedAt: null };
+    // Search and the technical group both need an OR, so each goes in AND.
+    const and: any[] = [];
     if (query.search)
-      where.OR = [
-        { title: { contains: query.search, mode: 'insensitive' } },
-        { slug: { contains: query.search, mode: 'insensitive' } },
-      ];
+      and.push({
+        OR: [
+          { title: contains(query.search) },
+          { title_vi: contains(query.search) },
+          { slug: contains(query.search) },
+        ],
+      });
+    if (domain === 'post' && query.group === 'news')
+      and.push({ category: { slug: { in: NEWS_SLUGS } } });
+    if (domain === 'post' && query.group === 'technical')
+      and.push({
+        OR: [
+          { categoryId: null },
+          { category: { slug: { notIn: NEWS_SLUGS } } },
+        ],
+      });
+    if (and.length) where.AND = and;
     if (query.status) {
       const status = query.status.toUpperCase();
       where.status =
@@ -126,7 +168,7 @@ export class AdminService implements OnModuleInit {
     return where;
   }
   async list(domain: Domain, query: AdminListQueryDto) {
-    const cacheKey = `list:${domain}:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.category || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
+    const cacheKey = `list:${domain}:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.category || ''}:${query.group || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = adminCache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
       return hit.data;
@@ -141,14 +183,13 @@ export class AdminService implements OnModuleInit {
           : domain === 'course'
             ? { curriculum: { orderBy: { sortOrder: 'asc' } } }
             : undefined;
-    const sortBy = allowedSort.has(query.sortBy) ? query.sortBy : 'updatedAt';
     const [rows, total] = await Promise.all([
       delegate.findMany({
         where,
         include,
         skip: (query.page - 1) * query.limit,
         take: query.limit,
-        orderBy: { [sortBy]: query.sortOrder },
+        orderBy: sortFor(query, SORTABLE.content, 'updatedAt'),
       }),
       delegate.count({ where }),
     ]);
@@ -481,7 +522,7 @@ export class AdminService implements OnModuleInit {
       : {};
   }
   async contacts(query: AdminListQueryDto) {
-    const cacheKey = `contacts:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.from || ''}:${query.to || ''}:${query.sortOrder || ''}`;
+    const cacheKey = `contacts:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.from || ''}:${query.to || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = adminCache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
       return hit.data;
@@ -491,7 +532,7 @@ export class AdminService implements OnModuleInit {
       ...(query.status ? { status: query.status.toUpperCase() } : {}),
       ...(query.search
         ? {
-            OR: ['name', 'email', 'company'].map((field) => ({
+            OR: ['name', 'email', 'company', 'phone', 'message'].map((field) => ({
               [field]: { contains: query.search, mode: 'insensitive' },
             })),
           }
@@ -502,7 +543,7 @@ export class AdminService implements OnModuleInit {
         where,
         skip: (query.page - 1) * query.limit,
         take: query.limit,
-        orderBy: { createdAt: query.sortOrder },
+        orderBy: sortFor(query, SORTABLE.contact, 'createdAt'),
       }),
       this.prisma.contact.count({ where }),
     ]);
@@ -529,7 +570,7 @@ export class AdminService implements OnModuleInit {
     this.dashboardCache = null;
   }
   async registrations(query: AdminListQueryDto) {
-    const cacheKey = `registrations:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.course || ''}:${query.from || ''}:${query.to || ''}:${query.sortOrder || ''}`;
+    const cacheKey = `registrations:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.course || ''}:${query.from || ''}:${query.to || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = adminCache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
       return hit.data;
@@ -540,9 +581,12 @@ export class AdminService implements OnModuleInit {
       ...(query.status ? { status: query.status.toUpperCase() } : {}),
       ...(query.search
         ? {
-            OR: ['name', 'email', 'phone'].map((field) => ({
-              [field]: { contains: query.search, mode: 'insensitive' },
-            })),
+            OR: [
+              ...['name', 'email', 'phone'].map((field) => ({
+                [field]: { contains: query.search, mode: 'insensitive' },
+              })),
+              { course: { title: { contains: query.search, mode: 'insensitive' } } },
+            ],
           }
         : {}),
     };
@@ -552,7 +596,7 @@ export class AdminService implements OnModuleInit {
         include: { course: { select: { id: true, title: true, slug: true } } },
         skip: (query.page - 1) * query.limit,
         take: query.limit,
-        orderBy: { createdAt: query.sortOrder },
+        orderBy: sortFor(query, SORTABLE.registration, 'createdAt'),
       }),
       this.prisma.courseRegistration.count({ where }),
     ]);
@@ -585,7 +629,7 @@ export class AdminService implements OnModuleInit {
     this.dashboardCache = null;
   }
   async subscriptions(query: AdminListQueryDto) {
-    const cacheKey = `subscriptions:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.sortOrder || ''}`;
+    const cacheKey = `subscriptions:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = adminCache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
       return hit.data;
@@ -602,7 +646,7 @@ export class AdminService implements OnModuleInit {
         where,
         skip: (query.page - 1) * query.limit,
         take: query.limit,
-        orderBy: { createdAt: query.sortOrder },
+        orderBy: sortFor(query, SORTABLE.subscription, 'createdAt'),
       }),
       this.prisma.newsletterSubscription.count({ where }),
     ]);
@@ -647,13 +691,15 @@ export class AdminService implements OnModuleInit {
               { name: { contains: query.search, mode: 'insensitive' } },
               { email: { contains: query.search, mode: 'insensitive' } },
               { company: { contains: query.search, mode: 'insensitive' } },
+              { phone: { contains: query.search, mode: 'insensitive' } },
+              { message: { contains: query.search, mode: 'insensitive' } },
             ],
           }
         : {}),
     };
     const rows = await this.prisma.contact.findMany({
       where,
-      orderBy: { createdAt: query.sortOrder },
+      orderBy: sortFor(query, SORTABLE.contact, 'createdAt'),
     });
     return toCsv([
       ['Name', 'Email', 'Phone', 'Company', 'Message', 'Status', 'Created At'],
@@ -679,6 +725,7 @@ export class AdminService implements OnModuleInit {
               { name: { contains: query.search, mode: 'insensitive' } },
               { email: { contains: query.search, mode: 'insensitive' } },
               { phone: { contains: query.search, mode: 'insensitive' } },
+              { course: { title: contains(query.search) } },
             ],
           }
         : {}),
@@ -686,7 +733,7 @@ export class AdminService implements OnModuleInit {
     const rows = await this.prisma.courseRegistration.findMany({
       where,
       include: { course: { select: { title: true } } },
-      orderBy: { createdAt: query.sortOrder },
+      orderBy: sortFor(query, SORTABLE.registration, 'createdAt'),
     });
     return toCsv([
       ['Course', 'Name', 'Email', 'Phone', 'Status', 'Created At'],
@@ -710,7 +757,7 @@ export class AdminService implements OnModuleInit {
     };
     const rows = await this.prisma.newsletterSubscription.findMany({
       where,
-      orderBy: { createdAt: query.sortOrder },
+      orderBy: sortFor(query, SORTABLE.subscription, 'createdAt'),
     });
     return toCsv([
       ['Email', 'Active', 'Subscribed At', 'Unsubscribed At'],
@@ -809,7 +856,7 @@ export class AdminService implements OnModuleInit {
     return data;
   }
   async media(query: AdminListQueryDto) {
-    const cacheKey = `media:${query.page}:${query.limit}:${query.search || ''}:${query.sortOrder || ''}`;
+    const cacheKey = `media:${query.page}:${query.limit}:${query.search || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = adminCache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
       return hit.data;
@@ -837,7 +884,7 @@ export class AdminService implements OnModuleInit {
         where,
         skip: (query.page - 1) * query.limit,
         take: query.limit,
-        orderBy: { createdAt: query.sortOrder },
+        orderBy: sortFor(query, SORTABLE.media, 'createdAt'),
       }),
       this.prisma.media.count({ where }),
     ]);

@@ -14,6 +14,7 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  Matches,
   Max,
   MaxLength,
   Min,
@@ -55,9 +56,11 @@ export class AdminListQueryDto {
   @IsOptional() @IsUUID() course?: string;
   @IsOptional() @IsDateString() from?: string;
   @IsOptional() @IsDateString() to?: string;
-  @IsOptional()
-  @IsIn(['createdAt', 'updatedAt', 'publishedAt', 'title', 'sortOrder'])
-  sortBy = 'updatedAt';
+  /** Post list split used by the admin "Tin tức" and "Chuyên môn" screens. */
+  @IsOptional() @IsIn(['news', 'technical']) group?: 'news' | 'technical';
+  // Each list checks the field against its own allowlist (see AdminService),
+  // so the shape is validated here and the meaning there.
+  @IsOptional() @Transform(trim) @Matches(/^[A-Za-z]{1,40}$/) sortBy?: string;
   @IsOptional() @IsIn(['asc', 'desc']) sortOrder: 'asc' | 'desc' = 'desc';
 }
 
