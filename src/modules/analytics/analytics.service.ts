@@ -103,7 +103,14 @@ export class AnalyticsService {
       });
     }
     if (!rows.length) return 0;
-    await this.prisma.analyticsEvent.createMany({ data: rows });
+    try {
+      await this.prisma.analyticsEvent.createMany({ data: rows });
+    } catch (error) {
+      // Tracking is fire-and-forget: a storage failure (e.g. the analytics
+      // migration not yet deployed) must not surface as a 500 to visitors.
+      this.logger.error(`Analytics ingest failed: ${(error as Error).message}`);
+      return 0;
+    }
     // Housekeeping without a scheduler: now and then drop expired events.
     if (Math.random() < 0.002) void this.purge();
     return rows.length;
