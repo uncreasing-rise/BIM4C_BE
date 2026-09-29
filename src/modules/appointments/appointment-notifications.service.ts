@@ -134,6 +134,11 @@ export class AppointmentNotificationsService {
     );
   }
 
+  async isGoogleConnected(): Promise<boolean> {
+    const refreshToken = await this.oauthRefreshToken();
+    return Boolean(refreshToken);
+  }
+
   googleAuthorizationUrl(sessionId: string): string {
     const client = this.oauthClient();
     if (!client)

@@ -71,13 +71,16 @@ export class EmailService {
         });
         if (response.ok) return 'sent';
         if (response.status !== 429 && response.status < 500) {
+          const errDetail = await response.text().catch(() => '');
           this.logger.error(
-            `Email rejected (${input.key}): HTTP ${response.status}`,
+            `Email rejected (${input.key}): HTTP ${response.status} ${errDetail}`,
           );
           return 'failed';
         }
-      } catch {
-        // Do not log recipient data, message bodies, provider responses or keys.
+      } catch (err) {
+        this.logger.error(
+          `Email fetch error (${input.key}): ${err instanceof Error ? err.message : String(err)}`,
+        );
       }
       if (attempt === 0)
         await new Promise((resolve) => setTimeout(resolve, 300));
