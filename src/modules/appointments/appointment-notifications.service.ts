@@ -17,7 +17,7 @@ import {
   randomUUID,
   timingSafeEqual,
 } from 'node:crypto';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import type { Appointment } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 
@@ -52,7 +52,7 @@ export class AppointmentNotificationsService {
 
   async confirm(appointment: Appointment): Promise<Appointment> {
     if (appointment.calendarEventId) return appointment;
-    if (!this.googleConfigured()) {
+    if (!(await this.googleConfigured())) {
       this.logger.warn(
         'Google Calendar is not configured; confirming without a Meet link',
       );
@@ -69,7 +69,7 @@ export class AppointmentNotificationsService {
   }
 
   async cancel(appointment: Appointment) {
-    if (appointment.calendarEventId && this.googleConfigured()) {
+    if (appointment.calendarEventId && (await this.googleConfigured())) {
       try {
         const token = await this.googleAccessToken();
         const calendarId = encodeURIComponent(
@@ -126,13 +126,21 @@ export class AppointmentNotificationsService {
       throw new BadRequestException('Invalid or expired OAuth state');
   }
 
+  private redirectUri(): string {
+    return (
+      this.config.get<string>('GOOGLE_REDIRECT_URI') ??
+      this.config.get<string>('GOOGLE_OAUTH_REDIRECT_URI') ??
+      'https://api.bim4c.vn/admin/appointments/google/callback'
+    );
+  }
+
   googleAuthorizationUrl(sessionId: string): string {
     const client = this.oauthClient();
     if (!client)
       throw new ConflictException('Google OAuth client is not configured');
     const params = new URLSearchParams({
       client_id: client.client_id,
-      redirect_uri: this.config.getOrThrow<string>('GOOGLE_OAUTH_REDIRECT_URI'),
+      redirect_uri: this.redirectUri(),
       response_type: 'code',
       access_type: 'offline',
       prompt: 'consent',
@@ -160,9 +168,7 @@ export class AppointmentNotificationsService {
         code,
         client_id: client.client_id,
         client_secret: client.client_secret,
-        redirect_uri: this.config.getOrThrow<string>(
-          'GOOGLE_OAUTH_REDIRECT_URI',
-        ),
+        redirect_uri: this.redirectUri(),
         grant_type: 'authorization_code',
       }),
     });
@@ -170,44 +176,67 @@ export class AppointmentNotificationsService {
       throw new ConflictException(
         `Google OAuth token exchange failed (${response.status})`,
       );
-    const token = (await response.json()) as { refresh_token?: string };
-    if (!token.refresh_token)
-      throw new ConflictException(
-        'Google OAuth did not return a refresh token',
-      );
-    try {
-      writeFileSync(
-        this.config.getOrThrow<string>('GOOGLE_OAUTH_TOKEN_FILE'),
-        JSON.stringify({ refresh_token: token.refresh_token }, null, 2),
-        { mode: 0o600 },
-      );
-    } catch (error) {
-      // Serverless filesystems are read-only; the token must then be stored as
-      // the GOOGLE_OAUTH_REFRESH_TOKEN secret instead. Never log its value.
-      this.logger.error(
-        `Could not persist Google refresh token: ${error instanceof Error ? error.message : String(error)}`,
-      );
-      throw new ConflictException(
-        'Google authorized, but the refresh token could not be stored. Set GOOGLE_OAUTH_REFRESH_TOKEN in the deployment secrets.',
+    const token = (await response.json()) as {
+      refresh_token?: string;
+      scope?: string;
+      token_type?: string;
+    };
+    if (token.refresh_token) {
+      await this.prisma.googleOAuthToken.upsert({
+        where: { id: 'default' },
+        create: {
+          id: 'default',
+          refreshToken: token.refresh_token,
+          scope: token.scope ?? null,
+          tokenType: token.token_type ?? null,
+        },
+        update: {
+          refreshToken: token.refresh_token,
+          scope: token.scope ?? undefined,
+          tokenType: token.token_type ?? undefined,
+        },
+      });
+      this.logger.log('Google OAuth refresh token successfully stored in database');
+    } else {
+      const existing = await this.prisma.googleOAuthToken.findUnique({
+        where: { id: 'default' },
+      });
+      if (!existing) {
+        throw new ConflictException(
+          'Google OAuth did not return a refresh token. Please re-authenticate and consent to offline access.',
+        );
+      }
+      if (token.scope || token.token_type) {
+        await this.prisma.googleOAuthToken.update({
+          where: { id: 'default' },
+          data: {
+            scope: token.scope ?? existing.scope,
+            tokenType: token.token_type ?? existing.tokenType,
+          },
+        });
+      }
+      this.logger.log(
+        'Google OAuth authorization refreshed (retained existing refresh token in database)',
       );
     }
   }
 
-  private googleConfigured() {
-    return Boolean(
-      this.config.get('GOOGLE_CALENDAR_ID') &&
-      (this.oauthRefreshToken() || this.googleCredentials()),
-    );
+  private async googleConfigured(): Promise<boolean> {
+    const calendarId = this.config.get('GOOGLE_CALENDAR_ID');
+    if (!calendarId) return false;
+    const refreshToken = await this.oauthRefreshToken();
+    if (refreshToken) return true;
+    return Boolean(this.googleCredentials());
   }
 
   private oauthClient(): { client_id: string; client_secret: string } | null {
     const filePath = this.config.get<string>('GOOGLE_OAUTH_CLIENT_FILE');
-    const configuredClientId = this.config.get<string>(
-      'GOOGLE_OAUTH_CLIENT_ID',
-    );
-    const configuredClientSecret = this.config.get<string>(
-      'GOOGLE_OAUTH_CLIENT_SECRET',
-    );
+    const configuredClientId =
+      this.config.get<string>('GOOGLE_CLIENT_ID') ??
+      this.config.get<string>('GOOGLE_OAUTH_CLIENT_ID');
+    const configuredClientSecret =
+      this.config.get<string>('GOOGLE_CLIENT_SECRET') ??
+      this.config.get<string>('GOOGLE_OAUTH_CLIENT_SECRET');
     if (!filePath) {
       return configuredClientId && configuredClientSecret
         ? {
@@ -217,6 +246,14 @@ export class AppointmentNotificationsService {
         : null;
     }
     try {
+      if (!existsSync(filePath)) {
+        return configuredClientId && configuredClientSecret
+          ? {
+              client_id: configuredClientId,
+              client_secret: configuredClientSecret,
+            }
+          : null;
+      }
       const json = JSON.parse(readFileSync(filePath, 'utf8')) as {
         web?: { client_id?: string; client_secret?: string };
         installed?: { client_id?: string; client_secret?: string };
@@ -234,23 +271,25 @@ export class AppointmentNotificationsService {
       this.logger.error(
         `Could not read Google OAuth client file: ${error instanceof Error ? error.message : String(error)}`,
       );
-      return null;
+      return configuredClientId && configuredClientSecret
+        ? {
+            client_id: configuredClientId,
+            client_secret: configuredClientSecret,
+          }
+        : null;
     }
   }
 
-  private oauthRefreshToken(): string | null {
-    const configuredToken = this.config.get<string>(
-      'GOOGLE_OAUTH_REFRESH_TOKEN',
-    );
-    if (configuredToken) return configuredToken;
-    const filePath = this.config.getOrThrow<string>('GOOGLE_OAUTH_TOKEN_FILE');
+  private async oauthRefreshToken(): Promise<string | null> {
     try {
-      if (!existsSync(filePath)) return null;
-      const token = JSON.parse(readFileSync(filePath, 'utf8')) as {
-        refresh_token?: string;
-      };
-      return token.refresh_token || null;
-    } catch {
+      const record = await this.prisma.googleOAuthToken.findUnique({
+        where: { id: 'default' },
+      });
+      return record?.refreshToken ?? null;
+    } catch (error) {
+      this.logger.error(
+        `Could not fetch Google OAuth token from database: ${error instanceof Error ? error.message : String(error)}`,
+      );
       return null;
     }
   }
@@ -283,7 +322,7 @@ export class AppointmentNotificationsService {
 
   private async googleAccessToken(): Promise<string> {
     const oauthClient = this.oauthClient();
-    const refreshToken = this.oauthRefreshToken();
+    const refreshToken = await this.oauthRefreshToken();
     if (oauthClient && refreshToken) {
       const response = await timedFetch('https://oauth2.googleapis.com/token', {
         method: 'POST',
@@ -311,7 +350,7 @@ export class AppointmentNotificationsService {
         }
         if (failure?.error === 'invalid_grant') {
           throw new BadGatewayException(
-            `${prefix}: invalid_grant. Reconnect Google Calendar via /admin/appointments/google/connect. If GOOGLE_OAUTH_REFRESH_TOKEN is set, replace that deployment secret; it takes precedence over the token saved by reconnecting.`,
+            `${prefix}: invalid_grant. Reconnect Google Calendar via /admin/appointments/google/connect.`,
           );
         }
         throw new BadGatewayException(
@@ -326,6 +365,7 @@ export class AppointmentNotificationsService {
     const credentials = this.googleCredentials();
     if (!credentials)
       throw new Error('Google service account credentials are not configured');
+
     const { email, privateKey } = credentials;
     const now = Math.floor(Date.now() / 1000);
     const header = encode(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));

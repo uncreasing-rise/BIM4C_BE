@@ -588,3 +588,15 @@ model AnalyticsEvent {
   @@index([sessionId])
   @@map("analytics_events")
 }
+
+/// Stored Google OAuth refresh token for Calendar & Meet integration
+model GoogleOAuthToken {
+  id           String   @id @default("default") @db.VarChar(32)
+  refreshToken String   @map("refresh_token") @db.Text
+  scope        String?  @db.VarChar(500)
+  tokenType    String?  @map("token_type") @db.VarChar(64)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("google_oauth_tokens")
+}

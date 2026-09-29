@@ -59,13 +59,11 @@ const schema = z
       .default('Asia/Ho_Chi_Minh'),
     OAUTH_STATE_SECRET: z.string().min(32).optional(),
     GOOGLE_OAUTH_CLIENT_FILE: z.string().min(1).optional(),
+    GOOGLE_CLIENT_ID: z.string().min(20).optional(),
+    GOOGLE_CLIENT_SECRET: z.string().min(10).optional(),
+    GOOGLE_REDIRECT_URI: z.string().url().optional(),
     GOOGLE_OAUTH_CLIENT_ID: z.string().min(20).optional(),
     GOOGLE_OAUTH_CLIENT_SECRET: z.string().min(10).optional(),
-    GOOGLE_OAUTH_REFRESH_TOKEN: z.string().min(20).optional(),
-    GOOGLE_OAUTH_TOKEN_FILE: z
-      .string()
-      .min(1)
-      .default('.google-oauth-token.json'),
     GOOGLE_OAUTH_REDIRECT_URI: z
       .string()
       .url()
