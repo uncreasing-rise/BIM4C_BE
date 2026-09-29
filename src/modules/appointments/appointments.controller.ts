@@ -76,11 +76,7 @@ export class AdminAppointmentsController {
     @Req() request: Request,
     @Res() response: Response,
   ) {
-    await this.notifications.completeGoogleAuthorization(
-      code,
-      state,
-      request.admin!.sessionId,
-    );
+    await this.notifications.completeGoogleAuthorization(code, state);
     const frontendUrl =
       this.config.get<string>('FRONTEND_URL') ?? 'http://localhost:3000';
     return response.redirect(

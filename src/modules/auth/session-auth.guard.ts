@@ -51,6 +51,7 @@ export class SessionAuthGuard implements CanActivate {
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
+    if (request.path?.endsWith('/google/callback')) return true;
     const cookieToken = request.cookies?.[
       this.config.get<string>('AUTH_COOKIE_NAME') ?? 'bim4c_admin_session'
     ] as string | undefined;

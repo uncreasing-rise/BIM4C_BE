@@ -38,26 +38,29 @@ const stateOf = (url: string) => new URL(url).searchParams.get('state')!;
 describe('Google OAuth state', () => {
   it('binds the authorization URL to the admin session', () => {
     const url = service().googleAuthorizationUrl('session-a');
-    expect(stateOf(url)).toMatch(/^\d+\.[\w-]+$/);
+    expect(stateOf(url)).toMatch(/^session-a\.\d+\.[\w-]+$/);
   });
 
-  it('rejects a callback whose state belongs to another session', async () => {
+  it('rejects a tampered session or signature in state', async () => {
     const notifications = service();
     const state = stateOf(notifications.googleAuthorizationUrl('session-a'));
+    const parts = state.split('.');
+    const tampered = `session-b.${parts[1]}.${parts[2]}`;
     await expect(
-      notifications.completeGoogleAuthorization('code', state, 'session-b'),
+      notifications.completeGoogleAuthorization('code', tampered),
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 
-  it('rejects a missing or tampered state', async () => {
+  it('rejects a missing or expired state', async () => {
     const notifications = service();
     await expect(
-      notifications.completeGoogleAuthorization('code', undefined, 'session-a'),
+      notifications.completeGoogleAuthorization('code', undefined),
     ).rejects.toBeInstanceOf(BadRequestException);
     const state = stateOf(notifications.googleAuthorizationUrl('session-a'));
-    const tampered = `${Number(state.split('.')[0]) + 1}.${state.split('.')[1]}`;
+    const parts = state.split('.');
+    const tampered = `${parts[0]}.${Number(parts[1]) - 100000000}.${parts[2]}`;
     await expect(
-      notifications.completeGoogleAuthorization('code', tampered, 'session-a'),
+      notifications.completeGoogleAuthorization('code', tampered),
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 });

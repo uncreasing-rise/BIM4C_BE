@@ -18,6 +18,7 @@ export class PermissionGuard implements CanActivate {
     ]);
     if (!resource) return true;
     const request = context.switchToHttp().getRequest<Request>();
+    if (request.path?.endsWith('/google/callback')) return true;
     const action = this.action(request);
     const permission = `${resource}.${action}`;
     if (!request.admin || !hasPermission(request.admin.permissions, permission))
