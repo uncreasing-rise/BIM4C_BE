@@ -34,7 +34,8 @@ export class SubmissionNotificationsService {
       [vi ? 'Điện thoại' : 'Phone', data.phone],
       [vi ? 'Công ty' : 'Company', data.company],
       [vi ? 'Khóa học' : 'Course', courseTitle],
-      [vi ? 'Nội dung của bạn' : 'Your message', data.message],
+      // The message is not repeated back: these emails go to whatever address
+      // the form was given, so echoing free text let anyone send it from BIM4C.
     ];
     const [customer, admin] = await Promise.all([
       this.email.send({

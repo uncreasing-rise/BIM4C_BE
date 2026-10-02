@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
+import { HoneypotInterceptor } from '../../common/honeypot.interceptor';
 import {
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -13,6 +14,7 @@ export class CourseRegistrationController {
   constructor(private readonly service: CourseRegistrationService) {}
   @Post()
   @Throttle({ default: { limit: 5, ttl: 60000 } })
+  @UseInterceptors(HoneypotInterceptor)
   @ApiCreatedResponse()
   @ApiNotFoundResponse()
   create(@Body() input: CreateCourseRegistrationDto) {
