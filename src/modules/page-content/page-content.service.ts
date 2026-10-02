@@ -8,6 +8,31 @@ export type PublicPageContent = Record<string, { vi: unknown; en: unknown }>;
 
 const CACHE_TTL_MS = 60_000;
 
+/**
+ * The team on the About page is shown by role and expertise only: names and
+ * photos stay in the database (admins still edit them) but never leave the
+ * API publicly, so they are in no page's source either.
+ */
+export function withoutTeamIdentity(key: string, value: unknown): unknown {
+  if (key !== 'about' || !value || typeof value !== 'object') return value;
+  const about = value as { teamMembers?: unknown };
+  if (!Array.isArray(about.teamMembers)) return value;
+  return {
+    ...about,
+    teamMembers: about.teamMembers.map((member: unknown) => {
+      if (!member || typeof member !== 'object') return member;
+      const {
+        name: _name,
+        image: _image,
+        ...rest
+      } = member as Record<string, unknown>;
+      void _name;
+      void _image;
+      return rest;
+    }),
+  };
+}
+
 @Injectable()
 export class PageContentService {
   private publicCache: { data: PublicPageContent; cachedAt: number } | null =
@@ -22,7 +47,13 @@ export class PageContentService {
     }
     const rows = await this.prisma.pageContent.findMany();
     const data = Object.fromEntries(
-      rows.map((row) => [row.key, { vi: row.vi, en: row.en }]),
+      rows.map((row) => [
+        row.key,
+        {
+          vi: withoutTeamIdentity(row.key, row.vi),
+          en: withoutTeamIdentity(row.key, row.en),
+        },
+      ]),
     );
     this.publicCache = { data, cachedAt: now };
     return data;

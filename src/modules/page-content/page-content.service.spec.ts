@@ -20,6 +20,36 @@ describe('PageContentService', () => {
     expect(prisma.pageContent.findMany).toHaveBeenCalledTimes(1);
   });
 
+  it('publishes the team by role and expertise only, never names or photos', async () => {
+    const member = {
+      name: 'Nguyễn Văn A',
+      role: 'CEO',
+      spec: '15 năm BIM',
+      image: '/a.jpg',
+    };
+    const about = {
+      key: 'about',
+      vi: { teamTitle: 'Đội ngũ', teamMembers: [member] },
+      en: { teamMembers: [member] },
+    };
+    const prisma = {
+      pageContent: { findMany: jest.fn().mockResolvedValue([about, row]) },
+    };
+    const service = new PageContentService(prisma as never);
+    const data = await service.public();
+    expect(data.about.vi).toEqual({
+      teamTitle: 'Đội ngũ',
+      teamMembers: [{ role: 'CEO', spec: '15 năm BIM' }],
+    });
+    expect(data.about.en).toEqual({
+      teamMembers: [{ role: 'CEO', spec: '15 năm BIM' }],
+    });
+    expect(JSON.stringify(data)).not.toContain('Nguyễn Văn A');
+    expect(data['home.hero']).toEqual({ vi: row.vi, en: row.en });
+    // Admins still see and edit the full records.
+    await expect(service.list()).resolves.toEqual([about, row]);
+  });
+
   it('returns an empty map when every block was deleted', async () => {
     const prisma = {
       pageContent: { findMany: jest.fn().mockResolvedValue([]) },
