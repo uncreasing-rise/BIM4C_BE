@@ -43,7 +43,6 @@ async function main() {
       startAt: new Date('2026-10-05T09:00:00Z'),
       endAt: new Date('2026-10-05T09:45:00Z'),
       timezone: locale === 'vi' ? 'Asia/Ho_Chi_Minh' : 'Europe/London',
-      meetingUrl: 'https://meet.google.com/example',
     } as Appointment;
     for (const kind of [
       'requested',

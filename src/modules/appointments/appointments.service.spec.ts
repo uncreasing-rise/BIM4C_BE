@@ -40,8 +40,6 @@ function setup() {
   };
   const notifications = {
     notifyRequested: jest.fn().mockResolvedValue(undefined),
-    confirm: jest.fn(),
-    cancel: jest.fn().mockResolvedValue(undefined),
     notify: jest.fn().mockResolvedValue({ customer: 'sent', admin: 'sent' }),
   };
   const config = { get: jest.fn(() => 'Asia/Ho_Chi_Minh') };
@@ -177,10 +175,6 @@ describe('AppointmentsService', () => {
       id: 'a1',
       status: 'REQUESTED',
     });
-    notifications.confirm.mockResolvedValue({
-      meetingUrl: 'https://meet.google.com/test',
-      calendarEventId: 'event',
-    });
     client.appointment.update.mockResolvedValue({
       id: 'a1',
       status: 'CONFIRMED',
@@ -193,6 +187,22 @@ describe('AppointmentsService', () => {
     );
     expect(client.appointment.update.mock.invocationCallOrder[0]).toBeLessThan(
       notifications.notify.mock.invocationCallOrder[0],
+    );
+    // Confirming only changes the status: no calendar event or meeting link.
+    expect(client.appointment.update).toHaveBeenCalledWith({
+      where: { id: 'a1' },
+      data: { status: 'CONFIRMED' },
+    });
+  });
+
+  it('emails a cancellation like every other status change', async () => {
+    const { service, client, notifications } = setup();
+    client.appointment.findUnique.mockResolvedValue({ id: 'a1', status: 'CONFIRMED' });
+    client.appointment.update.mockResolvedValue({ id: 'a1', status: 'CANCELLED' });
+    await service.updateStatus('a1', { status: 'CANCELLED' });
+    expect(notifications.notify).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'CANCELLED' }),
+      'cancelled',
     );
   });
 });

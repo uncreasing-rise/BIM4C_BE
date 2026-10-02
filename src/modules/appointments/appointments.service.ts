@@ -15,6 +15,7 @@ import type {
   CreateAppointmentDto,
 } from './appointments.dto';
 import { AppointmentNotificationsService } from './appointment-notifications.service';
+import type { AppointmentEmailKind } from './appointment-email';
 
 const ACTIVE_STATUSES: AppointmentStatus[] = [
   AppointmentStatus.REQUESTED,
@@ -32,6 +33,13 @@ const TRANSITIONS: Record<AppointmentStatus, AppointmentStatus[]> = {
   CANCELLED: [],
   COMPLETED: [],
   NO_SHOW: [],
+};
+/** The email each status change sends (REQUESTED is sent on creation). */
+const STATUS_EMAILS: Partial<Record<AppointmentStatus, AppointmentEmailKind>> = {
+  CONFIRMED: 'confirmed',
+  CANCELLED: 'cancelled',
+  COMPLETED: 'completed',
+  NO_SHOW: 'no_show',
 };
 
 @Injectable()
@@ -206,35 +214,14 @@ export class AppointmentsService {
         `Cannot change an appointment from ${current.status} to ${input.status}`,
       );
 
-    if (input.status === 'CONFIRMED') {
-      const withCalendar = await this.notifications.confirm(current);
-      const updated = await this.prisma.appointment.update({
-        where: { id },
-        data: {
-          status: input.status,
-          meetingUrl: withCalendar.meetingUrl,
-          calendarEventId: withCalendar.calendarEventId,
-        },
-      });
-      const notification = await this.notifications.notify(
-        updated,
-        'confirmed',
-      );
-      return { ...updated, notification };
-    }
     const updated = await this.prisma.appointment.update({
       where: { id },
       data: { status: input.status },
     });
-    const notification =
-      input.status === 'CANCELLED'
-        ? await this.notifications.cancel(updated)
-        : input.status === 'COMPLETED' || input.status === 'NO_SHOW'
-          ? await this.notifications.notify(
-              updated,
-              input.status === 'COMPLETED' ? 'completed' : 'no_show',
-            )
-          : undefined;
+    const kind = STATUS_EMAILS[input.status];
+    const notification = kind
+      ? await this.notifications.notify(updated, kind)
+      : undefined;
     return { ...updated, notification };
   }
 }

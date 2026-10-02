@@ -589,7 +589,8 @@ model AnalyticsEvent {
   @@map("analytics_events")
 }
 
-/// Stored Google OAuth refresh token for Calendar & Meet integration
+/// Unused: left from the removed Google Calendar & Meet integration. Kept so
+/// no migration drops production data; safe to drop in a later migration.
 model GoogleOAuthToken {
   id           String   @id @default("default") @db.VarChar(32)
   refreshToken String   @map("refresh_token") @db.Text

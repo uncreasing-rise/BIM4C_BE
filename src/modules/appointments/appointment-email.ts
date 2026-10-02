@@ -45,16 +45,12 @@ export function appointmentEmail(
   };
   const steps: Record<AppointmentEmailKind, [string, string]> = {
     requested: [
-      'Đây là thời gian bạn đề xuất, chưa phải lịch đã xác nhận. BIM4C sẽ kiểm tra và gửi email xác nhận cùng thông tin tham gia. Bạn có thể trả lời email này nếu cần điều chỉnh.',
-      'Your preferred time is pending review. We will email you once the appointment is confirmed, with joining details. Reply to this email if you need to make a change.',
+      'Đây là thời gian bạn đề xuất, chưa phải lịch đã xác nhận. BIM4C sẽ kiểm tra và gửi email xác nhận. Bạn có thể trả lời email này nếu cần điều chỉnh.',
+      'Your preferred time is pending review. We will email you once the appointment is confirmed. Reply to this email if you need to make a change.',
     ],
     confirmed: [
-      a.meetingUrl
-        ? 'Tham gia qua Google Meet vào thời gian bên trên. Bạn có thể chuẩn bị trước câu hỏi hoặc tài liệu dự án. Cần đổi lịch? Hãy trả lời email này.'
-        : 'BIM4C sẽ liên hệ trực tiếp theo thông tin bạn cung cấp. Hãy trả lời email này nếu cần làm rõ hình thức tư vấn hoặc thay đổi thời gian.',
-      a.meetingUrl
-        ? 'Join using the Google Meet link at the time shown above. Feel free to prepare questions or project documents. To reschedule, reply to this email.'
-        : 'BIM4C will contact you using the details you provided. Reply to this email to clarify the meeting format or request a different time.',
+      'BIM4C sẽ liên hệ trực tiếp theo thông tin bạn cung cấp. Hãy trả lời email này nếu cần làm rõ hình thức tư vấn hoặc thay đổi thời gian.',
+      'BIM4C will contact you using the details you provided. Reply to this email to clarify the meeting format or request a different time.',
     ],
     cancelled: [
       'Lịch hẹn này không còn hiệu lực. Bạn có thể chọn thời gian mới trên website hoặc trả lời email để được hỗ trợ.',
@@ -85,24 +81,20 @@ export function appointmentEmail(
       ['Điện thoại', a.phone],
       ['Công ty', a.company],
     );
-  if (a.message) details.push([vi ? 'Ghi chú' : 'Notes', a.message]);
+  // Free text only to BIM4C: the customer copy goes to an address anyone can type.
+  if (admin && a.message) details.push(['Ghi chú', a.message]);
   const title = titles[kind][vi ? 0 : 1];
   const action = admin
     ? {
         label: 'Quản lý lịch hẹn',
         url: new URL('/admin/lich-tu-van', siteUrl).href,
       }
-    : kind === 'confirmed' && a.meetingUrl
+    : ['cancelled', 'no_show'].includes(kind)
       ? {
-          label: vi ? 'Tham gia Google Meet' : 'Join Google Meet',
-          url: a.meetingUrl,
+          label: vi ? 'Chọn thời gian mới' : 'Choose a new time',
+          url: new URL(`/${locale}/lien-he#dat-lich`, siteUrl).href,
         }
-      : ['cancelled', 'no_show'].includes(kind)
-        ? {
-            label: vi ? 'Chọn thời gian mới' : 'Choose a new time',
-            url: new URL(`/${locale}/lien-he#dat-lich`, siteUrl).href,
-          }
-        : undefined;
+      : undefined;
   return {
     locale,
     eyebrow: vi ? 'LỊCH TƯ VẤN · BIM4C' : 'YOUR CONSULTATION · BIM4C',

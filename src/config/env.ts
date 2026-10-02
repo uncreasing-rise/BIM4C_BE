@@ -48,26 +48,10 @@ const schema = z
     APPOINTMENT_ADMIN_EMAIL: z.string().email().optional(),
     NOTIFICATION_ADMIN_EMAIL: z.string().email().optional(),
     MAIL_REPLY_TO: z.string().email().optional(),
-    GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string().email().optional(),
-    GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY: z.string().min(100).optional(),
-    GOOGLE_SERVICE_ACCOUNT_KEY_FILE: z.string().min(1).optional(),
-    GOOGLE_CALENDAR_ID: z.string().min(1).optional(),
-    GOOGLE_CALENDAR_TIMEZONE: z.string().min(1).default('Asia/Ho_Chi_Minh'),
     APPOINTMENT_TIMEZONE: z
       .string()
       .refine(isValidTimeZone, 'Must be an IANA timezone')
       .default('Asia/Ho_Chi_Minh'),
-    OAUTH_STATE_SECRET: z.string().min(32).optional(),
-    GOOGLE_OAUTH_CLIENT_FILE: z.string().min(1).optional(),
-    GOOGLE_CLIENT_ID: z.string().min(20).optional(),
-    GOOGLE_CLIENT_SECRET: z.string().min(10).optional(),
-    GOOGLE_REDIRECT_URI: z.string().url().optional(),
-    GOOGLE_OAUTH_CLIENT_ID: z.string().min(20).optional(),
-    GOOGLE_OAUTH_CLIENT_SECRET: z.string().min(10).optional(),
-    GOOGLE_OAUTH_REDIRECT_URI: z
-      .string()
-      .url()
-      .default('https://api.bim4c.vn/admin/appointments/google/callback'),
   })
   .superRefine((env, context) => {
     if (env.AUTH_COOKIE_SAME_SITE === 'none' && env.NODE_ENV !== 'production')

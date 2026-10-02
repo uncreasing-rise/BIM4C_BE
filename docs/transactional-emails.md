@@ -18,7 +18,7 @@ Requests are saved before mail is attempted. Mail calls are awaited, with a time
 - `NOTIFICATION_ADMIN_EMAIL`: recipient for internal notifications; falls back to `APPOINTMENT_ADMIN_EMAIL` for existing installations.
 - `MAIL_REPLY_TO`: monitored support inbox; falls back to the internal notification address, then `bim4c.lab@gmail.com`. Admin notifications reply directly to the customer.
 - `FRONTEND_URL`: public website origin used in email links. Set the production website origin on hosting.
-- Google Calendar credentials remain necessary to create Meet links. Without configured Calendar integration, confirmation emails explain that the team will contact the customer directly.
+- There is no calendar integration: confirmation emails explain that the BIM4C team will contact the customer directly.
 
 Apply migrations with `npm run db:migrate` before deploying this backend, then regenerate Prisma (`npm run db:generate`) and build. The new migration adds `appointments.locale` with a backward-compatible default.
 

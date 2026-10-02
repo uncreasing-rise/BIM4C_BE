@@ -134,6 +134,7 @@ describe('Transactional email', () => {
         startAt: new Date('2026-10-05T02:00:00Z'),
         endAt: new Date('2026-10-05T02:45:00Z'),
         timezone: 'America/New_York',
+        // Left on older rows by the removed Google Meet integration: never linked.
         meetingUrl: 'https://meet.google.com/test',
       };
       for (const kind of [
@@ -154,9 +155,8 @@ describe('Transactional email', () => {
           locale === 'vi' ? 'Múi giờ' : 'Time zone',
           'America/New_York',
         ]);
-        if (kind === 'confirmed')
-          expect(email.action?.url).toBe(appointment.meetingUrl);
-        else expect(email.action?.url).not.toBe(appointment.meetingUrl);
+        expect(email.action?.url).not.toBe(appointment.meetingUrl);
+        if (kind === 'confirmed') expect(email.action).toBeUndefined();
       }
     },
   );
