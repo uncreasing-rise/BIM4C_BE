@@ -23,7 +23,14 @@ import {
   UpdateUserStatusDto,
   UserQueryDto,
 } from './users.dto';
-import { UsersService } from './users.service';
+import { UsersService, type UserActor } from './users.service';
+/** The signed-in admin, as the service's permission checks need them. */
+const actor = (req: Request): UserActor => ({
+  id: req.admin!.id,
+  roles: req.admin!.roles,
+  sessionId: req.admin!.sessionId,
+});
+
 @ApiTags('Admin Users')
 @Controller('admin/users')
 @UseGuards(SessionAuthGuard, PermissionGuard, CsrfGuard)
@@ -35,7 +42,7 @@ export class UsersController {
   }
   @Post() async create(@Body() dto: CreateAdminUserDto, @Req() req: Request) {
     return {
-      data: await this.service.create(dto, req.admin!.id, req.requestId),
+      data: await this.service.create(dto, actor(req), req.requestId),
     };
   }
   @Patch(':id') async update(
@@ -44,7 +51,7 @@ export class UsersController {
     @Req() req: Request,
   ) {
     return {
-      data: await this.service.update(id, dto, req.admin!.id, req.requestId),
+      data: await this.service.update(id, dto, actor(req), req.requestId),
     };
   }
   @Patch(':id/status') async status(
@@ -56,7 +63,7 @@ export class UsersController {
       data: await this.service.status(
         id,
         dto.status,
-        req.admin!.id,
+        actor(req),
         req.requestId,
       ),
     };
@@ -70,7 +77,7 @@ export class UsersController {
       data: await this.service.roles(
         id,
         dto.roles,
-        req.admin!.id,
+        actor(req),
         req.requestId,
       ),
     };

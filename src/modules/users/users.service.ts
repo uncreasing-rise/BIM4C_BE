@@ -13,6 +13,32 @@ import type {
   UpdateAdminUserDto,
   UserQueryDto,
 } from './users.dto';
+import type { AuthenticatedAdmin } from '../auth/auth.types';
+import { invalidateSessionCache } from '../auth/session-auth.guard';
+
+/** Who is making the change. */
+export type UserActor = Pick<AuthenticatedAdmin, 'id' | 'roles' | 'sessionId'>;
+
+const SUPER: AdminRole = 'SUPER_ADMIN';
+
+/**
+ * ADMIN and SUPER_ADMIN share every other permission; the difference is
+ * here: only a super admin may create, grant, edit, reset the password of,
+ * re-role or disable a super admin account. Without it an ADMIN could make
+ * themselves super admin or take over one by resetting its password.
+ */
+export function assertCanManage(
+  actor: Pick<UserActor, 'roles'>,
+  targetRoles: AdminRole[],
+  nextRoles: AdminRole[] = [],
+) {
+  if (actor.roles.includes(SUPER)) return;
+  if (targetRoles.includes(SUPER) || nextRoles.includes(SUPER))
+    throw new ForbiddenException(
+      'Only a super admin can manage super admin accounts',
+    );
+}
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -58,7 +84,9 @@ export class UsersService {
     if (!user) throw new NotFoundException('User not found');
     return user;
   }
-  async create(dto: CreateAdminUserDto, actorId: string, requestId?: string) {
+  async create(dto: CreateAdminUserDto, actor: UserActor, requestId?: string) {
+    assertCanManage(actor, [], dto.roles);
+    const actorId = actor.id;
     try {
       const user = await this.prisma.adminUser.create({
         data: {
@@ -89,20 +117,36 @@ export class UsersService {
   async update(
     id: string,
     dto: UpdateAdminUserDto,
-    actorId: string,
+    actor: UserActor,
     requestId?: string,
   ) {
-    await this.detail(id);
+    const current = await this.detail(id);
     const { password, roles, ...data } = dto;
+    assertCanManage(
+      actor,
+      current.roles.map((r) => r.role),
+      roles,
+    );
     const user = await this.prisma.adminUser.update({
       where: { id },
       data: {
         ...data,
-        ...(password ? { passwordHash: await hash(password, 12) } : {}),
+        ...(password
+          ? {
+              passwordHash: await hash(password, 12),
+              // A reset password must lock out whoever had the old one; an
+              // admin resetting their own keeps the session they are using.
+              sessions: {
+                deleteMany: id === actor.id ? { id: { not: actor.sessionId } } : {},
+              },
+            }
+          : {}),
       },
       select: this.select,
     });
-    if (roles) await this.roles(id, roles, actorId, requestId);
+    if (password) invalidateSessionCache();
+    if (roles) await this.roles(id, roles, actor, requestId);
+    const actorId = actor.id;
     await this.audit.record({
       actorId,
       action: AuditAction.UPDATE,
@@ -115,9 +159,15 @@ export class UsersService {
   async status(
     id: string,
     status: UserStatus,
-    actorId: string,
+    actor: UserActor,
     requestId?: string,
   ) {
+    const actorId = actor.id;
+    const target = await this.detail(id);
+    assertCanManage(
+      actor,
+      target.roles.map((r) => r.role),
+    );
     await this.protectLastSuper(id, status === 'DISABLED', undefined);
     const user = await this.prisma.adminUser.update({
       where: { id },
@@ -127,6 +177,7 @@ export class UsersService {
       },
       select: this.select,
     });
+    if (status === 'DISABLED') invalidateSessionCache();
     await this.audit.record({
       actorId,
       action: AuditAction.UPDATE,
@@ -140,9 +191,16 @@ export class UsersService {
   async roles(
     id: string,
     roles: AdminRole[],
-    actorId: string,
+    actor: UserActor,
     requestId?: string,
   ) {
+    const actorId = actor.id;
+    const target = await this.detail(id);
+    assertCanManage(
+      actor,
+      target.roles.map((r) => r.role),
+      roles,
+    );
     await this.protectLastSuper(id, false, roles);
     await this.prisma.$transaction([
       this.prisma.adminUserRole.deleteMany({ where: { userId: id } }),
