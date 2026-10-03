@@ -70,12 +70,12 @@ export class SettingsService {
       where: { id: 'default' },
     });
     if (!x) return null;
+    // The registered company name and the brochure (company profile PDF) are
+    // not published: legal-entity details stay admin-only.
     const data = {
-      companyName: x.companyName,
       email: x.email,
       phone: x.phone,
       address: x.address,
-      brochureUrl: x.brochureUrl,
       metrics: x.metrics,
       socialLinks: x.socialLinks,
       defaultSeoTitle: x.defaultSeoTitle,

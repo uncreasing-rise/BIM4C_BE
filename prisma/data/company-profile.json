@@ -595,10 +595,6 @@
       "vi": "Công ty Cổ phần Xây dựng và Công nghệ BIM4C",
       "en": "BIM4C Construction and Technology Joint Stock Company"
     },
-    "brochure": {
-      "vi": "/documents/bim4c-profile-2026-vi.pdf",
-      "en": "/documents/bim4c-profile-2026-en.pdf"
-    },
     "socials": {
       "linkedin": "https://www.linkedin.com/company/bim4cjsc",
       "facebook": "https://www.facebook.com/BIM4CGroup/",
@@ -621,7 +617,7 @@
   ],
   "team": [
     {
-      "name": "Trần Ngọc Hiếu",
+      "name": "Harry Tran",
       "role": {
         "vi": "Nhà sáng lập / CEO",
         "en": "Founder / CEO"
@@ -632,7 +628,7 @@
       }
     },
     {
-      "name": "Nguyễn Vũ Long",
+      "name": "Logan Nguyen",
       "role": {
         "vi": "BIM Manager / Đồng sáng lập",
         "en": "BIM Manager / Co-Founder"
@@ -643,7 +639,7 @@
       }
     },
     {
-      "name": "Nguyễn Tiến Cường",
+      "name": "Colin Nguyen",
       "role": {
         "vi": "BIM Coordinator / Đồng sáng lập",
         "en": "BIM Coordinator / Co-Founder"
@@ -654,7 +650,7 @@
       }
     },
     {
-      "name": "Nguyễn Văn Chiêu",
+      "name": "Charlie Nguyen",
       "role": {
         "vi": "BIM Developer / IT Manager",
         "en": "BIM Developer / IT Manager"
@@ -665,7 +661,7 @@
       }
     },
     {
-      "name": "Nguyễn Hồng Chinh",
+      "name": "Chase Nguyen",
       "role": {
         "vi": "Trưởng nhóm Thiết kế Kết cấu",
         "en": "Structural Design Lead"
@@ -676,7 +672,7 @@
       }
     },
     {
-      "name": "Nguyễn Ngọc Phước",
+      "name": "Philip Nguyen",
       "role": {
         "vi": "Trưởng nhóm Thiết kế MEP & PCCC",
         "en": "MEP & Fire Protection Design Lead"
@@ -687,7 +683,7 @@
       }
     },
     {
-      "name": "Phan Thị Kiều Diệu",
+      "name": "Diana Phan",
       "role": {
         "vi": "Trưởng nhóm Dự toán & Quản lý Chi phí",
         "en": "Cost Estimation & Management Lead"

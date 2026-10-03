@@ -50,6 +50,31 @@ describe('PageContentService', () => {
     await expect(service.list()).resolves.toEqual([about, row]);
   });
 
+  it('publishes only the headquarters from the company block, no legal-entity details', async () => {
+    const block = {
+      copyright: '© 2026 CÔNG TY CỔ PHẦN BIM4C',
+      enterpriseInfo: {
+        companyName: 'Công ty Cổ phần BIM4C',
+        internationalName: 'BIM4C JOINT STOCK COMPANY',
+        shortName: 'BIM4C JSC',
+        headquarters: '20 Bắc Sơn, Đà Nẵng',
+        legalRepresentative: 'NGUYỄN VĂN A',
+      },
+    };
+    const company = { key: 'company', vi: block, en: { copyright: '©' } };
+    const prisma = {
+      pageContent: { findMany: jest.fn().mockResolvedValue([company, row]) },
+    };
+    const service = new PageContentService(prisma as never);
+    const data = await service.public();
+    expect(data.company).toEqual({
+      vi: { enterpriseInfo: { headquarters: '20 Bắc Sơn, Đà Nẵng' } },
+      en: {},
+    });
+    expect(data['home.hero']).toEqual({ vi: row.vi, en: row.en });
+    await expect(service.list()).resolves.toEqual([company, row]);
+  });
+
   it('returns an empty map when every block was deleted', async () => {
     const prisma = {
       pageContent: { findMany: jest.fn().mockResolvedValue([]) },

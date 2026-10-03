@@ -33,6 +33,20 @@ export function withoutTeamIdentity(key: string, value: unknown): unknown {
   };
 }
 
+/**
+ * Legal-entity details (registered and international names, legal
+ * representative, copyright holder) stay admin-only: the public company block
+ * carries the headquarters address alone.
+ */
+export function withoutLegalEntity(key: string, value: unknown): unknown {
+  if (key !== 'company' || !value || typeof value !== 'object') return value;
+  const info = (value as { enterpriseInfo?: { headquarters?: unknown } })
+    .enterpriseInfo;
+  return info?.headquarters
+    ? { enterpriseInfo: { headquarters: info.headquarters } }
+    : {};
+}
+
 @Injectable()
 export class PageContentService {
   private publicCache: { data: PublicPageContent; cachedAt: number } | null =
@@ -50,8 +64,8 @@ export class PageContentService {
       rows.map((row) => [
         row.key,
         {
-          vi: withoutTeamIdentity(row.key, row.vi),
-          en: withoutTeamIdentity(row.key, row.en),
+          vi: withoutLegalEntity(row.key, withoutTeamIdentity(row.key, row.vi)),
+          en: withoutLegalEntity(row.key, withoutTeamIdentity(row.key, row.en)),
         },
       ]),
     );
