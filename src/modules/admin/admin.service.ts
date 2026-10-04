@@ -837,6 +837,7 @@ export class AdminService implements OnModuleInit {
               id: true,
               slug: true,
               title: true,
+              title_vi: true,
               image: true,
               status: true,
               updatedAt: true,
