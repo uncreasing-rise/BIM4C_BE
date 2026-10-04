@@ -145,26 +145,22 @@ describe('P0 API contract (HTTP)', () => {
     },
     contact: {
       create: jest.fn().mockResolvedValue({ id: courseId }),
-      findMany: jest
-        .fn()
-        .mockResolvedValue([
-          {
-            id: courseId,
-            name: 'A',
-            email: 'a@example.com',
-            status: 'NEW',
-            createdAt: new Date(),
-          },
-        ]),
-      count: jest.fn().mockResolvedValue(1),
-      findUnique: jest
-        .fn()
-        .mockResolvedValue({
+      findMany: jest.fn().mockResolvedValue([
+        {
           id: courseId,
           name: 'A',
           email: 'a@example.com',
           status: 'NEW',
-        }),
+          createdAt: new Date(),
+        },
+      ]),
+      count: jest.fn().mockResolvedValue(1),
+      findUnique: jest.fn().mockResolvedValue({
+        id: courseId,
+        name: 'A',
+        email: 'a@example.com',
+        status: 'NEW',
+      }),
       update: jest.fn().mockResolvedValue({ id: courseId, status: 'RESOLVED' }),
       delete: jest.fn(),
       groupBy: jest.fn().mockResolvedValue([]),
@@ -186,13 +182,11 @@ describe('P0 API contract (HTTP)', () => {
           { id: courseId, email: 'a@example.com', isActive: true },
         ]),
       count: jest.fn().mockResolvedValue(1),
-      findUnique: jest
-        .fn()
-        .mockResolvedValue({
-          id: courseId,
-          email: 'a@example.com',
-          isActive: true,
-        }),
+      findUnique: jest.fn().mockResolvedValue({
+        id: courseId,
+        email: 'a@example.com',
+        isActive: true,
+      }),
       update: jest.fn().mockResolvedValue({ id: courseId, isActive: false }),
       delete: jest.fn(),
       groupBy: jest.fn().mockResolvedValue([]),
@@ -214,19 +208,17 @@ describe('P0 API contract (HTTP)', () => {
       delete: jest.fn(),
     },
     adminSession: {
-      findUnique: jest
-        .fn()
-        .mockResolvedValue({
+      findUnique: jest.fn().mockResolvedValue({
+        id: courseId,
+        expiresAt: new Date('2099-01-01'),
+        user: {
           id: courseId,
-          expiresAt: new Date('2099-01-01'),
-          user: {
-            id: courseId,
-            email: 'admin@example.com',
-            name: 'Admin',
-            status: 'ACTIVE',
-            roles: [{ role: 'SUPER_ADMIN' }],
-          },
-        }),
+          email: 'admin@example.com',
+          name: 'Admin',
+          status: 'ACTIVE',
+          roles: [{ role: 'SUPER_ADMIN' }],
+        },
+      }),
     },
     auditLog: { create: jest.fn().mockResolvedValue({ id: courseId }) },
     $transaction: jest.fn(async (operations: Promise<unknown>[]) =>
@@ -285,7 +277,9 @@ describe('P0 API contract (HTTP)', () => {
       })
       .expect(201, {
         success: true,
-        message: 'Yêu cầu liên hệ đã được ghi nhận.',
+        message: 'Yêu cầu đã được ghi nhận. Đội ngũ BIM4C sẽ liên hệ với bạn.',
+        // Tests never reach a mail provider (see test/setup-env.ts).
+        notification: { customer: 'skipped', admin: 'skipped' },
       });
     expect(prisma.contact.create).toHaveBeenCalled();
   });
@@ -312,7 +306,11 @@ describe('P0 API contract (HTTP)', () => {
     expect(response.body.code).toBe('NOT_FOUND');
   });
   it('keeps newsletter subscription idempotent', async () => {
-    const payload = { email: 'USER@example.com', consent: true, privacyPolicyVersion: '20.08.2026' };
+    const payload = {
+      email: 'USER@example.com',
+      consent: true,
+      privacyPolicyVersion: '20.08.2026',
+    };
     await request(app.getHttpServer())
       .post('/newsletter/subscriptions')
       .send(payload)
