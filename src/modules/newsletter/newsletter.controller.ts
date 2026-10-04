@@ -18,7 +18,7 @@ export class NewsletterController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(HoneypotInterceptor)
-  @Throttle({ default: { limit: 10, ttl: 60000 } })
+  @Throttle({ default: { limit: 20, ttl: 60000 } })
   @ApiOkResponse({ description: 'Idempotent subscription success' })
   subscribe(@Body() input: CreateNewsletterSubscriptionDto) {
     return this.service.subscribe(input);

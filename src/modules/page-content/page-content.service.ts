@@ -9,11 +9,11 @@ export type PublicPageContent = Record<string, { vi: unknown; en: unknown }>;
 const CACHE_TTL_MS = 60_000;
 
 /**
- * The team on the About page is shown by role and expertise only: names and
- * photos stay in the database (admins still edit them) but never leave the
- * API publicly, so they are in no page's source either.
+ * The team on the About page is shown by name, role and expertise. Photos
+ * stay in the database (admins still edit them) but never leave the API
+ * publicly, so they are in no page's source either.
  */
-export function withoutTeamIdentity(key: string, value: unknown): unknown {
+export function withoutTeamPhotos(key: string, value: unknown): unknown {
   if (key !== 'about' || !value || typeof value !== 'object') return value;
   const about = value as { teamMembers?: unknown };
   if (!Array.isArray(about.teamMembers)) return value;
@@ -21,12 +21,7 @@ export function withoutTeamIdentity(key: string, value: unknown): unknown {
     ...about,
     teamMembers: about.teamMembers.map((member: unknown) => {
       if (!member || typeof member !== 'object') return member;
-      const {
-        name: _name,
-        image: _image,
-        ...rest
-      } = member as Record<string, unknown>;
-      void _name;
+      const { image: _image, ...rest } = member as Record<string, unknown>;
       void _image;
       return rest;
     }),
@@ -64,8 +59,8 @@ export class PageContentService {
       rows.map((row) => [
         row.key,
         {
-          vi: withoutLegalEntity(row.key, withoutTeamIdentity(row.key, row.vi)),
-          en: withoutLegalEntity(row.key, withoutTeamIdentity(row.key, row.en)),
+          vi: withoutLegalEntity(row.key, withoutTeamPhotos(row.key, row.vi)),
+          en: withoutLegalEntity(row.key, withoutTeamPhotos(row.key, row.en)),
         },
       ]),
     );

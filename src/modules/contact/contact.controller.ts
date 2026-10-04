@@ -13,7 +13,7 @@ import { CreateContactDto } from './create-contact.dto';
 export class ContactController {
   constructor(private readonly service: ContactService) {}
   @Post()
-  @Throttle({ default: { limit: 5, ttl: 60000 } })
+  @Throttle({ default: { limit: 20, ttl: 60000 } })
   @UseInterceptors(HoneypotInterceptor)
   @ApiCreatedResponse()
   @ApiUnprocessableEntityResponse()

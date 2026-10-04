@@ -20,7 +20,7 @@ describe('PageContentService', () => {
     expect(prisma.pageContent.findMany).toHaveBeenCalledTimes(1);
   });
 
-  it('publishes the team by role and expertise only, never names or photos', async () => {
+  it('publishes the team by name, role and expertise, never photos', async () => {
     const member = {
       name: 'Nguyễn Văn A',
       role: 'CEO',
@@ -39,12 +39,12 @@ describe('PageContentService', () => {
     const data = await service.public();
     expect(data.about.vi).toEqual({
       teamTitle: 'Đội ngũ',
-      teamMembers: [{ role: 'CEO', spec: '15 năm BIM' }],
+      teamMembers: [{ name: 'Nguyễn Văn A', role: 'CEO', spec: '15 năm BIM' }],
     });
     expect(data.about.en).toEqual({
-      teamMembers: [{ role: 'CEO', spec: '15 năm BIM' }],
+      teamMembers: [{ name: 'Nguyễn Văn A', role: 'CEO', spec: '15 năm BIM' }],
     });
-    expect(JSON.stringify(data)).not.toContain('Nguyễn Văn A');
+    expect(JSON.stringify(data)).not.toContain('/a.jpg');
     expect(data['home.hero']).toEqual({ vi: row.vi, en: row.en });
     // Admins still see and edit the full records.
     await expect(service.list()).resolves.toEqual([about, row]);

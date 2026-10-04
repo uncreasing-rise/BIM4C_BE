@@ -31,7 +31,7 @@ export class AppointmentsController {
     return this.service.availability(new Date(query.from), new Date(query.to));
   }
   @Post()
-  @Throttle({ default: { limit: 5, ttl: 60000 } })
+  @Throttle({ default: { limit: 20, ttl: 60000 } })
   @UseInterceptors(HoneypotInterceptor)
   create(@Body() input: CreateAppointmentDto) {
     return this.service.create(input);

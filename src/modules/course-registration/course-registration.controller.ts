@@ -13,7 +13,7 @@ import { CreateCourseRegistrationDto } from './create-course-registration.dto';
 export class CourseRegistrationController {
   constructor(private readonly service: CourseRegistrationService) {}
   @Post()
-  @Throttle({ default: { limit: 5, ttl: 60000 } })
+  @Throttle({ default: { limit: 20, ttl: 60000 } })
   @UseInterceptors(HoneypotInterceptor)
   @ApiCreatedResponse()
   @ApiNotFoundResponse()
