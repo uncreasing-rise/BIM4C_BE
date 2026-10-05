@@ -15,6 +15,7 @@ import { PrismaService } from '../../database/prisma.service';
 
 export interface PostResponse extends ContentResponse {
   authorName: string | null;
+  authorName_vi: string | null;
   category?: { id: string; name: string; slug: string } | null;
 }
 
@@ -110,6 +111,7 @@ export class PostsService {
           seoTitle: true, seoTitle_vi: true, seoDescription: true, seoDescription_vi: true,
           seoImage: true, canonicalUrl: true, status: true, publishedAt: true, createdAt: true, updatedAt: true,
           authorName: true,
+          authorName_vi: true,
           category: { select: { id: true, name: true, slug: true } },
         },
         skip: (page - 1) * limit,
@@ -127,6 +129,7 @@ export class PostsService {
       rows.map((row) => ({
         ...mapContentSummary(row),
         authorName: row.authorName,
+        authorName_vi: row.authorName_vi,
         category: row.category
           ? { id: row.category.id, name: row.category.name, slug: row.category.slug }
           : null,
@@ -154,6 +157,7 @@ export class PostsService {
     const result: PostResponse = {
       ...mapContent(row),
       authorName: row.authorName,
+      authorName_vi: row.authorName_vi,
       category: row.category
         ? { id: row.category.id, name: row.category.name, slug: row.category.slug }
         : null,

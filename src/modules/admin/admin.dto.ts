@@ -179,6 +179,7 @@ export class UpdateProjectDto extends PartialType(CreateProjectDto) {}
 
 export class CreatePostDto extends CreateContentDto {
   @IsOptional() @IsUUID() categoryId?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(160) authorName_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(160) authorName?:
     string | null;
 }
@@ -206,6 +207,8 @@ export class UpdateCategoryDto extends PartialType(CategoryDto) {}
 export class ProjectImageDto {
   @Transform(trim) @IsString() @MinLength(1) @MaxLength(500) url!: string;
   @Transform(trim) @IsString() @MinLength(1) @MaxLength(240) alt!: string;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) alt_vi?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(500) caption_vi?: string | null;
   @IsOptional() @Transform(trim) @IsString() @MaxLength(500) caption?:
     string | null;
   @IsOptional() @IsInt() @Min(0) sortOrder?: number;
@@ -214,6 +217,8 @@ export class UpdateProjectImageDto extends PartialType(ProjectImageDto) {}
 
 export class CourseSectionDto {
   @Transform(trim) @IsString() @MinLength(1) @MaxLength(240) title!: string;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(240) title_vi?: string | null;
+  @IsOptional() @Transform(trim) @IsString() @MaxLength(30000) description_vi?: string | null;
   @Transform(trim)
   @IsString()
   @MinLength(1)

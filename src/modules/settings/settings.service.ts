@@ -43,6 +43,8 @@ export class SettingsService {
       socialLinks: dto.socialLinks,
       defaultSeoTitle: dto.defaultSeoTitle,
       defaultSeoDescription: dto.defaultSeoDescription,
+      defaultSeoTitle_vi: dto.defaultSeoTitle_vi?.trim() || null,
+      defaultSeoDescription_vi: dto.defaultSeoDescription_vi?.trim() || null,
       defaultOgImage: dto.defaultOgImage,
     };
     const row = await this.prisma.siteSettings.update({
@@ -80,6 +82,8 @@ export class SettingsService {
       socialLinks: x.socialLinks,
       defaultSeoTitle: x.defaultSeoTitle,
       defaultSeoDescription: x.defaultSeoDescription,
+      defaultSeoTitle_vi: x.defaultSeoTitle_vi,
+      defaultSeoDescription_vi: x.defaultSeoDescription_vi,
       defaultOgImage: x.defaultOgImage,
     };
     this.publicCache = { data, cachedAt: now };

@@ -21,6 +21,8 @@ export class UpdateSettingsDto {
   @IsObject() socialLinks!: Record<string, string>;
   @IsString() @MinLength(2) @MaxLength(240) defaultSeoTitle!: string;
   @IsString() @MinLength(10) @MaxLength(500) defaultSeoDescription!: string;
+  @IsOptional() @IsString() @MaxLength(240) defaultSeoTitle_vi?: string | null;
+  @IsOptional() @IsString() @MaxLength(500) defaultSeoDescription_vi?: string | null;
   @IsOptional()
   // The site resolves relative paths against its own origin (metadataBase),
   // and the stored default is one, so a path must save as well as a URL.

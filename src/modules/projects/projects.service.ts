@@ -33,7 +33,9 @@ export interface ProjectResponse extends ContentResponse {
     id: string;
     url: string;
     alt: string;
+    alt_vi: string | null;
     caption: string | null;
+    caption_vi: string | null;
     sortOrder: number;
   }[];
 }

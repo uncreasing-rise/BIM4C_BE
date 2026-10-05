@@ -76,13 +76,15 @@ model Project {
 }
 
 model ProjectImage {
-  id        String  @id @default(uuid()) @db.Uuid
-  projectId String  @map("project_id") @db.Uuid
-  url       String  @db.VarChar(500)
-  alt       String  @db.VarChar(240)
-  sortOrder Int     @default(0) @map("sort_order")
-  caption   String? @db.VarChar(500)
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id         String  @id @default(uuid()) @db.Uuid
+  projectId  String  @map("project_id") @db.Uuid
+  url        String  @db.VarChar(500)
+  alt        String  @db.VarChar(240)
+  alt_vi     String? @db.VarChar(240)
+  sortOrder  Int     @default(0) @map("sort_order")
+  caption    String? @db.VarChar(500)
+  caption_vi String? @db.VarChar(500)
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId, sortOrder])
   @@map("project_images")
@@ -179,12 +181,14 @@ model Course {
 }
 
 model CourseSection {
-  id          String @id @default(uuid()) @db.Uuid
-  courseId    String @map("course_id") @db.Uuid
-  title       String @db.VarChar(240)
-  description String
-  sortOrder   Int    @default(0) @map("sort_order")
-  course      Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  id             String  @id @default(uuid()) @db.Uuid
+  courseId       String  @map("course_id") @db.Uuid
+  title          String  @db.VarChar(240)
+  title_vi       String? @db.VarChar(240)
+  description    String
+  description_vi String?
+  sortOrder      Int     @default(0) @map("sort_order")
+  course         Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId, sortOrder])
   @@map("course_sections")
@@ -227,6 +231,7 @@ model Post {
   canonicalUrl      String?       @map("canonical_url") @db.VarChar(1000)
   relatedIds        Json?         @map("related_ids")
   authorName        String?       @map("author_name") @db.VarChar(160)
+  authorName_vi     String?       @db.VarChar(160)
   status            ContentStatus @default(DRAFT)
   sortOrder         Int           @default(0) @map("sort_order")
   categoryId        String?       @map("category_id") @db.Uuid
@@ -483,19 +488,21 @@ model AuditLog {
 }
 
 model SiteSettings {
-  id                    String   @id @default("default") @db.VarChar(32)
-  companyName           String   @map("company_name") @db.VarChar(200)
-  email                 String   @db.VarChar(320)
-  phone                 String?  @db.VarChar(32)
-  address               String?  @db.VarChar(500)
-  brochureUrl           String?  @map("brochure_url") @db.VarChar(1000)
-  metrics               Json?    @map("metrics")
-  socialLinks           Json     @map("social_links")
-  defaultSeoTitle       String   @map("default_seo_title") @db.VarChar(240)
-  defaultSeoDescription String   @map("default_seo_description") @db.VarChar(500)
-  defaultOgImage        String?  @map("default_og_image") @db.VarChar(1000)
-  createdAt             DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt             DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id                       String   @id @default("default") @db.VarChar(32)
+  companyName              String   @map("company_name") @db.VarChar(200)
+  email                    String   @db.VarChar(320)
+  phone                    String?  @db.VarChar(32)
+  address                  String?  @db.VarChar(500)
+  brochureUrl              String?  @map("brochure_url") @db.VarChar(1000)
+  metrics                  Json?    @map("metrics")
+  socialLinks              Json     @map("social_links")
+  defaultSeoTitle          String   @map("default_seo_title") @db.VarChar(240)
+  defaultSeoDescription    String   @map("default_seo_description") @db.VarChar(500)
+  defaultSeoTitle_vi       String?  @db.VarChar(240)
+  defaultSeoDescription_vi String?  @db.VarChar(500)
+  defaultOgImage           String?  @map("default_og_image") @db.VarChar(1000)
+  createdAt                DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@map("site_settings")
 }
