@@ -1,0 +1,118 @@
+{
+  "course_sections": [
+    {
+      "id": "54ba040f-0623-44b6-b834-44939739fa5a",
+      "course_id": "a77d26f2-9aac-48f9-b695-767a68c9ef66",
+      "title": "dâd",
+      "description": "adadadad",
+      "sort_order": 0
+    },
+    {
+      "id": "f99ee7de-043d-423b-8a5e-f489ed121e1e",
+      "course_id": "a77d26f2-9aac-48f9-b695-767a68c9ef66",
+      "title": "adadad",
+      "description": "adadad",
+      "sort_order": 1
+    },
+    {
+      "id": "30f5e3bc-31b0-4626-a715-b2693997ac02",
+      "course_id": "a77d26f2-9aac-48f9-b695-767a68c9ef66",
+      "title": "adadad",
+      "description": "adadad",
+      "sort_order": 2
+    }
+  ],
+  "project_images": [],
+  "posts": [
+    {
+      "id": "378ce938-0f48-45a0-98c3-f191a431165e",
+      "author_name": "BIM4C Specialist Team"
+    },
+    {
+      "id": "f08804a6-4302-4c76-85d0-2be5eed23b3d",
+      "author_name": "BIM4C Specialist Team"
+    },
+    {
+      "id": "295e7a04-1fca-4d9f-b098-9446c50683c8",
+      "author_name": "BIM4C R&D Lab"
+    },
+    {
+      "id": "a155f22a-b1e6-44fb-911d-a774ad12a516",
+      "author_name": "BIM4C Specialist Team"
+    },
+    {
+      "id": "f49df519-00a8-4d5f-9320-89a268774486",
+      "author_name": "BIM4C Specialist Team"
+    },
+    {
+      "id": "25c730cd-4d81-499e-8181-629665af3ecd",
+      "author_name": "BIM4C Specialist Team"
+    },
+    {
+      "id": "a7f4cf68-6140-41bd-a7ad-37599543c442",
+      "author_name": "BIM4C Specialist Team"
+    },
+    {
+      "id": "034dfb74-f7f7-43a2-a01d-92f317c8d4c8",
+      "author_name": "BIM4C Engineering Team"
+    },
+    {
+      "id": "d251c761-a3f3-49c7-b495-24d1a197db89",
+      "author_name": "BIM4C Specialist Team"
+    },
+    {
+      "id": "c7451f76-0e30-4328-a8de-4e435fae5192",
+      "author_name": "BIM4C Specialist Team"
+    },
+    {
+      "id": "0253eda9-8c29-48c0-902a-fce09c0aa36e",
+      "author_name": "vávasvasvasvasvasvvávasvasvasvasvasvvávasvasvasvasvasv"
+    },
+    {
+      "id": "ad6d4b79-93f3-4785-878c-4a2e0148bc40",
+      "author_name": null
+    }
+  ],
+  "site_settings": [
+    {
+      "id": "default",
+      "company_name": "Công ty Cổ phần Xây dựng và Công nghệ BIM4C",
+      "email": "Bim4c.lab@gmail.com",
+      "phone": "093 2468 099",
+      "address": "20 Bắc Sơn, Đà Nẵng, Việt Nam",
+      "brochure_url": null,
+      "metrics": [
+        {
+          "value": "50+",
+          "label_en": "BIM & Management Projects",
+          "label_vi": "Dự án BIM & Quản lý"
+        },
+        {
+          "value": "100+",
+          "label_en": "Engineers & Specialists",
+          "label_vi": "Kỹ sư & Chuyên gia"
+        },
+        {
+          "value": "05+",
+          "label_en": "Years of Growth",
+          "label_vi": "Năm phát triển"
+        },
+        {
+          "value": "98%",
+          "label_en": "Partner Satisfaction",
+          "label_vi": "Hài lòng đối tác"
+        }
+      ],
+      "social_links": {
+        "youtube": "https://www.youtube.com/@BIM4C-vp8lv",
+        "facebook": "https://www.facebook.com/BIM4CGroup/",
+        "linkedin": "https://www.linkedin.com/company/bim4cjsc"
+      },
+      "default_seo_title": "BIM4C — BIM, Design & Training",
+      "default_seo_description": "Laser scanning, BIM 3D–7D, design, construction consulting and training.",
+      "default_og_image": "/images/profile/hoa-xuan.webp",
+      "created_at": "2026-09-22T16:19:07.916Z",
+      "updated_at": "2026-10-04T00:53:36.303Z"
+    }
+  ]
+}
