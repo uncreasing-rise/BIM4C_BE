@@ -1,19 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument */
 import {
   ConflictException,
-  ForbiddenException,
   Injectable,
   Logger,
   NotFoundException,
   UnprocessableEntityException,
   OnModuleInit,
 } from '@nestjs/common';
-import {
-  ContentStatus,
-  Prisma,
-  ProjectStatus,
-  ReviewStatus,
-} from '@prisma/client';
+import { ContentStatus, Prisma, ProjectStatus } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import {
   pageResponse,
@@ -45,14 +39,6 @@ import { clearPostsCache, NEWS_SLUGS } from '../posts/posts.service';
 import { toCsv } from '../../common/utils/csv';
 
 type Domain = 'project' | 'service' | 'course' | 'post';
-const PUBLISH_DENIED =
-  'Biên tập viên không xuất bản trực tiếp. Lưu bản nháp và gửi duyệt.';
-/** Author and reviewer names shown in the admin post list and editor. */
-const POST_INCLUDE = {
-  category: true,
-  submittedBy: { select: { id: true, name: true } },
-  reviewedBy: { select: { id: true, name: true } },
-};
 const delegateName: Record<Domain, string> = {
   project: 'project',
   service: 'service',
@@ -162,7 +148,6 @@ export class AdminService implements OnModuleInit {
           { category: { slug: { notIn: NEWS_SLUGS } } },
         ],
       });
-    if (domain === 'post' && query.review) where.reviewStatus = query.review;
     if (and.length) where.AND = and;
     if (query.status) {
       const status = query.status.toUpperCase();
@@ -183,7 +168,7 @@ export class AdminService implements OnModuleInit {
     return where;
   }
   async list(domain: Domain, query: AdminListQueryDto) {
-    const cacheKey = `list:${domain}:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.category || ''}:${query.group || ''}:${query.sortBy || ''}:${query.sortOrder || ''}:${query.review || ''}`;
+    const cacheKey = `list:${domain}:${query.page}:${query.limit}:${query.search || ''}:${query.status || ''}:${query.category || ''}:${query.group || ''}:${query.sortBy || ''}:${query.sortOrder || ''}`;
     const hit = adminCache.get(cacheKey);
     if (hit && Date.now() - hit.cachedAt < ADMIN_CACHE_TTL_MS) {
       return hit.data;
@@ -194,7 +179,7 @@ export class AdminService implements OnModuleInit {
       domain === 'project'
         ? { category: true, images: { orderBy: { sortOrder: 'asc' } } }
         : domain === 'post'
-          ? POST_INCLUDE
+          ? { category: true }
           : domain === 'course'
             ? { curriculum: { orderBy: { sortOrder: 'asc' } } }
             : undefined;
@@ -217,7 +202,7 @@ export class AdminService implements OnModuleInit {
       domain === 'project'
         ? { category: true, images: { orderBy: { sortOrder: 'asc' } } }
         : domain === 'post'
-          ? POST_INCLUDE
+          ? { category: true }
           : domain === 'course'
             ? { curriculum: { orderBy: { sortOrder: 'asc' } } }
             : undefined;
@@ -238,10 +223,7 @@ export class AdminService implements OnModuleInit {
   async create(
     domain: Domain,
     input: CreateContentDto | CreateProjectDto | CreatePostDto,
-    canPublish = true,
   ) {
-    if (domain === 'post' && !canPublish && input.status === ContentStatus.PUBLISHED)
-      throw new ForbiddenException(PUBLISH_DENIED);
     try {
       const created = await this.delegate(domain).create({
         data: this.writeData(domain, input),
@@ -256,16 +238,8 @@ export class AdminService implements OnModuleInit {
     domain: Domain,
     id: string,
     input: UpdateContentDto | UpdateProjectDto | UpdatePostDto,
-    canPublish = true,
   ) {
-    const current = await this.detail(domain, id);
-    if (
-      domain === 'post' &&
-      !canPublish &&
-      (current.status === ContentStatus.PUBLISHED ||
-        input.status === ContentStatus.PUBLISHED)
-    )
-      throw new ForbiddenException(PUBLISH_DENIED);
+    await this.detail(domain, id);
     try {
       const updated = await this.delegate(domain).update({
         where: { id },
@@ -314,16 +288,9 @@ export class AdminService implements OnModuleInit {
     });
     this.invalidateMutation(domain);
   }
-  async status(
-    domain: Domain,
-    id: string,
-    input: StatusDto,
-    canPublish = true,
-  ) {
+  async status(domain: Domain, id: string, input: StatusDto) {
     const current = await this.detail(domain, id);
     const value = input.status.toUpperCase();
-    if (domain === 'post' && !canPublish && value === ContentStatus.PUBLISHED)
-      throw new ForbiddenException(PUBLISH_DENIED);
     const allowed =
       domain === 'project'
         ? Object.values(ProjectStatus)
@@ -381,127 +348,6 @@ export class AdminService implements OnModuleInit {
     this.invalidateMutation(domain);
     return { success: true, affected };
   }
-  // ===== Post drafts and review =====
-  // A published post keeps its live columns while edits wait in `draft`.
-  // Editors submit (a draft, or an unpublished post) for review; an admin
-  // approves, which applies the draft and publishes, or sends it back.
-
-  async saveDraft(id: string, input: UpdatePostDto) {
-    const current = await this.detail('post', id);
-    if (current.status !== ContentStatus.PUBLISHED)
-      throw new UnprocessableEntityException(
-        'Chỉ bài đã xuất bản mới có bản nháp riêng; bài chưa xuất bản sửa trực tiếp.',
-      );
-    // Status and publication date stay with the live post.
-    const draft: Record<string, unknown> = { ...input };
-    delete draft.status;
-    delete draft.publishedAt;
-    this.writeData('post', draft); // validate now, not at approval time
-    const updated = await this.prisma.post.update({
-      where: { id },
-      data: {
-        draft: draft as Prisma.InputJsonValue,
-        draftUpdatedAt: new Date(),
-      },
-      include: POST_INCLUDE,
-    });
-    this.invalidateMutation('post');
-    return updated;
-  }
-
-  async discardDraft(id: string) {
-    const current = await this.detail('post', id);
-    const updated = await this.prisma.post.update({
-      where: { id },
-      data: {
-        draft: Prisma.DbNull,
-        draftUpdatedAt: null,
-        // A published post under review was under review for its draft.
-        ...(current.status === ContentStatus.PUBLISHED && {
-          reviewStatus: ReviewStatus.NONE,
-          reviewNote: null,
-        }),
-      },
-      include: POST_INCLUDE,
-    });
-    this.invalidateMutation('post');
-    return updated;
-  }
-
-  async submitForReview(id: string, actorId: string) {
-    const current = await this.detail('post', id);
-    if (current.status === ContentStatus.ARCHIVED)
-      throw new UnprocessableEntityException('Bài đã lưu trữ không gửi duyệt.');
-    if (current.status === ContentStatus.PUBLISHED && current.draft == null)
-      throw new UnprocessableEntityException(
-        'Bài đang hiển thị và chưa có bản nháp nào để duyệt.',
-      );
-    const updated = await this.prisma.post.update({
-      where: { id },
-      data: {
-        reviewStatus: ReviewStatus.PENDING,
-        reviewNote: null,
-        submittedAt: new Date(),
-        submittedById: actorId,
-      },
-      include: POST_INCLUDE,
-    });
-    this.invalidateMutation('post');
-    return updated;
-  }
-
-  /** Applies the draft (if any) to the live post and publishes it. */
-  async approve(id: string, actorId: string) {
-    const current = await this.detail('post', id);
-    if (current.status === ContentStatus.ARCHIVED)
-      throw new UnprocessableEntityException('Bài đã lưu trữ không xuất bản được.');
-    const changes =
-      current.draft && typeof current.draft === 'object'
-        ? this.writeData('post', current.draft)
-        : {};
-    delete changes.status;
-    delete changes.publishedAt;
-    try {
-      const updated = await this.prisma.post.update({
-        where: { id },
-        data: {
-          ...changes,
-          status: ContentStatus.PUBLISHED,
-          publishedAt: current.publishedAt ?? new Date(),
-          draft: Prisma.DbNull,
-          draftUpdatedAt: null,
-          reviewStatus: ReviewStatus.NONE,
-          reviewNote: null,
-          reviewedAt: new Date(),
-          reviewedById: actorId,
-        },
-        include: POST_INCLUDE,
-      });
-      this.invalidateMutation('post');
-      return updated;
-    } catch (error) {
-      this.writeError(error);
-    }
-  }
-
-  async reject(id: string, actorId: string, note: string) {
-    const current = await this.detail('post', id);
-    if (current.reviewStatus !== ReviewStatus.PENDING)
-      throw new UnprocessableEntityException('Bài này không ở trạng thái chờ duyệt.');
-    const updated = await this.prisma.post.update({
-      where: { id },
-      data: {
-        reviewStatus: ReviewStatus.CHANGES_REQUESTED,
-        reviewNote: note,
-        reviewedAt: new Date(),
-        reviewedById: actorId,
-      },
-      include: POST_INCLUDE,
-    });
-    this.invalidateMutation('post');
-    return updated;
-  }
-
   private writeError(error: unknown): never {
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&

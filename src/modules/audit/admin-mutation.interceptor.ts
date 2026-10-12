@@ -97,8 +97,6 @@ export class AdminMutationInterceptor implements NestInterceptor {
     const bulk = (req.body as { action?: string } | undefined)?.action;
     if (bulk === 'publish') return AuditAction.PUBLISH;
     if (bulk === 'archive') return AuditAction.ARCHIVE;
-    if (req.path.endsWith('/approve')) return AuditAction.PUBLISH;
-    if (/\/(draft|submit|reject)$/.test(req.path)) return AuditAction.UPDATE;
     if (
       req.path.endsWith('/status') &&
       (req.body as { status?: string } | undefined)?.status === 'PUBLISHED'

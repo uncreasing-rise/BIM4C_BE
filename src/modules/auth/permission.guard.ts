@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import type { Request } from 'express';
-import { ADMIN_ACTION, ADMIN_RESOURCE, hasPermission } from './permissions';
+import { ADMIN_RESOURCE, hasPermission } from './permissions';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
@@ -18,9 +18,7 @@ export class PermissionGuard implements CanActivate {
     ]);
     if (!resource) return true;
     const request = context.switchToHttp().getRequest<Request>();
-    const action =
-      this.reflector.get<string | undefined>(ADMIN_ACTION, context.getHandler()) ??
-      this.action(request);
+    const action = this.action(request);
     const permission = `${resource}.${action}`;
     if (!request.admin || !hasPermission(request.admin.permissions, permission))
       throw new ForbiddenException(`Missing permission: ${permission}`);

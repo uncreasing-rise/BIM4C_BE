@@ -58,10 +58,6 @@ export class AdminListQueryDto {
   @IsOptional() @IsDateString() to?: string;
   /** Post list split used by the admin "Tin tức" and "Chuyên môn" screens. */
   @IsOptional() @IsIn(['news', 'technical']) group?: 'news' | 'technical';
-  /** Posts waiting for review or sent back to the author. */
-  @IsOptional() @IsIn(['PENDING', 'CHANGES_REQUESTED']) review?:
-    | 'PENDING'
-    | 'CHANGES_REQUESTED';
   // Each list checks the field against its own allowlist (see AdminService),
   // so the shape is validated here and the meaning there.
   @IsOptional() @Transform(trim) @Matches(/^[A-Za-z]{1,40}$/) sortBy?: string;
@@ -199,9 +195,6 @@ export class BulkActionDto {
     'publish' | 'unpublish' | 'archive' | 'delete';
 }
 
-export class ReviewNoteDto {
-  @Transform(trim) @IsString() @MinLength(1) @MaxLength(1000) note!: string;
-}
 export class StatusDto {
   @IsString() @IsNotEmpty() status!: string;
 }

@@ -11,19 +11,17 @@ import {
   Patch,
   Post,
   Query,
-  Req,
   StreamableFile,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import type { Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { SessionAuthGuard } from '../auth/session-auth.guard';
 import { PermissionGuard } from '../auth/permission.guard';
 import { CsrfGuard } from '../auth/csrf.guard';
-import { AdminAction, AdminResource, hasPermission } from '../auth/permissions';
+import { AdminResource } from '../auth/permissions';
 import { AdminService } from './admin.service';
 import {
   AdminListQueryDto,
@@ -36,7 +34,6 @@ import {
   CreateProjectDto,
   NewsletterStatusDto,
   ProjectImageDto,
-  ReviewNoteDto,
   StatusDto,
   SubmissionStatusDto,
   UpdateCategoryDto,
@@ -220,68 +217,26 @@ export class AdminPostsController extends BaseController {
   constructor(service: AdminService) {
     super(service);
   }
-  private canPublish(req: Request) {
-    return hasPermission(req.admin?.permissions ?? [], 'posts.publish');
-  }
   @Get() list(@Query() q: AdminListQueryDto) {
     return this.service.list('post', q);
   }
   @Get(':id') async detail(@Param('id', ParseUUIDPipe) id: string) {
     return this.data(await this.service.detail('post', id));
   }
-  @Post() async create(@Body() dto: CreatePostDto, @Req() req: Request) {
-    return this.data(
-      await this.service.create('post', dto, this.canPublish(req)),
-    );
+  @Post() async create(@Body() dto: CreatePostDto) {
+    return this.data(await this.service.create('post', dto));
   }
   @Patch(':id') async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdatePostDto,
-    @Req() req: Request,
   ) {
-    return this.data(
-      await this.service.update('post', id, dto, this.canPublish(req)),
-    );
+    return this.data(await this.service.update('post', id, dto));
   }
   @Patch(':id/status') async status(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: StatusDto,
-    @Req() req: Request,
   ) {
-    return this.data(
-      await this.service.status('post', id, dto, this.canPublish(req)),
-    );
-  }
-  /** Saves edits to a published post without changing the live page. */
-  @Post(':id/draft') @AdminAction('update') async saveDraft(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UpdatePostDto,
-  ) {
-    return this.data(await this.service.saveDraft(id, dto));
-  }
-  @Delete(':id/draft') @AdminAction('update') async discardDraft(
-    @Param('id', ParseUUIDPipe) id: string,
-  ) {
-    return this.data(await this.service.discardDraft(id));
-  }
-  @Post(':id/submit') @AdminAction('update') async submit(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Req() req: Request,
-  ) {
-    return this.data(await this.service.submitForReview(id, req.admin!.id));
-  }
-  @Post(':id/approve') @AdminAction('publish') async approve(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Req() req: Request,
-  ) {
-    return this.data(await this.service.approve(id, req.admin!.id));
-  }
-  @Post(':id/reject') @AdminAction('publish') async reject(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: ReviewNoteDto,
-    @Req() req: Request,
-  ) {
-    return this.data(await this.service.reject(id, req.admin!.id, dto.note));
+    return this.data(await this.service.status('post', id, dto));
   }
   @Post('bulk') bulk(@Body() dto: BulkActionDto) {
     return this.service.bulk('post', dto);

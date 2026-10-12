@@ -4,9 +4,6 @@ import type { AdminRole } from '@prisma/client';
 export const ADMIN_RESOURCE = 'adminResource';
 export const AdminResource = (resource: string) =>
   SetMetadata(ADMIN_RESOURCE, resource);
-export const ADMIN_ACTION = 'adminAction';
-/** Overrides the permission action the guard derives from the HTTP method. */
-export const AdminAction = (action: string) => SetMetadata(ADMIN_ACTION, action);
 const editorResources = [
   'projects',
   'services',
@@ -24,9 +21,6 @@ const editorPermissions = [
     ['read', 'create', 'update', 'delete', 'publish', 'archive'].map(
       (action) => `${resource}.${action}`,
     ),
-  ).filter(
-    // Editors send posts for review; an admin approves and publishes them.
-    (permission) => permission !== 'posts.publish',
   ),
   'dashboard.read',
   'analytics.read',
