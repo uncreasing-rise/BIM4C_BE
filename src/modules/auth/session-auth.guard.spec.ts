@@ -85,11 +85,23 @@ describe('session guard security states', () => {
 
 describe('permission guard after role removal', () => {
   it('returns 403 when the current session has no required permission', () => {
-    const reflector = { getAllAndOverride: jest.fn(() => 'users') };
+    const reflector = { getAllAndOverride: jest.fn(() => 'users'), get: jest.fn(() => undefined) };
     const guard = new PermissionGuard(reflector as never);
     const req = Object.assign(request(token), {
       admin: { permissions: [], roles: [], id: 'user-id' },
     });
     expect(() => guard.canActivate(context(req))).toThrow(ForbiddenException);
+  });
+  it('checks the action a route declares instead of the HTTP method', () => {
+    const reflector = { getAllAndOverride: jest.fn(() => 'posts'), get: jest.fn(() => 'publish') };
+    const guard = new PermissionGuard(reflector as never);
+    const editor = Object.assign(request(token), {
+      method: 'POST',
+      path: '/admin/posts/1/approve',
+      admin: { permissions: ['posts.create', 'posts.update'], roles: ['EDITOR'], id: 'e' },
+    });
+    expect(() => guard.canActivate(context(editor))).toThrow(ForbiddenException);
+    const admin = Object.assign(request(token), { ...editor, admin: { permissions: ['*'], roles: ['ADMIN'], id: 'a' } });
+    expect(guard.canActivate(context(admin))).toBe(true);
   });
 });

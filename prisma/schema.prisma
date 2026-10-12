@@ -239,9 +239,21 @@ model Post {
   createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
   deletedAt         DateTime?     @map("deleted_at") @db.Timestamptz(3)
+  /// Pending edits to a published post; the live columns change only on approval.
+  draft             Json?
+  draftUpdatedAt    DateTime?     @map("draft_updated_at") @db.Timestamptz(3)
+  reviewStatus      ReviewStatus  @default(NONE) @map("review_status")
+  reviewNote        String?       @map("review_note") @db.VarChar(1000)
+  submittedAt       DateTime?     @map("submitted_at") @db.Timestamptz(3)
+  submittedById     String?       @map("submitted_by_id") @db.Uuid
+  reviewedAt        DateTime?     @map("reviewed_at") @db.Timestamptz(3)
+  reviewedById      String?       @map("reviewed_by_id") @db.Uuid
   category          PostCategory? @relation(fields: [categoryId], references: [id])
+  submittedBy       AdminUser?    @relation("PostSubmitter", fields: [submittedById], references: [id], onDelete: SetNull)
+  reviewedBy        AdminUser?    @relation("PostReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
 
   @@index([status, publishedAt])
+  @@index([reviewStatus, deletedAt])
   @@index([categoryId])
   @@index([deletedAt, status, sortOrder, publishedAt])
   @@index([categoryId, deletedAt, status, sortOrder, publishedAt])
@@ -430,17 +442,19 @@ model Media {
 }
 
 model AdminUser {
-  id           String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email        String          @unique @db.VarChar(320)
-  name         String          @db.VarChar(160)
-  passwordHash String          @map("password_hash") @db.VarChar(255)
-  status       UserStatus      @default(ACTIVE)
-  lastLoginAt  DateTime?       @map("last_login_at") @db.Timestamptz(3)
-  createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt    DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
-  sessions     AdminSession[]
-  roles        AdminUserRole[]
-  auditLogs    AuditLog[]
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email          String          @unique @db.VarChar(320)
+  name           String          @db.VarChar(160)
+  passwordHash   String          @map("password_hash") @db.VarChar(255)
+  status         UserStatus      @default(ACTIVE)
+  lastLoginAt    DateTime?       @map("last_login_at") @db.Timestamptz(3)
+  createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  sessions       AdminSession[]
+  roles          AdminUserRole[]
+  auditLogs      AuditLog[]
+  submittedPosts Post[]          @relation("PostSubmitter")
+  reviewedPosts  Post[]          @relation("PostReviewer")
 
   @@index([status, createdAt])
   @@map("admin_users")
@@ -511,6 +525,13 @@ enum ContentStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+}
+
+/// Editorial review of a post: editors submit, admins approve or send back.
+enum ReviewStatus {
+  NONE
+  PENDING
+  CHANGES_REQUESTED
 }
 
 enum ProjectStatus {
