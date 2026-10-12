@@ -47,6 +47,9 @@ export default async function handler(req: Request, res: Response) {
     const server = await bootstrap();
     server(req, res);
   } catch (error) {
+    // Nest buffers its logs (bufferLogs) until the app is created, so a failed
+    // bootstrap never flushes them; write the cause straight to stderr.
+    console.error("Serverless bootstrap failed:", error);
     Logger.error(
       'Serverless bootstrap failed',
       error instanceof Error ? error.stack : String(error),
