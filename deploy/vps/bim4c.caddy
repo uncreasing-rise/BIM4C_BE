@@ -1,0 +1,17 @@
+# BIM4C on the VPS: website (FE repo) and API (this repo), behind the shared Caddy
+# (BIM4C 4D/5D repo, deploy/edge). Copy to /opt/edge/sites/ on the server.
+# Domains come from /opt/edge/.env. HSTS and security headers are set by the apps.
+
+{$BIM4C_WEB_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy bim4c-web:3000
+}
+
+{$BIM4C_API_DOMAIN} {
+	encode zstd gzip
+	# Media uploads are limited to 10 MiB by the API; allow multipart overhead.
+	request_body {
+		max_size 12MB
+	}
+	reverse_proxy bim4c-api:8080
+}
