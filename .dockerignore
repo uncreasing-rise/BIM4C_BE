@@ -1,5 +1,16 @@
 node_modules
 dist
-.env
 coverage
 .git
+.github
+.vercel
+.qa
+.dev-logs
+.email-previews
+backups
+# Secrets never enter the build context; production values come from env_file at runtime.
+.env
+.env.*
+!.env.example
+.google-oauth-*.json
+*.log

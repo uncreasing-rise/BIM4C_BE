@@ -26,6 +26,10 @@ const schema = z
     CORS_ORIGINS: z.string().min(1).optional(),
     RATE_LIMIT_TTL_MS: z.coerce.number().int().positive().default(60000),
     RATE_LIMIT_MAX: z.coerce.number().int().positive().default(30),
+    // Number of reverse proxies in front of the API (e.g. 1 behind Caddy), so
+    // req.ip, rate limits and audit logs see the visitor instead of the proxy.
+    // Unset on Vercel.
+    TRUST_PROXY: z.coerce.number().int().min(1).max(5).optional(),
     TEMPORARY_ADMIN_AUTH: environmentBoolean,
     AUTH_COOKIE_NAME: z.string().min(3).default('bim4c_admin_session'),
     AUTH_COOKIE_DOMAIN: z.string().min(1).optional(),

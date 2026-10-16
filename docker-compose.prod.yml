@@ -1,0 +1,22 @@
+# Production on a VPS behind the shared Caddy (network "edge", see the BIM4C 4D/5D
+# repo deploy/edge). Secrets live in .env on the server (chmod 600), never in git.
+#   docker compose -f docker-compose.prod.yml up -d --build
+# Migrations are not run on start; run `npx prisma migrate deploy` deliberately.
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      # One proxy (Caddy) in front: rate limits and audit logs see the visitor's IP.
+      TRUST_PROXY: 1
+    networks:
+      edge:
+        aliases: [bim4c-api]
+    stop_grace_period: 20s
+
+networks:
+  edge:
+    external: true

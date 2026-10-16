@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import { json, urlencoded } from 'express';
+import { type Express, json, urlencoded } from 'express';
 import helmet from 'helmet';
 import { ApiExceptionFilter } from './common/filters/api-exception.filter';
 
@@ -42,6 +42,13 @@ export function configureApp(app: INestApplication): void {
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);
+
+  const trustProxy = config.get<number>('TRUST_PROXY');
+  if (trustProxy)
+    (app.getHttpAdapter().getInstance() as Express).set(
+      'trust proxy',
+      trustProxy,
+    );
 
   app.use(compression());
   app.use(helmet());
