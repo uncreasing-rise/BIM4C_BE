@@ -29,9 +29,8 @@ function validationException(
 }
 
 /**
- * Applies the HTTP pipeline shared by the long-running server (main.ts) and
- * the Vercel serverless entry (api/index.ts). Keep all middleware, CORS and
- * validation settings here so the two runtimes cannot drift apart.
+ * Applies the HTTP pipeline (middleware, CORS, validation) to the server
+ * (main.ts) and to the e2e tests, so both run the same configuration.
  */
 export function configureApp(app: INestApplication): void {
   const config = app.get(ConfigService);

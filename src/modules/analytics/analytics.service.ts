@@ -13,6 +13,7 @@ import {
   siteHosts,
   visitorId,
   type StoredAttribution,
+  visitorCountry,
 } from './analytics.utils';
 
 type Headers = Record<string, string | string[] | undefined>;
@@ -67,8 +68,7 @@ export class AnalyticsService {
     if (isBot(userAgent)) return 0;
     const visitor = visitorId(this.secret, clientIp(headers, socketIp), userAgent);
     const { device, browser, os } = parseUserAgent(userAgent);
-    const countryHeader = headers['x-vercel-ip-country'];
-    const country = typeof countryHeader === 'string' && /^[A-Z]{2}$/.test(countryHeader) ? countryHeader : null;
+    const country = visitorCountry(headers);
     const rows: Prisma.AnalyticsEventCreateManyInput[] = [];
     for (const e of events) {
       const page = normalizePath(e.path);

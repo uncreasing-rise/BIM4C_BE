@@ -27,6 +27,8 @@ jobs:
     env:
       NODE_ENV: test
       DATABASE_URL: postgresql://bim4c:bim4c@localhost:5432/bim4c?schema=public
+      # schema.prisma reads directUrl from DIRECT_URL (migrations bypass the pooler in production).
+      DIRECT_URL: postgresql://bim4c:bim4c@localhost:5432/bim4c?schema=public
       SHADOW_DATABASE_URL: postgresql://bim4c:bim4c@localhost:5432/bim4c_shadow?schema=public
     steps:
       - uses: actions/checkout@v4

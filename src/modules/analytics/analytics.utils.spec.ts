@@ -7,6 +7,7 @@ import {
   normalizePath,
   parseUserAgent,
   visitorId,
+  visitorCountry,
 } from './analytics.utils';
 import { previousRange, toRange } from './analytics.service';
 
@@ -131,5 +132,16 @@ describe('analytics utils', () => {
     expect(previous.end).toEqual(range.start);
     expect(() => toRange('2026-09-30', '2026-09-01')).toThrow();
     expect(() => toRange('2024-01-01', '2026-01-01')).toThrow();
+  });
+});
+
+describe('visitorCountry', () => {
+  it('reads Cloudflare CF-IPCountry and ignores unknown and Tor', () => {
+    expect(visitorCountry({ 'cf-ipcountry': 'VN' })).toBe('VN');
+    expect(visitorCountry({ 'cf-ipcountry': 'vn' })).toBe('VN');
+    expect(visitorCountry({ 'cf-ipcountry': 'XX' })).toBeNull();
+    expect(visitorCountry({ 'cf-ipcountry': 'T1' })).toBeNull();
+    expect(visitorCountry({ 'cf-ipcountry': 'Vietnam' })).toBeNull();
+    expect(visitorCountry({})).toBeNull();
   });
 });

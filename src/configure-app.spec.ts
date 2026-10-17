@@ -33,7 +33,7 @@ describe('configureApp trust proxy', () => {
     await app.close();
   });
 
-  it('trusts no proxy when unset (Vercel)', async () => {
+  it('trusts no proxy when unset', async () => {
     const app = await appWith({});
     expect(trustProxy(app)).toBeFalsy();
     await app.close();

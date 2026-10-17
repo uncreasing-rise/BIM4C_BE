@@ -178,7 +178,18 @@ export function parseUserAgent(ua: string): { device: string; browser: string; o
   return { device, browser, os };
 }
 
-/** First IP in the forwarding chain (Vercel puts the client first). */
+/**
+ * Visitor's country (ISO 3166-1 alpha-2) from Cloudflare's CF-IPCountry, set
+ * only when the site is proxied through Cloudflare (orange cloud). XX (unknown)
+ * and T1 (Tor) are not countries.
+ */
+export function visitorCountry(headers: Record<string, string | string[] | undefined>): string | null {
+  const raw = headers['cf-ipcountry'];
+  const code = (Array.isArray(raw) ? raw[0] : raw)?.trim().toUpperCase();
+  return code && /^[A-Z]{2}$/.test(code) && code !== 'XX' && code !== 'T1' ? code : null;
+}
+
+/** First IP in the forwarding chain (the reverse proxy overwrites it with the client's). */
 export function clientIp(headers: Record<string, string | string[] | undefined>, fallback = ''): string {
   const pick = (h: string | string[] | undefined) => (Array.isArray(h) ? h[0] : h);
   const forwarded = pick(headers['x-forwarded-for'])?.split(',')[0]?.trim();

@@ -20,7 +20,6 @@
     "src/**/*.ts",
     "prisma/**/*.ts",
     "test/**/*.ts",
-    "api/**/*.ts",
     "scripts/**/*.ts"
   ]
 }
