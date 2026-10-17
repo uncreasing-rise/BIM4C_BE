@@ -4,6 +4,8 @@
 # Migrations are not run on start; run `npx prisma migrate deploy` deliberately.
 services:
   api:
+    # CI/CD sets BE_IMAGE=ghcr.io/…:<commit> (deploy-app); unset builds locally.
+    image: ${BE_IMAGE:-be-api}
     build: .
     restart: unless-stopped
     env_file: .env

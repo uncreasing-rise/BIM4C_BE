@@ -1,13 +1,28 @@
-name: CI
+name: CI/CD
+
+# Push to main: verify -> build image -> push to GHCR -> deploy to the VPS (deploy-app on
+# the server swaps the container, waits for healthy, rolls back if not). Pull requests
+# only verify. Migrations are never run here: a release that adds one stops before
+# deploying; apply it by hand, then run this workflow manually with migrations_applied.
 
 on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      migrations_applied:
+        description: New migrations in this release are already applied to production
+        type: boolean
+        default: false
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # Never cancel a deploy half-way on main.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
 
 jobs:
   verify:
@@ -54,3 +69,60 @@ jobs:
             --shadow-database-url "$SHADOW_DATABASE_URL" \
             --exit-code
       - run: npm audit --omit=dev --audit-level=high
+
+  image:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: verify
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE: ghcr.io/uncreasing-rise/bim4c_be:${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t "$IMAGE" .
+      - run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker push -q "$IMAGE"
+
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: image
+    permissions:
+      contents: read
+      packages: read
+    concurrency:
+      group: deploy-bim4c-api
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Deploy to VPS
+        env:
+          DEPLOY_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+          VPS_HOST: ${{ vars.VPS_HOST }}
+          # Lives only for this job; the server uses it to pull the image, then logs out.
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MIGRATIONS_APPLIED: ${{ inputs.migrations_applied }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy && chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          vps() { ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes "root@$VPS_HOST" "$@"; }
+
+          current=$(vps bim4c-api status </dev/null)
+          echo "Running on the VPS: $current"
+          if [ "$MIGRATIONS_APPLIED" != true ] && git cat-file -e "$current^{commit}" 2>/dev/null; then
+            added=$(git diff --name-only --diff-filter=A "$current" "$GITHUB_SHA" -- prisma/migrations | grep '/migration.sql$' || true)
+            if [ -n "$added" ]; then
+              echo "::error::This release adds database migrations. Back up, run 'npx prisma migrate deploy' against production, then re-run this workflow with migrations_applied."
+              echo "$added"
+              exit 1
+            fi
+          fi
+          printf '%s' "$GHCR_TOKEN" | vps bim4c-api "$GITHUB_SHA"
