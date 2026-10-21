@@ -93,16 +93,19 @@ const schema = z
       );
     if (!env.REVALIDATION_SECRET)
       issue('REVALIDATION_SECRET', 'Required in production');
-    if (env.MEDIA_STORAGE_DRIVER !== 'supabase')
+    if (env.MEDIA_STORAGE_DRIVER === 'supabase') {
+      if (!env.SUPABASE_URL) issue('SUPABASE_URL', 'Required for Supabase media');
+      if (!env.SUPABASE_SERVICE_ROLE_KEY)
+        issue('SUPABASE_SERVICE_ROLE_KEY', 'Required for Supabase media');
+      if (!env.SUPABASE_MEDIA_BUCKET)
+        issue('SUPABASE_MEDIA_BUCKET', 'Required for Supabase media');
+    } else if (!env.MEDIA_STORAGE_PATH.startsWith('/'))
+      // Production keeps uploads on a mounted volume (docker-compose.prod.yml),
+      // never in a path relative to wherever the process happens to start.
       issue(
-        'MEDIA_STORAGE_DRIVER',
-        'Production media storage must use Supabase',
+        'MEDIA_STORAGE_PATH',
+        'Production local media needs an absolute path on a persistent volume',
       );
-    if (!env.SUPABASE_URL) issue('SUPABASE_URL', 'Required in production');
-    if (!env.SUPABASE_SERVICE_ROLE_KEY)
-      issue('SUPABASE_SERVICE_ROLE_KEY', 'Required in production');
-    if (!env.SUPABASE_MEDIA_BUCKET)
-      issue('SUPABASE_MEDIA_BUCKET', 'Required in production');
     if (!publicHttps(env.PUBLIC_API_URL))
       issue('PUBLIC_API_URL', 'Production public API URL must be public HTTPS');
     const databaseHost = new URL(env.DATABASE_URL).hostname;

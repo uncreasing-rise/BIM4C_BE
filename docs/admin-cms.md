@@ -6,6 +6,6 @@ Content modules provide list/detail/create/update/soft-delete, status changes an
 
 Contacts and course registrations have `NEW`, `IN_PROGRESS`, `RESOLVED` and `SPAM` workflow states. Newsletter subscriptions retain idempotent public subscribe behavior and can be deactivated/reactivated by admin.
 
-Media uses `MediaStorageService`. Local development stores image binaries outside PostgreSQL under `MEDIA_STORAGE_PATH`; PostgreSQL contains metadata only. Production uses Supabase Storage through `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `SUPABASE_MEDIA_BUCKET` without changing the admin UI or HTTP contract.
+Media uses `MediaStorageService`. Image binaries are stored outside PostgreSQL under `MEDIA_STORAGE_PATH` (in production `/app/uploads`, the `media-data` volume on the VPS) and served at `/media/files/<key>`; PostgreSQL contains metadata only. A Supabase Storage driver (`MEDIA_STORAGE_DRIVER=supabase` with `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_MEDIA_BUCKET`) remains available without changing the admin UI or HTTP contract.
 
 Public APIs keep their cache headers. After an admin mutation, the backend calls `REVALIDATION_URL` with `REVALIDATION_SECRET` so affected Next.js cache tags are invalidated immediately. Time-based revalidation remains the fallback.

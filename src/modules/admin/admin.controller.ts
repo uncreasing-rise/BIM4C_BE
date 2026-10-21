@@ -448,7 +448,10 @@ export class AdminMediaController extends BaseController {
 @Controller('media/files')
 export class MediaFilesController {
   constructor(private readonly storage: MediaStorageService) {}
-  @Get(':key') async file(@Param('key') key: string) {
+  // Keys are random and a file never changes after upload.
+  @Get(':key')
+  @Header('Cache-Control', 'public, max-age=31536000, immutable')
+  async file(@Param('key') key: string) {
     return new StreamableFile(await this.storage.read(key), {
       type: this.mime(key),
     });

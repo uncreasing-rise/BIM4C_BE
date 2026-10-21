@@ -2,7 +2,7 @@
 # Secrets live in .env on the server (chmod 600), never in git.
 #   docker compose -f docker-compose.prod.yml up -d --build
 # Migrations are not run on start; run `npx prisma migrate deploy` deliberately.
-# The database runs here, on the VPS; Supabase is used for media storage only.
+# The database and uploaded images both live here, on the VPS (volumes db-data, media-data).
 services:
   api:
     # CI/CD sets BE_IMAGE=ghcr.io/…:<commit> (deploy-app); unset builds locally.
@@ -15,6 +15,11 @@ services:
       PORT: 8080
       # One proxy (Caddy) in front: rate limits and audit logs see the visitor's IP.
       TRUST_PROXY: 1
+      # Uploaded images: stored on the media-data volume, served at /media/files/<key>.
+      MEDIA_STORAGE_DRIVER: local
+      MEDIA_STORAGE_PATH: /app/uploads
+    volumes:
+      - media-data:/app/uploads
     depends_on:
       db:
         condition: service_healthy
@@ -49,3 +54,4 @@ networks:
 
 volumes:
   db-data:
+  media-data:

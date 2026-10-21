@@ -21,7 +21,7 @@ npm run start:dev
 
 ## Environment variables
 
-`DATABASE_URL` is required. In production the database is PostgreSQL on the VPS (the `db` service of `docker-compose.prod.yml`, see `deploy/vps/README.md`); Supabase is used for media storage only. `PORT`, `FRONTEND_URL`, `CORS_ORIGINS`, `RATE_LIMIT_TTL_MS` and `RATE_LIMIT_MAX` have explicit development defaults in `.env.example`. `CORS_ORIGINS` accepts a comma-separated allowlist. No secret is exposed to FE.
+`DATABASE_URL` is required. In production the database is PostgreSQL on the VPS (the `db` service of `docker-compose.prod.yml`, see `deploy/vps/README.md`); uploaded images are on a volume there too (`MEDIA_STORAGE_DRIVER=local`). `PORT`, `FRONTEND_URL`, `CORS_ORIGINS`, `RATE_LIMIT_TTL_MS` and `RATE_LIMIT_MAX` have explicit development defaults in `.env.example`. `CORS_ORIGINS` accepts a comma-separated allowlist. No secret is exposed to FE.
 
 ## Database
 

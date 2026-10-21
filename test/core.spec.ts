@@ -121,4 +121,15 @@ describe('backend contract primitives', () => {
       }),
     ).toThrow(/Invalid environment/);
   });
+  it('keeps production local media on an absolute (volume) path', () => {
+    const production = (MEDIA_STORAGE_PATH: string) => () =>
+      validateEnvironment({
+        NODE_ENV: 'production',
+        DATABASE_URL: 'postgresql://user:pass@db:5432/test',
+        MEDIA_STORAGE_DRIVER: 'local',
+        MEDIA_STORAGE_PATH,
+      });
+    expect(production('uploads')).toThrow(/MEDIA_STORAGE_PATH/);
+    expect(production('/app/uploads')).not.toThrow(/MEDIA_STORAGE|SUPABASE/);
+  });
 });

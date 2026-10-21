@@ -4,15 +4,15 @@ The VPS (157.66.218.174) runs BIM4C only: the website (FE repo) and the API with
 PostgreSQL database (this repo), as two Docker stacks behind one Caddy. Each stack is
 deployed on its own. BIM 4D/5D is a separate system and does not run here.
 
-Supabase is used for **media storage only** (bucket `media`); the database is the
-`db` service of `docker-compose.prod.yml`, on the VPS.
+Nothing runs on Supabase: the database is the `db` service of `docker-compose.prod.yml` and
+uploaded images are on the `media-data` volume, both on the VPS.
 
 | Path on the server | What |
 |---|---|
 | `/opt/bim4c/be` | this repo; `.env` holds the API secrets and `POSTGRES_PASSWORD` (chmod 600, git-ignored) |
 | `/opt/bim4c/fe` | FE repo; `.env` holds the website values (chmod 600, git-ignored) |
 | `/opt/edge` | Caddy: copy of `deploy/vps/edge` (`bim4c.caddy` goes to `sites/`) |
-| `/var/backups/bim4c-db` | nightly database dumps, 14 days (`backup-db.sh`) |
+| `/var/backups/bim4c-db` | nightly database dumps and image archives, 14 days (`backup-db.sh`) |
 
 Containers: `be-api-1` (alias `bim4c-api:8080`), `fe-web-1` (alias `bim4c-web:3000`),
 both on the Docker network `edge`, and `be-db-1` (PostgreSQL 16, volume `be_db-data`) on the
@@ -50,8 +50,8 @@ Manual deploy without CI (emergency): `git pull`, remove the `BE_IMAGE=` line fr
 ## Environment notes
 
 - `DATABASE_URL` and `DIRECT_URL` are both `postgresql://bim4c:<POSTGRES_PASSWORD>@db:5432/bim4c?schema=public`.
-- `MEDIA_STORAGE_DRIVER=supabase` with `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_MEDIA_BUCKET`:
-  only uploaded images live there.
+- Uploaded images: `MEDIA_STORAGE_DRIVER=local`, `MEDIA_STORAGE_PATH=/app/uploads` (set in
+  `docker-compose.prod.yml`, volume `be_media-data`), served at `https://api.bim4c.vn/media/files/<key>`.
 - The container healthcheck calls `/ready` (database reachable and schema compatible), so a
   release that cannot reach the database is rolled back by deploy-app.
 - `TRUST_PROXY=1` (set in `docker-compose.prod.yml`): behind Caddy, rate limits and
@@ -73,14 +73,15 @@ Manual deploy without CI (emergency): `git pull`, remove the `BE_IMAGE=` line fr
 
 The monitor emails `NOTIFICATION_ADMIN_EMAIL` (else `APPOINTMENT_ADMIN_EMAIL`) through Resend when
 `/ready` or the website fails twice in a row or the newest dump is older than 36 hours, and again
-when everything is back. Dumps stay on the VPS: copy them off the server now and then
+when everything is back. Backups stay on the VPS: copy them off the server now and then
 (`scp bim4c-vps:/var/backups/bim4c-db/<file> .`).
 
-Restore a dump:
+Restore a dump and the images:
 
 ```bash
 cd /opt/bim4c/be
 docker compose -f docker-compose.prod.yml exec -T db pg_restore -U bim4c -d bim4c --clean --if-exists < /var/backups/bim4c-db/<file>.dump
+docker compose -f docker-compose.prod.yml exec -T api tar -xzf - -C /app/uploads < /var/backups/bim4c-db/media-<date>.tgz
 ```
 
 ## Domains
