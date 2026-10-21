@@ -83,6 +83,9 @@ describe('production admin auth and RBAC', () => {
   it('grants editor content permissions but no user or audit permission', () => {
     const p = permissionsFor(['EDITOR']);
     expect(p).toContain('projects.create');
+    // Every bulk action an editor can pick (BulkActionDto) is a permission.
+    for (const action of ['publish', 'unpublish', 'archive', 'delete'])
+      expect(p).toContain(`posts.${action}`);
     expect(p).not.toContain('users.read');
     expect(p).not.toContain('audit.read');
   });

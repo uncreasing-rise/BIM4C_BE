@@ -18,7 +18,15 @@ const editorResources = [
 ];
 const editorPermissions = [
   ...editorResources.flatMap((resource) =>
-    ['read', 'create', 'update', 'delete', 'publish', 'archive'].map(
+    [
+      'read',
+      'create',
+      'update',
+      'delete',
+      'publish',
+      'unpublish',
+      'archive',
+    ].map(
       (action) => `${resource}.${action}`,
     ),
   ),

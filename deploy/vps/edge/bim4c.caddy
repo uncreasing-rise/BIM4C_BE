@@ -1,0 +1,32 @@
+# BIM4C: website (FE repo) and API (this repo). Lives at /opt/edge/sites/bim4c.caddy.
+# HSTS and security headers are set by the apps.
+
+# Scanners probe for /.env, /.git/config and the like; nothing on this site starts
+# with a dot, so answer them here instead of in the apps. ACME stays reachable.
+(no_dotfiles) {
+	@dotfiles {
+		path */.*
+		not path /.well-known/*
+	}
+	respond @dotfiles 404
+}
+
+www.bim4c.vn {
+	import no_dotfiles
+	encode zstd gzip
+	reverse_proxy bim4c-web:3000
+}
+
+api.bim4c.vn {
+	import no_dotfiles
+	encode zstd gzip
+	# Media uploads are limited to 10 MiB by the API; allow multipart overhead.
+	request_body {
+		max_size 12MB
+	}
+	reverse_proxy bim4c-api:8080
+}
+
+bim4c.vn {
+	redir https://www.bim4c.vn{uri} permanent
+}

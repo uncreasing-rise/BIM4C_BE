@@ -1,16 +1,22 @@
 # BIM4C on the VPS
 
-Website (FE repo) and API (this repo) run as two Docker stacks on the VPS, behind
-one shared Caddy that also serves BIM4C 4D/5D. Each stack is deployed on its own.
+The VPS (157.66.218.174) runs BIM4C only: the website (FE repo) and the API with its
+PostgreSQL database (this repo), as two Docker stacks behind one Caddy. Each stack is
+deployed on its own. BIM 4D/5D is a separate system and does not run here.
+
+Supabase is used for **media storage only** (bucket `media`); the database is the
+`db` service of `docker-compose.prod.yml`, on the VPS.
 
 | Path on the server | What |
 |---|---|
-| `/opt/bim4c/be` | this repo; `.env` holds the API secrets (chmod 600, git-ignored) |
+| `/opt/bim4c/be` | this repo; `.env` holds the API secrets and `POSTGRES_PASSWORD` (chmod 600, git-ignored) |
 | `/opt/bim4c/fe` | FE repo; `.env` holds the website values (chmod 600, git-ignored) |
-| `/opt/edge` | shared Caddy (from the 4D/5D repo `deploy/edge`); `sites/bim4c.caddy` is this folder's file; domains in `/opt/edge/.env` |
+| `/opt/edge` | Caddy: copy of `deploy/vps/edge` (`bim4c.caddy` goes to `sites/`) |
+| `/var/backups/bim4c-db` | nightly database dumps, 14 days (`backup-db.sh`) |
 
 Containers: `be-api-1` (alias `bim4c-api:8080`), `fe-web-1` (alias `bim4c-web:3000`),
-both on the Docker network `edge`. Neither publishes a port; only Caddy listens on 80/443.
+both on the Docker network `edge`, and `be-db-1` (PostgreSQL 16, volume `be_db-data`) on the
+API stack's private network only. Nothing publishes a port; only Caddy listens on 80/443.
 
 ## Deploying (CI/CD)
 
@@ -26,13 +32,13 @@ Pushing to `main` deploys automatically once CI is green (`.github/workflows/ci.
 
 **Migrations stop the deploy.** If the release adds a migration that the commit running on the VPS does not have,
 the deploy job fails before touching anything. Back up, run `npx prisma migrate deploy` against production
-(`DIRECT_URL`, port 5432), then run the workflow by hand (Actions → CI/CD → Run workflow) with
+(`docker compose -f docker-compose.prod.yml run --rm api npx prisma migrate deploy`), then run the workflow by hand (Actions → CI/CD → Run workflow) with
 **migrations_applied** checked.
 
 On the server:
 
 ```bash
-deploy-app bim4c-api status          # commit running now (bim4c-web, bim4d5d too)
+deploy-app bim4c-api status          # commit running now (bim4c-web too)
 cat /var/lib/deploy/bim4c-api.previous   # image to go back to
 # Roll back by hand: put that image in BE_IMAGE= in /opt/bim4c/be/.env, then
 cd /opt/bim4c/be && docker compose -f docker-compose.prod.yml up -d --no-build api
@@ -43,14 +49,39 @@ Manual deploy without CI (emergency): `git pull`, remove the `BE_IMAGE=` line fr
 
 ## Environment notes
 
-- `DATABASE_URL` uses Supabase's transaction pooler, port **6543** (Prisma switches to
-  `pgbouncer=true` automatically). `DIRECT_URL` stays on 5432 for migrations.
+- `DATABASE_URL` and `DIRECT_URL` are both `postgresql://bim4c:<POSTGRES_PASSWORD>@db:5432/bim4c?schema=public`.
+- `MEDIA_STORAGE_DRIVER=supabase` with `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_MEDIA_BUCKET`:
+  only uploaded images live there.
+- The container healthcheck calls `/ready` (database reachable and schema compatible), so a
+  release that cannot reach the database is rolled back by deploy-app.
 - `TRUST_PROXY=1` (set in `docker-compose.prod.yml`): behind Caddy, rate limits and
   audit logs see the visitor's IP instead of the proxy's.
 - FE `BACKEND_URL=http://bim4c-api:8080`: server-side rendering calls the API over the
   private network. The browser uses `NEXT_PUBLIC_API_URL`.
 - `REVALIDATION_URL` must be the public HTTPS website URL (the API validates this).
 - `NEXT_PUBLIC_*` are baked into the FE image: rebuild FE after changing them.
+
+## Backups and monitoring
+
+`backup-db.sh` and `monitor.sh` are installed as `/usr/local/bin/bim4c-backup-db` and
+`/usr/local/bin/bim4c-monitor`, run by `/etc/cron.d/bim4c`:
+
+```
+30 2 * * * root /usr/local/bin/bim4c-backup-db >> /var/log/bim4c-backup.log 2>&1
+*/5 * * * * root /usr/local/bin/bim4c-monitor > /dev/null 2>&1
+```
+
+The monitor emails `NOTIFICATION_ADMIN_EMAIL` (else `APPOINTMENT_ADMIN_EMAIL`) through Resend when
+`/ready` or the website fails twice in a row or the newest dump is older than 36 hours, and again
+when everything is back. Dumps stay on the VPS: copy them off the server now and then
+(`scp bim4c-vps:/var/backups/bim4c-db/<file> .`).
+
+Restore a dump:
+
+```bash
+cd /opt/bim4c/be
+docker compose -f docker-compose.prod.yml exec -T db pg_restore -U bim4c -d bim4c --clean --if-exists < /var/backups/bim4c-db/<file>.dump
+```
 
 ## Domains
 

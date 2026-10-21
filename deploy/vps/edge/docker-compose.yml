@@ -1,0 +1,28 @@
+# Caddy for BIM4C: holds ports 80/443 and serves www.bim4c.vn and api.bim4c.vn.
+# On the server this folder is /opt/edge (the compose project name "edge" keeps
+# the certificate volumes); sites/bim4c.caddy is ./bim4c.caddy.
+#   docker network create edge
+#   docker compose up -d
+services:
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./sites:/etc/caddy/sites:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - edge
+
+networks:
+  edge:
+    external: true
+
+volumes:
+  caddy-data:
+  caddy-config:

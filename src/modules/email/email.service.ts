@@ -3,9 +3,16 @@ import { ConfigService } from '@nestjs/config';
 import { renderEmail, type EmailContent } from './email-template';
 
 export type EmailDelivery = 'sent' | 'failed' | 'skipped';
+
+/** Emails a public form may trigger to one address per window. */
+export const PUBLIC_FORM_EMAILS_PER_RECIPIENT = 3;
+const PUBLIC_FORM_WINDOW_MS = 60 * 60 * 1000;
+
 @Injectable()
 export class EmailService {
   private readonly logger = new Logger(EmailService.name);
+  /** Recent public-form sends per recipient (one API instance, so in memory). */
+  private readonly publicFormSends = new Map<string, number[]>();
   constructor(private readonly config: ConfigService) {}
 
   get adminEmail() {
@@ -35,6 +42,12 @@ export class EmailService {
     key: string;
     content: EmailContent;
     replyTo?: string;
+    /**
+     * Sent to an address a visitor typed into a public form. Anyone can type
+     * anyone's address, so each recipient gets at most
+     * PUBLIC_FORM_EMAILS_PER_RECIPIENT of these an hour.
+     */
+    publicForm?: boolean;
   }): Promise<EmailDelivery> {
     if (
       !input.to ||
@@ -43,6 +56,12 @@ export class EmailService {
     ) {
       this.logger.warn(
         `Email skipped (${input.key}): recipient or provider not configured`,
+      );
+      return 'skipped';
+    }
+    if (input.publicForm && !this.allowPublicFormSend(input.to)) {
+      this.logger.warn(
+        `Email skipped (${input.key}): recipient limit for public forms reached`,
       );
       return 'skipped';
     }
@@ -89,5 +108,20 @@ export class EmailService {
       `Email delivery failed (${input.key}) after two attempts`,
     );
     return 'failed';
+  }
+
+  private allowPublicFormSend(to: string): boolean {
+    const now = Date.now();
+    const since = now - PUBLIC_FORM_WINDOW_MS;
+    for (const [address, times] of this.publicFormSends) {
+      const recent = times.filter((t) => t > since);
+      if (recent.length) this.publicFormSends.set(address, recent);
+      else this.publicFormSends.delete(address);
+    }
+    const address = to.trim().toLowerCase();
+    const recent = this.publicFormSends.get(address) ?? [];
+    if (recent.length >= PUBLIC_FORM_EMAILS_PER_RECIPIENT) return false;
+    this.publicFormSends.set(address, [...recent, now]);
+    return true;
   }
 }

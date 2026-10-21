@@ -1,7 +1,8 @@
-# Production on a VPS behind the shared Caddy (network "edge", see the BIM4C 4D/5D
-# repo deploy/edge). Secrets live in .env on the server (chmod 600), never in git.
+# Production on the BIM4C VPS behind Caddy (network "edge", see deploy/vps/edge).
+# Secrets live in .env on the server (chmod 600), never in git.
 #   docker compose -f docker-compose.prod.yml up -d --build
 # Migrations are not run on start; run `npx prisma migrate deploy` deliberately.
+# The database runs here, on the VPS; Supabase is used for media storage only.
 services:
   api:
     # CI/CD sets BE_IMAGE=ghcr.io/…:<commit> (deploy-app); unset builds locally.
@@ -14,11 +15,37 @@ services:
       PORT: 8080
       # One proxy (Caddy) in front: rate limits and audit logs see the visitor's IP.
       TRUST_PROXY: 1
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
+      default:
       edge:
         aliases: [bim4c-api]
     stop_grace_period: 20s
 
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bim4c
+      POSTGRES_USER: bim4c
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    # Private network only: no published port, Caddy and the website cannot reach it.
+    networks:
+      - default
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U bim4c -d bim4c']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    stop_grace_period: 30s
+
 networks:
   edge:
     external: true
+
+volumes:
+  db-data:

@@ -41,6 +41,7 @@ export class SubmissionNotificationsService {
       this.email.send({
         to: data.email,
         key: `${kind}/${data.id}/customer`,
+        publicForm: true,
         subject: `${title} | BIM4C`,
         content: {
           locale,
@@ -102,6 +103,7 @@ export class SubmissionNotificationsService {
     return this.email.send({
       to: address,
       key: `newsletter/${id}/welcome`,
+      publicForm: true,
       subject: vi
         ? 'Chào mừng bạn đến với BIM4C Insights'
         : 'Welcome to BIM4C Insights',

@@ -1,0 +1,4 @@
+# Site files are in sites/. After changing one, recreate the container
+# (docker compose up -d --force-recreate); a plain reload has dropped sites before.
+# Caddy obtains and renews certificates itself (Let's Encrypt, else ZeroSSL).
+import /etc/caddy/sites/*.caddy

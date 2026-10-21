@@ -33,6 +33,9 @@ export class AppointmentNotificationsService {
         subject: customerContent.title + ' | BIM4C',
         key: 'appointment/' + a.id + '/' + kind + '/customer',
         content: customerContent,
+        // Only the booking itself comes from the public form; later status
+        // emails are sent by the team.
+        publicForm: kind === 'requested',
       }),
       this.email.send({
         to: this.email.adminEmail,

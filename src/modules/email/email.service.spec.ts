@@ -1,4 +1,4 @@
-import { EmailService } from './email.service';
+import { EmailService, PUBLIC_FORM_EMAILS_PER_RECIPIENT } from './email.service';
 import { renderEmail } from './email-template';
 import { appointmentEmail } from '../appointments/appointment-email';
 
@@ -108,6 +108,27 @@ describe('Transactional email', () => {
       }),
     ).resolves.toBe('failed');
     expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('caps public-form emails per recipient, not the team or other addresses', async () => {
+    const fetcher = jest
+      .spyOn(global, 'fetch')
+      .mockImplementation(() =>
+        Promise.resolve(new Response('{}', { status: 200 })),
+      );
+    const email = service();
+    const send = (to: string, key: string, publicForm = true) =>
+      email.send({ to, key, subject: 'Thanks', content, publicForm });
+    for (let i = 0; i < PUBLIC_FORM_EMAILS_PER_RECIPIENT; i++)
+      await expect(send('victim@example.com', `c/${i}`)).resolves.toBe('sent');
+    await expect(send('Victim@Example.com ', 'c/over')).resolves.toBe(
+      'skipped',
+    );
+    await expect(send('other@example.com', 'c/other')).resolves.toBe('sent');
+    await expect(send('victim@example.com', 'status', false)).resolves.toBe(
+      'sent',
+    );
+    expect(fetcher).toHaveBeenCalledTimes(PUBLIC_FORM_EMAILS_PER_RECIPIENT + 2);
   });
 
   it('reports skipped delivery honestly when provider is disabled', async () => {
