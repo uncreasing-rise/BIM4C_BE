@@ -24,7 +24,10 @@ api.bim4c.vn {
 	request_body {
 		max_size 12MB
 	}
-	reverse_proxy bim4c-api:8080
+	# One hop for the API (TRUST_PROXY=1): the visitor, also behind Cloudflare.
+	reverse_proxy bim4c-api:8080 {
+		header_up X-Forwarded-For {client_ip}
+	}
 }
 
 bim4c.vn {
